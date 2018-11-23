@@ -1,15 +1,6 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
-import Typography from 'typography'
-import GitHub from 'typography-theme-github'
-
-const typography = new Typography(GitHub)
-
-// Hot reload typography in development.
-if (process.env.NODE_ENV !== 'production') {
-  typography.injectStyles()
-}
 
 const Layout = ({ children }) => (
   <StaticQuery
