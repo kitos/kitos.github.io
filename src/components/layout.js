@@ -1,10 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
+import Typography from 'typography'
+import GitHub from 'typography-theme-github'
 
-import Header from './header'
-import './layout.css'
+const typography = new Typography(GitHub)
+
+// Hot reload typography in development.
+if (process.env.NODE_ENV !== 'production') {
+  typography.injectStyles()
+}
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -28,13 +33,13 @@ const Layout = ({ children }) => (
         >
           <html lang="en" />
         </Helmet>
-        <Header siteTitle={data.site.siteMetadata.title} />
         <div
           style={{
-            margin: '0 auto',
-            maxWidth: 960,
-            padding: '0px 1.0875rem 1.45rem',
-            paddingTop: 0,
+            maxWidth: '42rem',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            padding: '1.5rem 1.125rem',
+            paddingTop: '1.5rem',
           }}
         >
           {children}
@@ -43,9 +48,5 @@ const Layout = ({ children }) => (
     )}
   />
 )
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
 
 export default Layout

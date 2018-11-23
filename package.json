@@ -15,7 +15,9 @@
     "gatsby-transformer-sharp": "^2.1.4",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "typography": "^0.16.17",
+    "typography-theme-github": "^0.15.10"
   },
   "keywords": [
     "site",
