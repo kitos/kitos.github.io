@@ -5,11 +5,14 @@ import { Box, Flex } from '@rebass/grid'
 
 let H = styled.header`
   background: #fafbfc;
+  border-bottom: 1px solid #e1e4e7;
 `
 
 let Nav = styled.nav`
   max-width: 42rem;
   margin: 0 auto;
+  position: relative;
+  bottom: -1px;
 
   li {
     margin: 0;
