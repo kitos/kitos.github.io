@@ -9,8 +9,6 @@ const IndexPage = () => (
       <Avatar />
     </div>
 
-    <h1>Nikita Kirsanov</h1>
-
     <h2>Social links</h2>
 
     <ul>
@@ -45,7 +43,7 @@ const IndexPage = () => (
       </li>
     </ul>
 
-    <h2>About me</h2>
+    <h2>Summary</h2>
 
     <p>
       I have 5 years of experience as a software engineer. During this time I
