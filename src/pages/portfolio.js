@@ -19,7 +19,7 @@ let PastProjectsPage = ({
               <header>
                 <h2>
                   {project.id} ({formatDate(project.start)} -{' '}
-                  {formatDate(project.end)})
+                  {project.end ? formatDate(project.end) : 'Till Now'})
                 </h2>
               </header>
 

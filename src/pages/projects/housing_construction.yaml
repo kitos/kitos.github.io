@@ -1,0 +1,22 @@
+id: Housing Construction
+start: 2017-07-01
+customer: Some housing construction company
+description: >-
+  Build several web apps from scratch to display info about houses, developers, news...
+  I've suggested to use new approach (JAMStack) for some apps, and we applied it (using GatsbyJS).
+  Also I've implemented POC using graphql api over elasticsearch and we start using this approach.
+participation:
+  - backend and frontend development
+  - code review
+  - team lead
+  - estimations
+  - frontend head/architect
+technologies:
+  - React
+  - styled-components
+  - koajs
+  - gatsbyjs
+  - graphql
+  - appolo
+  - elasticsearch
+  - Spring
