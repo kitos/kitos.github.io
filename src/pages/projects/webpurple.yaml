@@ -1,0 +1,25 @@
+id: WebPurple
+start: 2016-05-01
+customer: WebPurple
+description: >-
+  I've created and currently maintain site of Ryazan frontend community.
+  I've changed technical stack a couple of times.
+  Initially more common approaches was used (react + koa + mongo).
+  But currently JAMstack (gatsby) is used.
+participation:
+  - backend and frontend development
+  - chose technical stack
+  - configured CI/CD
+  - code review
+technologies:
+  - React
+  - styled-components
+  - ramda
+  - koajs
+  - gatsbyjs
+  - graphql
+  - redux
+  - passportjs
+  - mongo
+  - heroku
+  - netlify

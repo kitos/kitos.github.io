@@ -13,6 +13,7 @@ participation:
   - frontend head/architect
 technologies:
   - React
+  - ramda
   - styled-components
   - koajs
   - gatsbyjs
