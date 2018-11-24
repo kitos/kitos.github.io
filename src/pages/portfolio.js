@@ -1,8 +1,10 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import { format } from 'date-fns/fp'
+import { Box, Flex } from '@rebass/grid'
 
 import Layout from '../components/layout'
+import Badge from '../components/badge'
 
 let formatDate = format('MMMM, yyyy')
 
@@ -39,11 +41,13 @@ let PastProjectsPage = ({
 
           <h3>Technologies</h3>
 
-          <ul>
+          <Flex as="ul" flexWrap="wrap" m={0} css={{ listStyle: 'none' }}>
             {project.technologies.map(t => (
-              <li key={t}>{t}</li>
+              <Box as="li" key={t} ml="5px">
+                <Badge>{t}</Badge>
+              </Box>
             ))}
-          </ul>
+          </Flex>
         </article>
       ))}
   </Layout>

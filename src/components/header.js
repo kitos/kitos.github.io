@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import { Box, Flex } from '@rebass/grid'
 
 import { rhythm, scale } from '../utils/typography'
