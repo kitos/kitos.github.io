@@ -1,0 +1,21 @@
+id: Online banking
+start: 2014-06-01
+end: 2016-05-01
+customer: One of the biggest russian bank
+description: >-
+  Web application built on top of RESTful web framework (Apache Sling).
+  The application provides bank customers the opportunity to carry out transactions
+  with their accounts without necessity to visit the bank offices.
+participation:
+  - backend and frontend development
+  - code review
+  - estimations
+  - feature lead
+technologies:
+  - jQuery
+  - dotJS
+  - LESS
+  - React
+  - Java EE
+  - Spring
+  - Adobe AEM (CQ5)
