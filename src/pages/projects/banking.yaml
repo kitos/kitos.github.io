@@ -12,10 +12,11 @@ participation:
   - estimations
   - feature lead
 technologies:
+  - javascript
   - jQuery
   - dotJS
   - LESS
-  - React
+  - reactjs
   - Java EE
   - Spring
   - Adobe AEM (CQ5)

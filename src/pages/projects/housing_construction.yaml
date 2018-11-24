@@ -12,9 +12,12 @@ participation:
   - estimations
   - frontend head/architect
 technologies:
-  - React
+  - javascript
+  - typescript
+  - reactjs
   - ramda
   - styled-components
+  - nodejs
   - koajs
   - gatsbyjs
   - graphql

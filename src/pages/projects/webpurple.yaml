@@ -12,9 +12,12 @@ participation:
   - configured CI/CD
   - code review
 technologies:
-  - React
+  - javascript
+  - flow
+  - reactjs
   - styled-components
   - ramda
+  - nodejs
   - koajs
   - gatsbyjs
   - graphql
