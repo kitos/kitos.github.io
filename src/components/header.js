@@ -63,8 +63,8 @@ let Header = () => (
           </MenuLink>
         </li>
         <li>
-          <MenuLink as={NavLink} to="/past-projects">
-            Past projects
+          <MenuLink as={NavLink} to="/portfolio">
+            Portfolio
           </MenuLink>
         </li>
         <li>
