@@ -10,46 +10,42 @@ let PastProjectsPage = ({
   data: { allProjectsYaml: { edges: projects = [] } = {} } = {},
 }) => (
   <Layout>
-    <ul>
-      {projects
-        .map(p => p.node)
-        .map(project => (
-          <li key={project.id}>
-            <article>
-              <header>
-                <h2>
-                  {project.id} ({formatDate(project.start)} -{' '}
-                  {project.end ? formatDate(project.end) : 'Till Now'})
-                </h2>
-              </header>
+    {projects
+      .map(p => p.node)
+      .map(project => (
+        <article key={project.id}>
+          <header>
+            <h2>
+              {project.id} ({formatDate(project.start)} -{' '}
+              {project.end ? formatDate(project.end) : 'Till Now'})
+            </h2>
+          </header>
 
-              <h3>Customer</h3>
+          <h3>Customer</h3>
 
-              <p>{project.customer}</p>
+          <p>{project.customer}</p>
 
-              <h3>Description</h3>
+          <h3>Description</h3>
 
-              <p>{project.description}</p>
+          <p>{project.description}</p>
 
-              <h3>Participation</h3>
+          <h3>Participation</h3>
 
-              <ul>
-                {project.participation.map(p => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
+          <ul>
+            {project.participation.map(p => (
+              <li key={p}>{p}</li>
+            ))}
+          </ul>
 
-              <h3>Technologies</h3>
+          <h3>Technologies</h3>
 
-              <ul>
-                {project.technologies.map(t => (
-                  <li key={t}>{t}</li>
-                ))}
-              </ul>
-            </article>
-          </li>
-        ))}
-    </ul>
+          <ul>
+            {project.technologies.map(t => (
+              <li key={t}>{t}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
   </Layout>
 )
 
