@@ -4,7 +4,7 @@ import { format } from 'date-fns/fp'
 
 import Layout from '../components/layout'
 
-let formatDate = format('MMMM yyyy')
+let formatDate = format('MMMM, yyyy')
 
 let PastProjectsPage = ({
   data: { allProjectsYaml: { edges: projects = [] } = {} } = {},
@@ -55,7 +55,7 @@ let PastProjectsPage = ({
 
 export let query = graphql`
   query ProjectsPageQuery {
-    allProjectsYaml {
+    allProjectsYaml(sort: { fields: [end], order: DESC }) {
       edges {
         node {
           id
