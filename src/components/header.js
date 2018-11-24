@@ -3,6 +3,8 @@ import { Link } from 'gatsby'
 import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 
+import { rhythm, scale } from '../utils/typography'
+
 let H = styled.header`
   background: #fafbfc;
   border-bottom: 1px solid #e1e4e7;
@@ -50,9 +52,9 @@ let NavLink = ({ className, ...props }) => (
 let Header = () => (
   <H>
     <Nav>
-      <Box as="h1" m={0} py={20}>
-        <Link to="/">Nikita Kirsanov</Link>
-      </Box>
+      <h1 style={{ ...scale(3 / 4), margin: 0, paddingTop: rhythm(1) }}>
+        Nikita Kirsanov / Software Engineer
+      </h1>
 
       <Flex as="ul" m={0} p={0} pt={20} css={{ listStyle: 'none' }}>
         <li>
