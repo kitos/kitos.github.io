@@ -8,7 +8,7 @@ import Badge from '../components/badge'
 
 let formatDate = format('MMMM, yyyy')
 
-let PastProjectsPage = ({
+let PortfolioPage = ({
   data: { allProjectsYaml: { edges: projects = [] } = {} } = {},
 }) => (
   <Layout>
@@ -54,7 +54,7 @@ let PastProjectsPage = ({
 )
 
 export let query = graphql`
-  query ProjectsPageQuery {
+  query PortfolioQuery {
     allProjectsYaml(sort: { fields: [end], order: DESC }) {
       edges {
         node {
@@ -71,4 +71,4 @@ export let query = graphql`
   }
 `
 
-export default PastProjectsPage
+export default PortfolioPage
