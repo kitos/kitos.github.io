@@ -33,6 +33,15 @@ export let query = graphql`
             thumbnails {
               medium {
                 url
+                width
+              }
+              high {
+                url
+                width
+              }
+              maxres {
+                url
+                width
               }
             }
           }
