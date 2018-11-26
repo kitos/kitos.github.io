@@ -68,6 +68,11 @@ let Header = () => (
           </MenuLink>
         </li>
         <li>
+          <MenuLink as={NavLink} to="/public-activity/">
+            Public activity
+          </MenuLink>
+        </li>
+        <li>
           <MenuLink as={NavLink} to="/blog/">
             Blog
           </MenuLink>

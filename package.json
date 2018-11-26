@@ -6,6 +6,7 @@
   "author": "Nikita Kirsanov <kitos.kirsanov@gmail.com>",
   "dependencies": {
     "@rebass/grid": "^6.0.0-4",
+    "axios": "^0.18.0",
     "babel-plugin-styled-components": "^1.8.0",
     "date-fns": "^2.0.0-alpha.25",
     "gatsby": "^2.0.55",
@@ -19,8 +20,8 @@
     "gatsby-source-filesystem": "^2.0.8",
     "gatsby-transformer-sharp": "^2.1.8",
     "gatsby-transformer-yaml": "^2.1.5",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2",
     "react-helmet": "^5.2.0",
     "react-typography": "^0.16.13",
     "styled-components": "^4.1.1",
