@@ -6,6 +6,20 @@ import { Box, Flex } from '@rebass/grid'
 import { scale } from '../utils/typography'
 import { useRotation } from './rotation-hook'
 import Badge from './badge'
+import YouTubePlayButton from './youtube-play-button'
+
+let VideoLink = styled.a`
+  display: block;
+  position: relative;
+
+  ${YouTubePlayButton} {
+    opacity: 0.8;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+`
 
 let Img = styled.img`
   width: 100%;
@@ -24,14 +38,20 @@ let VideoCard = ({ video: { id, snippet }, className }) => {
 
   return (
     <section className={className}>
-      <a href={link} target="_blank" rel="noopener noreferrer">
+      <VideoLink
+        {...rotation}
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <Img
-          {...rotation}
           src={medium.url}
           srcSet={`${medium.url}, ${high.url} 1.5x, ${maxres.url} 3x`}
           alt={snippet.title}
         />
-      </a>
+
+        <YouTubePlayButton />
+      </VideoLink>
 
       <h3 style={scale(0.1)}>
         <a href={link}>{snippet.title}</a>
