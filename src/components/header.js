@@ -46,6 +46,7 @@ let H = styled.header`
 `
 
 let NavWrapper = styled.nav`
+  padding: 20px 20px 0;
   position: relative;
   bottom: -1px;
 `
@@ -58,7 +59,7 @@ let ImagesWrapper = styled.div`
 let AvatarWrapper = styled.div`
   position: absolute;
   bottom: -50px;
-  left: 40px;
+  left: 20px;
 `
 
 let Avatar = styled(Img)`

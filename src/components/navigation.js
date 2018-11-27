@@ -37,7 +37,7 @@ let NavLink = ({ className, ...props }) => (
 
 let Navigation = () => (
   <nav>
-    <Flex as="ul" m={0} p="10px 10px 0" css={{ listStyle: 'none' }}>
+    <Flex as="ul" m={0} css={{ listStyle: 'none' }}>
       <MenuItem>
         <MenuLink as={NavLink} to="/">
           About
