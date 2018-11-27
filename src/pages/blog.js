@@ -1,9 +1,12 @@
 import React from 'react'
+import { Box } from '@rebass/grid'
 import Layout from '../components/layout'
 
 let BlogPage = () => (
   <Layout>
-    <div>Some posts might be here...</div>
+    <Box as="b" mt="50px" style={{ display: 'block', textAlign: 'center' }}>
+      Some posts might be here...
+    </Box>
   </Layout>
 )
 
