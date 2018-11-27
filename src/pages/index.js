@@ -1,14 +1,9 @@
 import React from 'react'
 
 import Layout from '../components/layout'
-import Avatar from '../components/avatar'
 
 const IndexPage = () => (
   <Layout>
-    <div style={{ maxWidth: 200, margin: 'auto' }}>
-      <Avatar />
-    </div>
-
     <h2>Social links</h2>
 
     <ul>

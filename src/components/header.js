@@ -1,84 +1,93 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { graphql, StaticQuery } from 'gatsby'
+import Img from 'gatsby-image'
 import styled from 'styled-components/macro'
 import { Box, Flex } from '@rebass/grid'
 
-import { rhythm, scale } from '../utils/typography'
+import Navigation from './navigation'
 
-let H = styled.header`
-  background: #fafbfc;
-  border-bottom: 1px solid #e1e4e7;
-`
+let QueryImages = ({ children }) => (
+  <StaticQuery
+    query={graphql`
+      query HeaderImages {
+        avatar: file(relativePath: { eq: "avatar.jpg" }) {
+          childImageSharp {
+            fluid(maxWidth: 250) {
+              ...GatsbyImageSharpFluid_tracedSVG
+            }
+          }
+        }
 
-let Nav = styled.nav`
-  max-width: 42rem;
-  margin: 0 auto;
-  position: relative;
-  bottom: -1px;
-
-  li {
-    margin: 0;
-  }
-`
-
-let MenuLink = styled(Box)`
-  display: block;
-  padding: 5px 15px;
-
-  border: 1px solid transparent;
-  border-top-width: 3px;
-  border-radius: 3px 3px 0 0;
-
-  &.active {
-    background: #fff;
-    border-top-color: #d4692b;
-    border-left-color: #e1e4e7;
-    border-right-color: #e1e4e7;
-  }
-
-  border-bottom: none;
-`
-
-let NavLink = ({ className, ...props }) => (
-  <Link
-    className={className}
-    getProps={({ isCurrent }) =>
-      isCurrent ? { className: `${className} active` } : null
+        background: file(relativePath: { eq: "header-bg.jpg" }) {
+          childImageSharp {
+            fluid(maxWidth: 672) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    `}
+    render={({ avatar, background }) =>
+      children({
+        avatar: avatar.childImageSharp.fluid,
+        background: background.childImageSharp.fluid,
+      })
     }
-    {...props}
   />
 )
 
+let H = styled.header`
+  background: #fafbfc;
+  border: 1px solid #e1e4e7;
+  border-top: none;
+  border-radius: 0 0 3px 3px;
+  max-width: 42rem;
+  margin: 0 auto;
+`
+
+let NavWrapper = styled.nav`
+  position: relative;
+  bottom: -1px;
+`
+
+let ImagesWrapper = styled.div`
+  position: relative;
+  margin-bottom: 60px;
+`
+
+let AvatarWrapper = styled.div`
+  position: absolute;
+  bottom: -50px;
+  left: 40px;
+`
+
+let Avatar = styled(Img)`
+  background: #fff;
+  border: 3px solid #fff;
+  width: 150px;
+`
+
 let Header = () => (
   <H>
-    <Nav>
-      <h1 style={{ ...scale(3 / 4), margin: 0, paddingTop: rhythm(1) }}>
-        Nikita Kirsanov / Software Engineer
-      </h1>
+    <QueryImages>
+      {({ avatar, background }) => (
+        <ImagesWrapper>
+          <Img fluid={background} style={{ height: 250 }} />
 
-      <Flex as="ul" m={0} p={0} pt={20} css={{ listStyle: 'none' }}>
-        <li>
-          <MenuLink as={NavLink} to="/">
-            About
-          </MenuLink>
-        </li>
-        <li>
-          <MenuLink as={NavLink} to="/portfolio/">
-            Portfolio
-          </MenuLink>
-        </li>
-        <li>
-          <MenuLink as={NavLink} to="/public-activity/">
-            Public activity
-          </MenuLink>
-        </li>
-        <li>
-          <MenuLink as={NavLink} to="/blog/">
-            Blog
-          </MenuLink>
-        </li>
-      </Flex>
-    </Nav>
+          <Flex as={AvatarWrapper} alignItems="flex-end">
+            <Avatar fluid={avatar} />
+
+            <Box as="h1" m={0} ml={20} fontSize={24}>
+              Nikita Kirsanov / Software Engineer
+            </Box>
+          </Flex>
+        </ImagesWrapper>
+      )}
+    </QueryImages>
+
+    <NavWrapper>
+      <Navigation />
+    </NavWrapper>
   </H>
 )
 
