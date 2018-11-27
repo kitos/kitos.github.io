@@ -37,10 +37,10 @@ let QueryImages = ({ children }) => (
 )
 
 let H = styled.header`
-  background: #fafbfc;
-  border: 1px solid #e1e4e7;
+  background: ${({ theme }) => theme.colors.pale};
+  border: 1px solid ${({ theme }) => theme.colors.lightgray};
   border-top: none;
-  border-radius: 0 0 3px 3px;
+  border-radius: ${({ theme: { borderRadius: br } }) => `0 0 ${br} ${br}`};
   max-width: ${({ theme }) => theme.pageWidth};
   margin: 0 auto;
 `

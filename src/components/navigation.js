@@ -18,8 +18,8 @@ let MenuLink = styled(Box)`
   &.active {
     background: #fff;
     border-top-color: #d4692b;
-    border-left-color: #e1e4e7;
-    border-right-color: #e1e4e7;
+    border-left-color: ${({ theme }) => theme.colors.lightgray};
+    border-right-color: ${({ theme }) => theme.colors.lightgray};
   }
 
   border-bottom: none;

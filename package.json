@@ -42,7 +42,7 @@
     "deploy": "rm -rf .cache public && gatsby build && gh-pages -d public -b master"
   },
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.9.1",
+    "babel-plugin-styled-components": "^1.8.0",
     "gh-pages": "^2.0.1",
     "prettier": "^1.15.2"
   },
