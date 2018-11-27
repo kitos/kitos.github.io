@@ -41,7 +41,7 @@ let H = styled.header`
   border: 1px solid #e1e4e7;
   border-top: none;
   border-radius: 0 0 3px 3px;
-  max-width: 42rem;
+  max-width: ${({ theme }) => theme.pageWidth};
   margin: 0 auto;
 `
 

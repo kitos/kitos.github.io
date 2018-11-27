@@ -1,8 +1,13 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
+import { ThemeProvider } from 'styled-components'
 
 import Header from './header'
+
+let theme = {
+  pageWidth: '800px',
+}
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -27,19 +32,20 @@ const Layout = ({ children }) => (
           <html lang="en" />
         </Helmet>
 
-        <Header />
+        <ThemeProvider theme={theme}>
+          <>
+            <Header />
 
-        <div
-          style={{
-            maxWidth: '42rem',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            padding: '1.5rem 1.125rem',
-            paddingTop: '1.5rem',
-          }}
-        >
-          {children}
-        </div>
+            <div
+              css={`
+                max-width: ${({ theme }) => theme.pageWidth};
+                margin: 0 auto;
+              `}
+            >
+              {children}
+            </div>
+          </>
+        </ThemeProvider>
       </>
     )}
   />

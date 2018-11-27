@@ -7,7 +7,6 @@
   "dependencies": {
     "@rebass/grid": "^6.0.0-4",
     "axios": "^0.18.0",
-    "babel-plugin-styled-components": "^1.8.0",
     "date-fns": "^2.0.0-alpha.25",
     "gatsby": "^2.0.55",
     "gatsby-image": "^2.0.20",
@@ -43,6 +42,7 @@
     "deploy": "rm -rf .cache public && gatsby build && gh-pages -d public -b master"
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^1.9.1",
     "gh-pages": "^2.0.1",
     "prettier": "^1.15.2"
   },
