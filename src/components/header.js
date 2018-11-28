@@ -5,6 +5,7 @@ import styled from 'styled-components/macro'
 import { Box, Flex } from '@rebass/grid'
 
 import Navigation from './navigation'
+import SocialLinks from './social-links'
 
 let QueryImages = ({ children }) => (
   <StaticQuery
@@ -59,7 +60,8 @@ let ImagesWrapper = styled.div`
 let AvatarWrapper = styled.div`
   position: absolute;
   bottom: -50px;
-  left: 20px;
+  padding: 0 20px;
+  width: 100%;
 `
 
 let Avatar = styled(Img)`
@@ -79,8 +81,10 @@ let Header = () => (
             <Avatar fluid={avatar} />
 
             <Box as="h1" m={0} ml={20} fontSize={24}>
-              Nikita Kirsanov / Software Engineer
+              Nikita Kirsanov
             </Box>
+
+            <SocialLinks />
           </Flex>
         </ImagesWrapper>
       )}

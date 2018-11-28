@@ -4,40 +4,6 @@ import Layout from '../components/layout'
 
 const IndexPage = () => (
   <Layout>
-    <h2>Social links</h2>
-
-    <ul>
-      <li>
-        <a
-          href="https://twitter.com/kitos_kirsanov"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          Twitter
-        </a>
-      </li>
-
-      <li>
-        <a
-          href="https://github.com/kitos"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          GitHub
-        </a>
-      </li>
-
-      <li>
-        <a
-          href="https://www.linkedin.com/in/%D0%BD%D0%B8%D0%BA%D0%B8%D1%82%D0%B0-%D0%BA%D0%B8%D1%80%D1%81%D0%B0%D0%BD%D0%BE%D0%B2-08b307b9/"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          Linkedin
-        </a>
-      </li>
-    </ul>
-
     <h2>Summary</h2>
 
     <p>
