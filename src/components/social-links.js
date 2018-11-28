@@ -8,6 +8,7 @@ import { FacebookIcon, GitHubIcon, LinkedinIcon, TwitterIcon } from './icons'
 let SocialItem = styled.li`
   margin: 0 0 0 5px;
   transition: 0.15s;
+  line-height: 0;
 
   & > a {
     display: block;
