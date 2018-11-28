@@ -7,6 +7,16 @@ import { FacebookIcon, GitHubIcon, LinkedinIcon, TwitterIcon } from './icons'
 
 let SocialItem = styled.li`
   margin: 0 0 0 5px;
+  transition: 0.15s;
+
+  & > a {
+    display: block;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: rgba(20, 26, 40, 0.25) 0 2px 5px;
+  }
 `
 let SocialLinks = () => (
   <Flex as="ul" m="0" ml="auto" style={{ listStyle: 'none' }}>
