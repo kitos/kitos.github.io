@@ -5,6 +5,7 @@ import styled, {
   ThemeProvider,
   createGlobalStyle,
 } from 'styled-components/macro'
+import { Box } from '@rebass/grid'
 
 import Header from './header'
 import Footer from './footer'
@@ -18,7 +19,7 @@ let theme = {
   },
 }
 
-let PageWrapper = styled.main`
+let PageWrapper = styled(Box)`
   max-width: ${({ theme }) => theme.pageWidth};
   margin: 0 auto;
 `
@@ -85,7 +86,9 @@ const Layout = ({ children }) => (
               <Header />
             </HeaderWrapper>
 
-            <PageWrapper>{children}</PageWrapper>
+            <PageWrapper as="main" px={[20, 0]}>
+              {children}
+            </PageWrapper>
 
             <FooterWrapper>
               <Footer />
