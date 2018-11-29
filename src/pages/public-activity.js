@@ -23,7 +23,9 @@ let PublicActivityPage = ({ data: { resp: { videos = [] } = {} } = {} }) => (
 
 export let query = graphql`
   query PublicActivityQuery {
-    resp: allYouTubeVideo {
+    resp: allYouTubeVideo(
+      sort: { fields: [snippet___publishedAt], order: DESC }
+    ) {
       videos: edges {
         node {
           id
