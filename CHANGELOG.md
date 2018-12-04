@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/kitos/kitos.github.io/compare/v1.0.0...v1.1.0) (2018-12-04)
+
+
+### Bug Fixes
+
+* :bug: fix repo url ([c79ffe2](https://github.com/kitos/kitos.github.io/commit/c79ffe2))
+
+
+### Features
+
+* :lipstick: :sparkles: add info about version to footer; add link to changelog to footer ([8b9c98c](https://github.com/kitos/kitos.github.io/commit/8b9c98c))
+* :sparkles: add changelog page ([7017d47](https://github.com/kitos/kitos.github.io/commit/7017d47))
+
+
+
 <a name="1.0.0"></a>
 # 1.0.0 (2018-12-04)
 
