@@ -56,14 +56,15 @@ const Layout = ({ children }) => (
         site {
           siteMetadata {
             title
+            version
           }
         }
       }
     `}
-    render={data => (
+    render={({ site: { siteMetadata: meta } }) => (
       <>
         <Helmet
-          title={data.site.siteMetadata.title}
+          title={meta.title}
           meta={[
             {
               name: 'description',
@@ -91,7 +92,7 @@ const Layout = ({ children }) => (
             </PageWrapper>
 
             <FooterWrapper>
-              <Footer />
+              <Footer version={meta.version} />
             </FooterWrapper>
           </>
         </ThemeProvider>

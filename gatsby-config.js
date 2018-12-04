@@ -1,6 +1,9 @@
+const pkg = require('./package')
+
 module.exports = {
   siteMetadata: {
     title: 'Nikita Kirsanov',
+    version: pkg.version,
   },
   plugins: [
     'gatsby-plugin-react-helmet',

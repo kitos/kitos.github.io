@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import { Link } from 'gatsby'
 
 let F = styled.footer`
   max-width: ${({ theme }) => theme.pageWidth};
@@ -12,17 +13,44 @@ let F = styled.footer`
   border-radius: ${({ theme: { borderRadius: br } }) => `${br} ${br} 0 0`};
 `
 
-let Footer = () => (
+let BottomLink = styled.a`
+  font-size: 14px;
+  padding: 0 5px;
+
+  border-right: solid 1px ${({ theme }) => theme.colors.lightgray};
+  &:last-child {
+    border: none;
+  }
+`
+
+let Footer = ({ version }) => (
   <F>
-    © Nikita Kirsanov - {new Date().getFullYear()}. Build with{' '}
-    <a
-      href="https://www.gatsbyjs.org/"
-      target="_blank"
-      rel="noreferrer noopener"
-    >
-      gatsbyjs
-    </a>{' '}
-    ❤️
+    <div>
+      © Nikita Kirsanov - <Link to="/changelog/">v{version}</Link> (
+      {new Date().getFullYear()}). Build with{' '}
+      <a
+        href="https://www.gatsbyjs.org/"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        gatsbyjs
+      </a>{' '}
+      ❤️
+    </div>
+
+    <div>
+      <BottomLink
+        href="https://github.com/kitos/kitos.github.io"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        source
+      </BottomLink>
+
+      <BottomLink as={Link} to="/changelog/">
+        changelog
+      </BottomLink>
+    </div>
   </F>
 )
 
