@@ -35,17 +35,27 @@
   ],
   "license": "MIT",
   "scripts": {
+    "clean": "rm -rf .cache public",
     "build": "gatsby build",
+    "clean-build": "npm run clean && gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "rm -rf .cache public && gatsby build && gh-pages -d public -b master"
+    "deploy": "gh-pages -d public -b master",
+    "release": "standard-version"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.8.0",
     "gh-pages": "^2.0.1",
-    "prettier": "^1.15.2"
+    "prettier": "^1.15.2",
+    "standard-version": "^4.4.0"
+  },
+  "standard-version": {
+    "scripts": {
+      "postchangelog": "npm run clean-build",
+      "postcommit": "npm run deploy"
+    }
   },
   "browserslist": [
     "last 2 versions"
