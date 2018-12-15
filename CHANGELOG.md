@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/kitos/kitos.github.io/compare/v1.1.0...v1.2.0) (2018-12-15)
+
+
+### Features
+
+* :sparkles: :lipstick: resolve [#3](https://github.com/kitos/kitos.github.io/issues/3) - add shields to about page ([fd4d1f8](https://github.com/kitos/kitos.github.io/commit/fd4d1f8))
+* :sparkles: build and deploy by travis! ([8d90ae1](https://github.com/kitos/kitos.github.io/commit/8d90ae1))
+* :sparkles: integration with contentful - pull projects from it ([9a89ccc](https://github.com/kitos/kitos.github.io/commit/9a89ccc))
+* :sparkles: pull about page from contentful ([1b291f5](https://github.com/kitos/kitos.github.io/commit/1b291f5))
+* :sparkles: pull public activities (videos) from contentful ([00075fc](https://github.com/kitos/kitos.github.io/commit/00075fc))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/kitos/kitos.github.io/compare/v1.0.0...v1.1.0) (2018-12-04)
 
