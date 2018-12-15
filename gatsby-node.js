@@ -1,4 +1,3 @@
-const crypto = require('crypto')
 const axios = require('axios')
 
 const { YOUTUBE_KEY } = process.env
@@ -10,33 +9,32 @@ let youtube = axios.create({
   },
 })
 
-let videoIds = [
-  'Im95DcXzTEU',
-  'WXojma0u_o4',
-  'QLXWhxd85Lc',
-  'o2svfxi1Rdg',
-  'q5EU1R2M574',
-]
+exports.sourceNodes = async ({ actions: { createNodeField }, getNodes }) => {
+  let videos = getNodes().filter(
+    n => n.internal.type === 'ContentfulPublicActivity' && n.type === 'video'
+  )
 
-exports.sourceNodes = async ({ actions: { createNode } }) => {
+  let videoMap = videos.reduce((map, video) => {
+    let [_, id] = video.url.match(/v=(.*)/)
+
+    return map.set(id, video)
+  }, new Map())
+
+  let videoIds = Array.from(videoMap.keys())
+
   let {
-    data: { items: videos },
+    data: { items: youtubeSnippets },
   } = await youtube.get('videos', {
     params: { part: 'snippet', id: videoIds.join(',') },
   })
 
-  videos
-    .map(video => ({
-      ...video,
-      parent: null,
-      children: [],
-      internal: {
-        type: 'YouTubeVideo',
-        contentDigest: crypto
-          .createHash(`md5`)
-          .update(JSON.stringify(video))
-          .digest(`hex`),
-      },
-    }))
-    .forEach(v => createNode(v))
+  videoMap.forEach((video, id) => {
+    let snippet = youtubeSnippets.find(s => s.id === id)
+
+    createNodeField({
+      node: video,
+      name: 'snippet',
+      value: snippet,
+    })
+  })
 }

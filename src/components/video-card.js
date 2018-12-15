@@ -31,35 +31,47 @@ let Img = styled.img`
   }
 `
 
-let VideoCard = ({ video: { id, snippet }, className }) => {
+let unique = arrOfPrimitives => Array.from(new Set(arrOfPrimitives))
+
+let VideoCard = ({
+  video: {
+    id,
+    title,
+    url,
+    tags,
+    snippet: { thumbnails, tags: snippetTags },
+  },
+  className,
+}) => {
   let rotation = useRotation()
-  let link = `https://www.youtube.com/watch?v=${id}`
-  let { medium, high, maxres } = snippet.thumbnails
+  let { medium, high, maxres } = thumbnails
+
+  tags = unique([...(tags || []), ...(snippetTags || [])])
 
   return (
     <section className={className}>
       <VideoLink
         {...rotation}
-        href={link}
+        href={url}
         target="_blank"
         rel="noopener noreferrer"
       >
         <Img
           src={medium.url}
           srcSet={`${medium.url}, ${high.url} 1.5x, ${maxres.url} 3x`}
-          alt={snippet.title}
+          alt={title}
         />
 
         <YouTubePlayButton />
       </VideoLink>
 
       <h3 style={scale(0.1)}>
-        <a href={link}>{snippet.title}</a>
+        <a href={url}>{title}</a>
       </h3>
 
-      {snippet.tags && (
+      {tags.length > 0 && (
         <Flex as="ul" flexWrap="wrap" mx="-5px" css={{ listStyle: 'none' }}>
-          {snippet.tags.map(t => (
+          {tags.map(t => (
             <Box as="li" key={t} m="5px 2px" fontSize="12px">
               <Badge>#{t}</Badge>
             </Box>
