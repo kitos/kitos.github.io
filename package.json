@@ -55,12 +55,6 @@
     "prettier": "^1.15.2",
     "standard-version": "^4.4.0"
   },
-  "standard-version": {
-    "scripts": {
-      "postchangelog": "npm run clean-build",
-      "postcommit": "npm run deploy"
-    }
-  },
   "browserslist": [
     "last 2 versions"
   ],
