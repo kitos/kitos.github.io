@@ -34,6 +34,15 @@ module.exports = {
       },
     },
     'gatsby-transformer-yaml',
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `6dybdba3jdxv`,
+        accessToken:
+          process.env.CONTENTFUL_ACCESS_TOKEN,
+        plugins: ['@contentful/gatsby-transformer-contentful-richtext'],
+      },
+    },
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {

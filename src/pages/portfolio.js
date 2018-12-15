@@ -9,17 +9,17 @@ import Badge from '../components/badge'
 let formatDate = format('MMMM, yyyy')
 
 let PortfolioPage = ({
-  data: { allProjectsYaml: { edges: projects = [] } = {} } = {},
+  data: { portfolios: { edges: projects = [] } = {} } = {},
 }) => (
   <Layout>
     {projects
       .map(p => p.node)
       .map(project => (
-        <article key={project.id}>
+        <article key={project.name}>
           <header>
             <h2>
-              {project.id} ({formatDate(project.start)} -{' '}
-              {project.end ? formatDate(project.end) : 'Till Now'})
+              {project.name} ({formatDate(project.startDate)} -{' '}
+              {project.endDate ? formatDate(project.endDate) : 'Till Now'})
             </h2>
           </header>
 
@@ -29,7 +29,11 @@ let PortfolioPage = ({
 
           <h3>Description</h3>
 
-          <p>{project.description}</p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: project.description.childContentfulRichText.html,
+            }}
+          />
 
           <h3>Participation</h3>
 
@@ -55,14 +59,20 @@ let PortfolioPage = ({
 
 export let query = graphql`
   query PortfolioQuery {
-    allProjectsYaml(sort: { fields: [end], order: DESC }) {
+    portfolios: allContentfulPortfolio(
+      sort: { fields: [endDate, startDate], order: DESC }
+    ) {
       edges {
         node {
-          id
+          name
           customer
-          start
-          end
-          description
+          startDate
+          endDate
+          description {
+            childContentfulRichText {
+              html
+            }
+          }
           participation
           technologies
         }
