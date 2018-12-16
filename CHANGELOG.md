@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/kitos/kitos.github.io/compare/v1.2.0...v1.3.0) (2018-12-16)
+
+
+### Bug Fixes
+
+* :bug: use reduce instead of flatMap (nodejs doesn't support it) ([5396901](https://github.com/kitos/kitos.github.io/commit/5396901))
+
+
+### Features
+
+* :horse: use webp ([362e809](https://github.com/kitos/kitos.github.io/commit/362e809))
+* :lipstick: adapt header for mobile ([d99bf17](https://github.com/kitos/kitos.github.io/commit/d99bf17))
+* :sparkles: add google analytics ([65c9494](https://github.com/kitos/kitos.github.io/commit/65c9494))
+* :sparkles: resolve [#5](https://github.com/kitos/kitos.github.io/issues/5) - list skills from projects and talks on about page ([df1ae3d](https://github.com/kitos/kitos.github.io/commit/df1ae3d))
+* :sparkles: sort skills by last usage also ([ae02c0f](https://github.com/kitos/kitos.github.io/commit/ae02c0f))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/kitos/kitos.github.io/compare/v1.1.0...v1.2.0) (2018-12-15)
 
