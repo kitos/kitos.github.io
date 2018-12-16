@@ -54,12 +54,21 @@ let NavWrapper = styled.nav`
 
 let ImagesWrapper = styled.div`
   position: relative;
-  margin-bottom: 60px;
+  margin-bottom: 70px;
+
+  @media screen and (min-width: 52em) {
+    margin-bottom: 60px;
+  }
 `
 
 let AvatarWrapper = styled.div`
   position: absolute;
-  bottom: -50px;
+  bottom: -70px;
+
+  @media screen and (min-width: 52em) {
+    bottom: -50px;
+  }
+
   padding: 0 20px;
   width: 100%;
 `
@@ -67,7 +76,6 @@ let AvatarWrapper = styled.div`
 let Avatar = styled(Img)`
   background: #fff;
   border: 3px solid #fff;
-  width: 150px;
 `
 
 let Header = () => (
@@ -78,13 +86,30 @@ let Header = () => (
           <Img fluid={background} style={{ height: 250 }} />
 
           <Flex as={AvatarWrapper} alignItems="flex-end">
-            <Avatar fluid={avatar} />
+            <Box as={Avatar} fluid={avatar} width={[100, 150]} />
 
-            <Box as="h1" m={0} ml={20} fontSize={24}>
-              Nikita Kirsanov
-            </Box>
+            <Flex
+              flexDirection={['column', 'row']}
+              justifyContent="space-between"
+              alignItems="flex-end"
+              flex={1}
+            >
+              <Box
+                as="h1"
+                m={0}
+                ml={20}
+                fontSize={24}
+                css={`
+                  white-space: nowrap;
+                `}
+              >
+                Nikita Kirsanov
+              </Box>
 
-            <SocialLinks />
+              <Box mt={[10, 0]}>
+                <SocialLinks />
+              </Box>
+            </Flex>
           </Flex>
         </ImagesWrapper>
       )}
