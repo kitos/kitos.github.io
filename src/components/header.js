@@ -14,7 +14,7 @@ let QueryImages = ({ children }) => (
         avatar: file(relativePath: { eq: "avatar.jpg" }) {
           childImageSharp {
             fluid(maxWidth: 250) {
-              ...GatsbyImageSharpFluid_tracedSVG
+              ...GatsbyImageSharpFluid_withWebp_tracedSVG
             }
           }
         }
@@ -22,7 +22,7 @@ let QueryImages = ({ children }) => (
         background: file(relativePath: { eq: "header-bg.jpg" }) {
           childImageSharp {
             fluid(maxWidth: 672) {
-              ...GatsbyImageSharpFluid
+              ...GatsbyImageSharpFluid_withWebp
             }
           }
         }
