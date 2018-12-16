@@ -8,24 +8,40 @@ import Badge from '../components/badge'
 
 const IndexPage = ({ data: { about, portfolio, talks } }) => {
   let projectTechnologies = portfolio.edges.reduce(
-    (arr, { node }) => arr.concat(node.technologies),
+    (arr, { node }) =>
+      arr.concat(
+        node.technologies.map(name => ({
+          name,
+          lastUsed: node.startDate || node.endDate,
+        }))
+      ),
     []
   )
   let talkTags = talks.edges.reduce(
-    (arr, { node }) => arr.concat(node.tags),
+    (arr, { node }) =>
+      arr.concat(
+        node.tags.map(name => ({
+          name,
+          lastUsed: node.fields.snippet.snippet.publishedAt,
+        }))
+      ),
     []
   )
 
-  let skillsMap = projectTechnologies
-    .concat(talkTags)
-    .reduce(
-      (map, skill) =>
-        map.has(skill) ? map.set(skill, map.get(skill) + 1) : map.set(skill, 1),
-      new Map()
-    )
+  let skillsMap = projectTechnologies.concat(talkTags).reduce((map, skill) => {
+    let { name } = skill
 
-  let skills = Array.from(skillsMap.entries()).sort(
-    ([, count2], [, count1]) => count1 - count2
+    return map.has(name)
+      ? map.set(name, {
+          ...skill,
+          mentions: map.get(name).mentions + 1,
+        })
+      : map.set(name, { ...skill, mentions: 1 })
+  }, new Map())
+
+  let skills = Array.from(skillsMap.values()).sort(
+    (s1, s2) =>
+      s2.mentions - s1.mentions || s2.lastUsed.localeCompare(s1.lastUsed)
   )
 
   return (
@@ -45,9 +61,9 @@ const IndexPage = ({ data: { about, portfolio, talks } }) => {
       <h2>Skills</h2>
 
       <Flex flexWrap="wrap">
-        {skills.map(([t, count]) => (
-          <Box as={Badge} key={t} mr="5px" mb="5px">
-            {t}
+        {skills.map(({ name }) => (
+          <Box as={Badge} key={name} mr="5px" mb="5px">
+            {name}
           </Box>
         ))}
       </Flex>
@@ -78,6 +94,8 @@ export let query = graphql`
     portfolio: allContentfulPortfolio {
       edges {
         node {
+          startDate
+          endDate
           technologies
         }
       }
@@ -86,6 +104,13 @@ export let query = graphql`
     talks: allContentfulPublicActivity {
       edges {
         node {
+          fields {
+            snippet {
+              snippet {
+                publishedAt
+              }
+            }
+          }
           tags
         }
       }
