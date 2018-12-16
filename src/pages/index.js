@@ -35,7 +35,7 @@ const IndexPage = ({ data: { about, portfolio, talks } }) => {
           let [label, value] = s.split('|')
 
           return (
-            <Box mr={[0, 10]} mb={['5px', 0]}>
+            <Box key={label} mr={[0, 10]} mb={['5px', 0]}>
               <Shield {...{ label, value }} />
             </Box>
           )
