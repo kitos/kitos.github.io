@@ -12,6 +12,7 @@
     "date-fns": "^2.0.0-alpha.25",
     "gatsby": "^2.0.55",
     "gatsby-image": "^2.0.20",
+    "gatsby-plugin-google-analytics": "^2.0.8",
     "gatsby-plugin-manifest": "^2.0.10",
     "gatsby-plugin-offline": "^2.0.17",
     "gatsby-plugin-react-helmet": "^3.0.2",
