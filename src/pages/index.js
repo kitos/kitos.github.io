@@ -7,10 +7,14 @@ import { Shield } from '../components/shield'
 import Badge from '../components/badge'
 
 const IndexPage = ({ data: { about, portfolio, talks } }) => {
-  let projectTechnologies = portfolio.edges.flatMap(
-    project => project.node.technologies
+  let projectTechnologies = portfolio.edges.reduce(
+    (arr, { node }) => arr.concat(node.technologies),
+    []
   )
-  let talkTags = talks.edges.flatMap(project => project.node.tags)
+  let talkTags = talks.edges.reduce(
+    (arr, { node }) => arr.concat(node.tags),
+    []
+  )
 
   let skillsMap = projectTechnologies
     .concat(talkTags)
