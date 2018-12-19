@@ -6,6 +6,10 @@ let Badge = styled.span`
   background: #ecf5fe;
   border-radius: 4px;
   padding: 5px 10px;
+
+  &:hover {
+    background: #def;
+  }
 `
 
 export default Badge
