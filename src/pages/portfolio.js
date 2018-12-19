@@ -57,25 +57,37 @@ let PortfolioPage = ({
               </h2>
             </header>
 
-            <h3>Customer</h3>
+            {project.customer && (
+              <>
+                <h3>Customer</h3>
 
-            <p>{project.customer}</p>
+                <p>{project.customer}</p>
+              </>
+            )}
 
-            <h3>Description</h3>
+            {project.description && (
+              <>
+                <h3>Description</h3>
 
-            <div
-              dangerouslySetInnerHTML={{
-                __html: project.description.childContentfulRichText.html,
-              }}
-            />
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: project.description.childContentfulRichText.html,
+                  }}
+                />
+              </>
+            )}
 
-            <h3>Participation</h3>
+            {project.participation && (
+              <>
+                <h3>Participation</h3>
 
-            <ul>
-              {project.participation.map(p => (
-                <li key={p}>{p}</li>
-              ))}
-            </ul>
+                <ul>
+                  {project.participation.map(p => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
+              </>
+            )}
 
             <h3>Technologies</h3>
 
