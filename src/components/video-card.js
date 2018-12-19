@@ -1,5 +1,4 @@
 import React from 'react'
-import { cold } from 'react-hot-loader'
 import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 
@@ -81,7 +80,5 @@ let VideoCard = ({
     </section>
   )
 }
-
-cold(VideoCard)
 
 export default VideoCard
