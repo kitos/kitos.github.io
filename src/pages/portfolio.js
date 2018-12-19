@@ -9,7 +9,8 @@ import Drawer from '../components/drawer'
 
 let formatDate = format('MMMM, yyyy')
 
-let isMobile = typeof window.orientation !== 'undefined'
+let isMobile =
+  typeof window !== 'undefined' && typeof window.orientation !== 'undefined'
 
 let PortfolioPage = ({
   data: { portfolios: { edges: projects = [] } = {} } = {},
