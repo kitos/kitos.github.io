@@ -61,9 +61,12 @@ const IndexPage = ({ data: { about, portfolio, talks } }) => {
       <h2>Skills</h2>
 
       <Flex flexWrap="wrap">
-        {skills.map(({ name }) => (
+        {skills.map(({ name, mentions }) => (
           <Box as={Badge} key={name} mr="5px" mb="5px">
-            {name}
+            {name} <b>|</b>{' '}
+            <span title="Mentioned in portfolio and public activities.">
+              {mentions}
+            </span>
           </Box>
         ))}
       </Flex>
