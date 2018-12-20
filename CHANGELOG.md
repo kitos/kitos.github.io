@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/kitos/kitos.github.io/compare/v1.3.0...v1.4.0) (2018-12-20)
+
+
+### Bug Fixes
+
+* **ssr:** :bug: check if window exists ([54ab347](https://github.com/kitos/kitos.github.io/commit/54ab347))
+* :bug: make customer, description and participation optional fields ([b18ae6b](https://github.com/kitos/kitos.github.io/commit/b18ae6b))
+
+
+### Features
+
+* :lipstick: add hover effect to badge ([a9e152f](https://github.com/kitos/kitos.github.io/commit/a9e152f))
+* :sparkles: display number of skill mentions (in portfolio and talks) on about page ([dda6f6e](https://github.com/kitos/kitos.github.io/commit/dda6f6e))
+* :sparkles: display project in iframe if it has url ([981ca44](https://github.com/kitos/kitos.github.io/commit/981ca44))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/kitos/kitos.github.io/compare/v1.2.0...v1.3.0) (2018-12-16)
 

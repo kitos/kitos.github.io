@@ -1,7 +1,7 @@
 {
   "name": "kitos.kirsanov",
   "description": "Blog of Nikita Kirsanov",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "private": true,
   "author": "Nikita Kirsanov <kitos.kirsanov@gmail.com>",
   "dependencies": {
