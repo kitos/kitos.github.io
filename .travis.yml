@@ -12,6 +12,7 @@ deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
+  fqdn: www.nikitakirsanov.com
   local-dir: public
   target-branch: master
   on:
