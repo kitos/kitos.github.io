@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/kitos/kitos.github.io/compare/v1.4.0...v1.5.0) (2018-12-23)
+
+
+### Features
+
+* :sparkles: add sitemap ([a8a8b30](https://github.com/kitos/kitos.github.io/commit/a8a8b30))
+* :sparkles: change site favicon ([4cb222b](https://github.com/kitos/kitos.github.io/commit/4cb222b))
+* :sparkles: resolve [#6](https://github.com/kitos/kitos.github.io/issues/6) - change domain to www.nikitakirsanov.com ([8af6e9b](https://github.com/kitos/kitos.github.io/commit/8af6e9b))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/kitos/kitos.github.io/compare/v1.3.0...v1.4.0) (2018-12-20)
 
