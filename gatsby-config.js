@@ -4,9 +4,11 @@ module.exports = {
   siteMetadata: {
     title: 'Nikita Kirsanov',
     version: pkg.version,
+    siteUrl: 'https://www.nikitakirsanov.com/',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-sitemap',
     'gatsby-plugin-styled-components',
     {
       resolve: `gatsby-source-filesystem`,
