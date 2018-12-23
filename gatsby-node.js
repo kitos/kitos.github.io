@@ -9,7 +9,10 @@ let youtube = axios.create({
   },
 })
 
-exports.sourceNodes = async ({ actions: { createNodeField }, getNodes }) => {
+let enrichPublicActivityVideosWithYouTubeSnippets = async ({
+  actions: { createNodeField },
+  getNodes,
+}) => {
   let videos = getNodes().filter(
     n => n.internal.type === 'ContentfulPublicActivity' && n.type === 'video'
   )
@@ -38,3 +41,6 @@ exports.sourceNodes = async ({ actions: { createNodeField }, getNodes }) => {
     })
   })
 }
+
+exports.sourceNodes = (...args) =>
+  Promise.all([enrichPublicActivityVideosWithYouTubeSnippets(...args)])
