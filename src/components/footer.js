@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { Link } from 'gatsby'
+import { graphql, Link, StaticQuery } from 'gatsby'
 
 let F = styled.footer`
   max-width: ${({ theme }) => theme.pageWidth};
@@ -23,35 +23,48 @@ let BottomLink = styled.a`
   }
 `
 
-let Footer = ({ version }) => (
-  <F>
-    <div>
-      © Nikita Kirsanov - <Link to="/changelog/">v{version}</Link> (
-      {new Date().getFullYear()}). Build with{' '}
-      <a
-        href="https://www.gatsbyjs.org/"
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        gatsbyjs
-      </a>{' '}
-      ❤️
-    </div>
+let Footer = () => (
+  <StaticQuery
+    query={graphql`
+      query SiteFooterQuery {
+        site {
+          siteMetadata {
+            version
+          }
+        }
+      }
+    `}
+    render={({ site: { siteMetadata: meta } }) => (
+      <F>
+        <div>
+          © Nikita Kirsanov - <Link to="/changelog/">v{meta.version}</Link> (
+          {new Date().getFullYear()}). Build with{' '}
+          <a
+            href="https://www.gatsbyjs.org/"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            gatsbyjs
+          </a>{' '}
+          ❤️
+        </div>
 
-    <div>
-      <BottomLink
-        href="https://github.com/kitos/kitos.github.io"
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        source
-      </BottomLink>
+        <div>
+          <BottomLink
+            href="https://github.com/kitos/kitos.github.io"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            source
+          </BottomLink>
 
-      <BottomLink as={Link} to="/changelog/">
-        changelog
-      </BottomLink>
-    </div>
-  </F>
+          <BottomLink as={Link} to="/changelog/">
+            changelog
+          </BottomLink>
+        </div>
+      </F>
+    )}
+  />
 )
 
 export default Footer

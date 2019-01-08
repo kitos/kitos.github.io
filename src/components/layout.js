@@ -1,6 +1,4 @@
 import React from 'react'
-import Helmet from 'react-helmet'
-import { StaticQuery, graphql } from 'gatsby'
 import styled, {
   ThemeProvider,
   createGlobalStyle,
@@ -9,6 +7,7 @@ import { Box } from '@rebass/grid'
 
 import Header from './header'
 import Footer from './footer'
+import SEO from './seo'
 
 let theme = {
   pageWidth: '800px',
@@ -50,90 +49,27 @@ let GlobalStyle = createGlobalStyle`
 `
 
 const Layout = ({ pageTitle, children }) => (
-  <StaticQuery
-    query={graphql`
-      query SiteTitleQuery {
-        site {
-          siteMetadata {
-            title
-            description
-            img
-            keywords
-            version
-          }
-        }
-      }
-    `}
-    render={({ site: { siteMetadata: meta } }) => (
+  <>
+    <SEO title={pageTitle} />
+
+    <ThemeProvider theme={theme}>
       <>
-        <Helmet
-          title={(pageTitle ? `${pageTitle} | ` : '') + meta.title}
-          meta={[
-            {
-              name: 'keywords',
-              content: meta.keywords.join(', '),
-            },
-            {
-              name: `description`,
-              content: meta.description,
-            },
-            {
-              property: `og:title`,
-              content: pageTitle,
-            },
-            {
-              property: `og:description`,
-              content: meta.description,
-            },
-            {
-              name: 'og:image',
-              content: meta.img,
-            },
-            {
-              property: `og:type`,
-              content: `website`,
-            },
-            {
-              name: `twitter:card`,
-              content: `summary`,
-            },
-            {
-              name: `twitter:creator`,
-              content: meta.title,
-            },
-            {
-              name: `twitter:title`,
-              content: pageTitle,
-            },
-            {
-              name: `twitter:description`,
-              content: meta.description,
-            },
-          ]}
-        >
-          <html lang="en" />
-        </Helmet>
+        <GlobalStyle />
 
-        <ThemeProvider theme={theme}>
-          <>
-            <GlobalStyle />
+        <HeaderWrapper>
+          <Header />
+        </HeaderWrapper>
 
-            <HeaderWrapper>
-              <Header />
-            </HeaderWrapper>
+        <PageWrapper as="main" px={[20, 0]}>
+          {children}
+        </PageWrapper>
 
-            <PageWrapper as="main" px={[20, 0]}>
-              {children}
-            </PageWrapper>
-
-            <FooterWrapper>
-              <Footer version={meta.version} />
-            </FooterWrapper>
-          </>
-        </ThemeProvider>
+        <FooterWrapper>
+          <Footer />
+        </FooterWrapper>
       </>
-    )}
-  />
+    </ThemeProvider>
+  </>
 )
 
 export default Layout
