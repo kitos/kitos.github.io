@@ -48,9 +48,9 @@ let GlobalStyle = createGlobalStyle`
   }
 `
 
-const Layout = ({ pageTitle, children }) => (
+const Layout = ({ pageTitle, schemaOrgItems, children }) => (
   <>
-    <SEO title={pageTitle} />
+    <SEO title={pageTitle} schemaOrgItems={schemaOrgItems} />
 
     <ThemeProvider theme={theme}>
       <>

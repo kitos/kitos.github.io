@@ -17,9 +17,45 @@ let PortfolioPage = ({
   data: { portfolios: { edges: projects = [] } = {} } = {},
 }) => {
   let [demo, setDemo] = useState(false)
+  projects = projects.map(p => p.node)
 
   return (
-    <Layout pageTitle="Portfolio">
+    <Layout
+      pageTitle="Portfolio"
+      schemaOrgItems={() => [
+        {
+          '@context': 'http://schema.org',
+          '@type': 'CollectionPage',
+          mainEntity: {
+            '@type': 'ItemList',
+            name: 'Projects',
+            itemListOrder: 'http://schema.org/ItemListOrderDescending',
+            itemListElement: projects.map(
+              ({ name, url, description, technologies, customer }) => {
+                let author = {
+                  '@type': 'Person',
+                  name: 'Nikita Kirsanov',
+                }
+
+                return {
+                  '@type': url ? 'WebSite' : 'CreativeWork',
+                  name,
+                  url: url || undefined,
+                  description: description || undefined,
+                  author,
+                  creator: author,
+                  keywords: technologies.join(','),
+                  funder: {
+                    '@type': 'Organization',
+                    name: customer,
+                  },
+                }
+              }
+            ),
+          },
+        },
+      ]}
+    >
       <VisuallyHidden>
         <h2>Portfolio</h2>
       </VisuallyHidden>
@@ -34,77 +70,75 @@ let PortfolioPage = ({
         />
       </Drawer>
 
-      {projects
-        .map(p => p.node)
-        .map(project => (
-          <article key={project.name}>
-            <header>
-              <h2>
-                {project.url ? (
-                  <a
-                    href={project.url}
-                    onClick={e => {
-                      if (!isMobile) {
-                        e.preventDefault()
-                        setDemo(project.url)
-                      }
-                    }}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {project.name}
-                  </a>
-                ) : (
-                  project.name
-                )}{' '}
-                ({formatDate(project.startDate)} -{' '}
-                {project.endDate ? formatDate(project.endDate) : 'Till Now'})
-              </h2>
-            </header>
-
-            {project.customer && (
-              <>
-                <h3>Customer</h3>
-
-                <p>{project.customer}</p>
-              </>
-            )}
-
-            {project.description && (
-              <>
-                <h3>Description</h3>
-
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: project.description.childContentfulRichText.html,
+      {projects.map(project => (
+        <article key={project.name}>
+          <header>
+            <h2>
+              {project.url ? (
+                <a
+                  href={project.url}
+                  onClick={e => {
+                    if (!isMobile) {
+                      e.preventDefault()
+                      setDemo(project.url)
+                    }
                   }}
-                />
-              </>
-            )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {project.name}
+                </a>
+              ) : (
+                project.name
+              )}{' '}
+              ({formatDate(project.startDate)} -{' '}
+              {project.endDate ? formatDate(project.endDate) : 'Till Now'})
+            </h2>
+          </header>
 
-            {project.participation && (
-              <>
-                <h3>Participation</h3>
+          {project.customer && (
+            <>
+              <h3>Customer</h3>
 
-                <ul>
-                  {project.participation.map(p => (
-                    <li key={p}>{p}</li>
-                  ))}
-                </ul>
-              </>
-            )}
+              <p>{project.customer}</p>
+            </>
+          )}
 
-            <h3>Technologies</h3>
+          {project.description && (
+            <>
+              <h3>Description</h3>
 
-            <Flex as="ul" flexWrap="wrap" m={0} css={{ listStyle: 'none' }}>
-              {project.technologies.map(t => (
-                <Box as="li" key={t} ml="5px">
-                  <Badge>{t}</Badge>
-                </Box>
-              ))}
-            </Flex>
-          </article>
-        ))}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: project.description.childContentfulRichText.html,
+                }}
+              />
+            </>
+          )}
+
+          {project.participation && (
+            <>
+              <h3>Participation</h3>
+
+              <ul>
+                {project.participation.map(p => (
+                  <li key={p}>{p}</li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          <h3>Technologies</h3>
+
+          <Flex as="ul" flexWrap="wrap" m={0} css={{ listStyle: 'none' }}>
+            {project.technologies.map(t => (
+              <Box as="li" key={t} ml="5px">
+                <Badge>{t}</Badge>
+              </Box>
+            ))}
+          </Flex>
+        </article>
+      ))}
     </Layout>
   )
 }

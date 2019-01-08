@@ -2,7 +2,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
-let SEO = ({ title, isBlogPost, schemaOrgItems = [] }) => (
+let SEO = ({ title, isBlogPost, schemaOrgItems = () => [] }) => (
   <StaticQuery
     query={graphql`
       query SiteSeoQuery {
@@ -22,10 +22,11 @@ let SEO = ({ title, isBlogPost, schemaOrgItems = [] }) => (
       }
     `}
     render={({ site: { siteMetadata: seo } }) => {
+      let url = seo.siteUrl
       let baseSchema = {
         '@context': 'http://schema.org',
         '@type': 'WebSite',
-        url: seo.siteUrl,
+        url,
         name: title,
       }
 
@@ -39,7 +40,7 @@ let SEO = ({ title, isBlogPost, schemaOrgItems = [] }) => (
           <meta name="keywords" content={seo.keywords.join(', ')} />
 
           {/* OpenGraph tags */}
-          <meta property="og:url" content={seo.siteUrl} />
+          <meta property="og:url" content={url} />
           {isBlogPost ? <meta property="og:type" content="article" /> : null}
           <meta property="og:title" content={title} />
           <meta property="og:description" content={seo.description} />
@@ -54,7 +55,7 @@ let SEO = ({ title, isBlogPost, schemaOrgItems = [] }) => (
 
           {/* Schema.org tags */}
           <script type="application/ld+json">
-            {JSON.stringify([baseSchema, ...schemaOrgItems])}
+            {JSON.stringify([baseSchema, ...schemaOrgItems({ url })])}
           </script>
         </Helmet>
       )
