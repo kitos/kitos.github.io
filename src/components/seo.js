@@ -2,7 +2,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
-let SEO = ({ title, isBlogPost }) => (
+let SEO = ({ title, isBlogPost, schemaOrgItems = [] }) => (
   <StaticQuery
     query={graphql`
       query SiteSeoQuery {
@@ -21,30 +21,44 @@ let SEO = ({ title, isBlogPost }) => (
         }
       }
     `}
-    render={({ site: { siteMetadata: seo } }) => (
-      <Helmet>
-        <html lang="en" />
+    render={({ site: { siteMetadata: seo } }) => {
+      let baseSchema = {
+        '@context': 'http://schema.org',
+        '@type': 'WebSite',
+        url: seo.siteUrl,
+        name: title,
+      }
 
-        <title>{(title ? `${title} | ` : '') + seo.title}</title>
-        <meta name="description" content={seo.description} />
-        <meta name="image" content={seo.img} />
-        <meta name="keywords" content={seo.keywords.join(', ')} />
+      return (
+        <Helmet>
+          <html lang="en" />
 
-        {/* OpenGraph tags */}
-        <meta property="og:url" content={seo.siteUrl} />
-        {isBlogPost ? <meta property="og:type" content="article" /> : null}
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={seo.description} />
-        <meta property="og:image" content={seo.img} />
+          <title>{(title ? `${title} | ` : '') + seo.title}</title>
+          <meta name="description" content={seo.description} />
+          <meta name="image" content={seo.img} />
+          <meta name="keywords" content={seo.keywords.join(', ')} />
 
-        {/* Twitter Card tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:creator" content={seo.social.twitter} />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={seo.description} />
-        <meta name="twitter:image" content={seo.img} />
-      </Helmet>
-    )}
+          {/* OpenGraph tags */}
+          <meta property="og:url" content={seo.siteUrl} />
+          {isBlogPost ? <meta property="og:type" content="article" /> : null}
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={seo.description} />
+          <meta property="og:image" content={seo.img} />
+
+          {/* Twitter Card tags */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:creator" content={seo.social.twitter} />
+          <meta name="twitter:title" content={title} />
+          <meta name="twitter:description" content={seo.description} />
+          <meta name="twitter:image" content={seo.img} />
+
+          {/* Schema.org tags */}
+          <script type="application/ld+json">
+            {JSON.stringify([baseSchema, ...schemaOrgItems])}
+          </script>
+        </Helmet>
+      )
+    }}
   />
 )
 
