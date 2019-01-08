@@ -3,7 +3,7 @@ import Layout from '../components/layout'
 import { graphql } from 'gatsby'
 
 let ChangelogPage = ({ data: { changelog } }) => (
-  <Layout>
+  <Layout pageTitle="Changelog">
     <div dangerouslySetInnerHTML={{ __html: changelog.html }} />
   </Layout>
 )

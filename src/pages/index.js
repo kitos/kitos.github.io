@@ -45,7 +45,7 @@ const IndexPage = ({ data: { about, portfolio, talks } }) => {
   )
 
   return (
-    <Layout>
+    <Layout pageTitle="About">
       <Flex my="30px" flexWrap="wrap">
         {about.shields.map(s => {
           let [label, value] = s.split('|')

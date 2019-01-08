@@ -49,7 +49,7 @@ let GlobalStyle = createGlobalStyle`
   }
 `
 
-const Layout = ({ children }) => (
+const Layout = ({ pageTitle, children }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -64,7 +64,7 @@ const Layout = ({ children }) => (
     render={({ site: { siteMetadata: meta } }) => (
       <>
         <Helmet
-          title={meta.title}
+          title={(pageTitle ? `${pageTitle} | ` : '') + meta.title}
           meta={[
             {
               name: 'description',

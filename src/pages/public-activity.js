@@ -8,7 +8,7 @@ import VideoCard from '../components/video-card'
 let PublicActivityPage = ({
   data: { resp: { edges: videos = [] } = {} } = {},
 }) => (
-  <Layout>
+  <Layout pageTitle="Public activity">
     <h2>Talks</h2>
 
     <Flex as="ul" m={'0 -20px'} flexWrap="wrap" css={{ listStyle: 'none' }}>

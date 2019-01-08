@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { graphql } from 'gatsby'
 import { format } from 'date-fns/fp'
 import { Box, Flex } from '@rebass/grid'
+import VisuallyHidden from '@reach/visually-hidden'
 
 import Layout from '../components/layout'
 import Badge from '../components/badge'
@@ -18,7 +19,11 @@ let PortfolioPage = ({
   let [demo, setDemo] = useState(false)
 
   return (
-    <Layout>
+    <Layout pageTitle="Portfolio">
+      <VisuallyHidden>
+        <h2>Portfolio</h2>
+      </VisuallyHidden>
+
       <Drawer open={!!demo} onOuterClick={() => setDemo(false)}>
         <iframe
           src={demo}
