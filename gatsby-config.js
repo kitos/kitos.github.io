@@ -3,6 +3,9 @@ const pkg = require('./package')
 module.exports = {
   siteMetadata: {
     title: 'Nikita Kirsanov',
+    description: 'Personal blog of software engineer - Nikita Kirsanov',
+    img: 'https://www.nikitakirsanov.com/icons/icon-512x512.png',
+    keywords: ['blog', 'personal', 'software engineer', 'CV', 'portfolio'],
     version: pkg.version,
     siteUrl: 'https://www.nikitakirsanov.com',
   },

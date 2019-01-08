@@ -56,6 +56,9 @@ const Layout = ({ pageTitle, children }) => (
         site {
           siteMetadata {
             title
+            description
+            img
+            keywords
             version
           }
         }
@@ -67,12 +70,44 @@ const Layout = ({ pageTitle, children }) => (
           title={(pageTitle ? `${pageTitle} | ` : '') + meta.title}
           meta={[
             {
-              name: 'description',
-              content: 'Personal blog of Nikita Kirsanov',
+              name: 'keywords',
+              content: meta.keywords.join(', '),
             },
             {
-              name: 'keywords',
-              content: 'blog, personal, software engineer, CV, portfolio',
+              name: `description`,
+              content: meta.description,
+            },
+            {
+              property: `og:title`,
+              content: pageTitle,
+            },
+            {
+              property: `og:description`,
+              content: meta.description,
+            },
+            {
+              name: 'og:image',
+              content: meta.img,
+            },
+            {
+              property: `og:type`,
+              content: `website`,
+            },
+            {
+              name: `twitter:card`,
+              content: `summary`,
+            },
+            {
+              name: `twitter:creator`,
+              content: meta.title,
+            },
+            {
+              name: `twitter:title`,
+              content: pageTitle,
+            },
+            {
+              name: `twitter:description`,
+              content: meta.description,
             },
           ]}
         >
