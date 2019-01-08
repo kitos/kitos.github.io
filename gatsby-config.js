@@ -8,6 +8,9 @@ module.exports = {
     keywords: ['blog', 'personal', 'software engineer', 'CV', 'portfolio'],
     version: pkg.version,
     siteUrl: 'https://www.nikitakirsanov.com',
+    social: {
+      twitter: '@kitos_kirsanov',
+    },
   },
   plugins: [
     'gatsby-plugin-react-helmet',
