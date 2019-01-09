@@ -22,7 +22,7 @@ let PublicActivityPage = ({
           '@type': 'CollectionPage',
           mainEntity: {
             '@type': 'ItemList',
-            name: 'Projects',
+            name: 'Videos',
             itemListOrder: 'http://schema.org/ItemListOrderDescending',
             itemListElement: videos.map(
               ({ title, url, snippet, contentDetails }) => ({
