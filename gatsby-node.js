@@ -28,7 +28,7 @@ let enrichPublicActivityVideosWithYouTubeSnippets = async ({
   let {
     data: { items: youtubeSnippets },
   } = await youtube.get('videos', {
-    params: { part: 'snippet', id: videoIds.join(',') },
+    params: { part: 'snippet,contentDetails', id: videoIds.join(',') },
   })
 
   videoMap.forEach((video, id) => {
