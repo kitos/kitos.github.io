@@ -36,10 +36,10 @@ let Tag = styled(Link)`
 `
 
 let BlogPostSnippet = ({
-  post: { title, date, preface, timeToRead, tags },
+  post: { title, createdAt, preface, timeToRead, tags },
 }) => (
   <Flex as="section" alignItems="center">
-    <DateWithTimeline>{format('MMMM dd, yyyy', date)}</DateWithTimeline>
+    <DateWithTimeline>{format('MMMM dd, yyyy', createdAt)}</DateWithTimeline>
     <Box
       pl={20}
       css={`
@@ -49,8 +49,8 @@ let BlogPostSnippet = ({
       <h2>
         <Link to="/blog/">{title}</Link>
       </h2>
-      <small>{timeToRead}</small>
-      <p>{preface}</p>
+      <small>{timeToRead} min read</small>
+      <div dangerouslySetInnerHTML={{ __html: preface }} />
       <Flex
         as="ul"
         m={0}
