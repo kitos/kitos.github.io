@@ -10,31 +10,34 @@ let BlogPage = ({
   data: {
     posts: { edges: posts },
   },
-}) => (
-  <Layout pageTitle="Blog">
-    <VisuallyHidden>
-      <h2>Blog</h2>
-    </VisuallyHidden>
+}) => {
+  posts = [] || posts
+    .map(p => p.node)
+    .map(p => ({
+      ...p,
+      preface: p.preface.childContentfulRichText.html,
+      // TODO: time to read in gatsby-transformer-contentful-richtext
+      timeToRead: 5,
+    }))
 
-    <Box mt={10}>
-      {posts ? (
-        <Box as="b" style={{ display: 'block', textAlign: 'center' }}>
-          Some posts might be here...
-        </Box>
-      ) : (
-        posts
-          .map(p => p.node)
-          .map(p => ({
-            ...p,
-            preface: p.preface.childContentfulRichText.html,
-            // TODO: time to read in gatsby-transformer-contentful-richtext
-            timeToRead: 5,
-          }))
-          .map(post => <BlogPostSnippet key={post.id} post={post} />)
-      )}
-    </Box>
-  </Layout>
-)
+  return (
+    <Layout pageTitle="Blog">
+      <VisuallyHidden>
+        <h2>Blog</h2>
+      </VisuallyHidden>
+
+      <Box mt={10}>
+        {posts.length === 0 ? (
+          <Box as="b" style={{ display: 'block', textAlign: 'center' }}>
+            Some posts might be here...
+          </Box>
+        ) : (
+          posts.map(post => <BlogPostSnippet key={post.id} post={post} />)
+        )}
+      </Box>
+    </Layout>
+  )
+}
 
 export default BlogPage
 
