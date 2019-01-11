@@ -1,6 +1,8 @@
 const path = require('path')
 const { createFilePath } = require(`gatsby-source-filesystem`)
 const axios = require('axios')
+const sanitizeHtml = require('sanitize-html')
+const words = require('lodash.words')
 
 const { YOUTUBE_KEY } = process.env
 
@@ -62,6 +64,16 @@ let groupPostsByTag = posts =>
     new Map()
   )
 
+let timeToRead = html => {
+  let plainText = sanitizeHtml(html, {
+    allowedTags: false,
+  })
+  let wordCount = words(plainText).length
+  let avgWPM = 200
+
+  return Math.floor(wordCount / avgWPM) || 1
+}
+
 exports.createPages = ({ graphql, actions: { createPage } }) =>
   graphql(`
     {
@@ -88,7 +100,14 @@ exports.createPages = ({ graphql, actions: { createPage } }) =>
       }
     }
   `).then(({ data }) => {
-    let posts = data.posts.edges.map(p => p.node)
+    let posts = data.posts.edges.map(({ node: n }) => ({
+      ...n,
+      preface: n.preface.childContentfulRichText.html,
+      content: n.content.childContentfulRichText.html,
+      // it should word out of the box one day...
+      // https://github.com/contentful/rich-text/pull/60
+      timeToRead: timeToRead(n.content.childContentfulRichText.html),
+    }))
 
     // create blog post pages
     posts.forEach(({ slug }) =>
