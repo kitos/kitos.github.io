@@ -47,6 +47,21 @@ let enrichPublicActivityVideosWithYouTubeSnippets = async ({
 exports.sourceNodes = (...args) =>
   Promise.all([enrichPublicActivityVideosWithYouTubeSnippets(...args)])
 
+let groupPostsByTag = posts =>
+  posts.reduce(
+    (map, post) =>
+      post.tags.reduce((map, tag) => {
+        let tagPosts = [post]
+
+        if (map.has(tag)) {
+          tagPosts = [...map.get(tag), ...tagPosts]
+        }
+
+        return map.set(tag, tagPosts)
+      }, map),
+    new Map()
+  )
+
 exports.createPages = ({ graphql, actions: { createPage } }) =>
   graphql(`
     {
@@ -54,20 +69,51 @@ exports.createPages = ({ graphql, actions: { createPage } }) =>
         edges {
           node {
             slug
+            title
+            createdAt
+            updatedAt
+            preface {
+              childContentfulRichText {
+                html
+              }
+            }
+            tags
+            content {
+              childContentfulRichText {
+                html
+              }
+            }
           }
         }
       }
     }
-  `).then(({ data }) =>
-    data.posts.edges.map(post => {
-      let { slug } = post.node
+  `).then(({ data }) => {
+    let posts = data.posts.edges.map(p => p.node)
 
-      return createPage({
+    // create blog post pages
+    posts.forEach(({ slug }) =>
+      createPage({
         path: `/blog/${slug}/`,
         component: path.resolve('./src/templates/blog-post.js'),
         context: {
           slug,
         },
       })
-    })
-  )
+    )
+
+    let postsByTag = groupPostsByTag(posts)
+
+    postsByTag.set('', posts)
+
+    // create blog tag root pages
+    postsByTag.forEach((posts, tag) =>
+      createPage({
+        path: `/blog/${tag ? `tag/${tag}` : ''}/`,
+        component: path.resolve('./src/templates/blog-post-list.js'),
+        context: {
+          tag,
+          posts,
+        },
+      })
+    )
+  })
