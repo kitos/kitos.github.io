@@ -1,3 +1,5 @@
+const path = require('path')
+const { createFilePath } = require(`gatsby-source-filesystem`)
 const axios = require('axios')
 
 const { YOUTUBE_KEY } = process.env
@@ -44,3 +46,28 @@ let enrichPublicActivityVideosWithYouTubeSnippets = async ({
 
 exports.sourceNodes = (...args) =>
   Promise.all([enrichPublicActivityVideosWithYouTubeSnippets(...args)])
+
+exports.createPages = ({ graphql, actions: { createPage } }) =>
+  graphql(`
+    {
+      posts: allContentfulBlog {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `).then(({ data }) =>
+    data.posts.edges.map(post => {
+      let { slug } = post.node
+
+      return createPage({
+        path: `/blog/${slug}/`,
+        component: path.resolve('./src/templates/blog-post.js'),
+        context: {
+          slug,
+        },
+      })
+    })
+  )

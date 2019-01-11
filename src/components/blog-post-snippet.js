@@ -1,8 +1,10 @@
 import React from 'react'
+import { Link } from 'gatsby'
 import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 import { format } from 'date-fns/fp'
-import { Link } from 'gatsby'
+
+import Tag from './tag'
 
 let DateWithTimeline = styled.small`
   position: relative;
@@ -27,16 +29,8 @@ let DateWithTimeline = styled.small`
   }
 `
 
-let Tag = styled(Link)`
-  text-decoration: underline;
-  color: grey;
-  &:hover {
-    color: #4078c0;
-  }
-`
-
 let BlogPostSnippet = ({
-  post: { title, createdAt, preface, timeToRead, tags },
+  post: { slug, title, createdAt, preface, timeToRead, tags },
 }) => (
   <Flex as="section" alignItems="center">
     <DateWithTimeline>{format('MMMM dd, yyyy', createdAt)}</DateWithTimeline>
@@ -47,10 +41,13 @@ let BlogPostSnippet = ({
       `}
     >
       <h2>
-        <Link to="/blog/">{title}</Link>
+        <Link to={`/blog/${slug}/`}>{title}</Link>
       </h2>
+
       <small>{timeToRead} min read</small>
+
       <div dangerouslySetInnerHTML={{ __html: preface }} />
+
       <Flex
         as="ul"
         m={0}
@@ -59,10 +56,10 @@ let BlogPostSnippet = ({
         `}
       >
         {tags.map(t => (
-          <Box as="li" key={t} pr="5px">
-            <Tag to={`/blog/tag/${t}`}>
-              <small>#{t}</small>
-            </Tag>
+          <Box as="li" key={t} mr="5px">
+            <Link to={`/blog/tag/${t}`}>
+              <Tag>#{t}</Tag>
+            </Link>
           </Box>
         ))}
       </Flex>

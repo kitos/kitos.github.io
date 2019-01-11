@@ -32,7 +32,7 @@ let BlogPage = ({
             Some posts might be here...
           </Box>
         ) : (
-          posts.map(post => <BlogPostSnippet key={post.id} post={post} />)
+          posts.map(post => <BlogPostSnippet key={post.slug} post={post} />)
         )}
       </Box>
     </Layout>
@@ -46,6 +46,7 @@ export let query = graphql`
     posts: allContentfulBlog {
       edges {
         node {
+          slug
           title
           createdAt
           updatedAt
