@@ -31,6 +31,7 @@ let DateWithTimeline = styled.small`
 
 let BlogPostSnippet = ({
   post: { slug, title, createdAt, preface, timeToRead, tags },
+  selectedTag,
 }) => (
   <Flex as="section" alignItems="center">
     <DateWithTimeline>{format('MMMM dd, yyyy', createdAt)}</DateWithTimeline>
@@ -58,7 +59,7 @@ let BlogPostSnippet = ({
         {tags.map(t => (
           <Box as="li" key={t} mr="5px">
             <Link to={`/blog/tag/${t}`}>
-              <Tag>#{t}</Tag>
+              <Tag active={t === selectedTag}>#{t}</Tag>
             </Link>
           </Box>
         ))}

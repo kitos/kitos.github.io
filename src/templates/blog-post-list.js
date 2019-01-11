@@ -5,7 +5,7 @@ import VisuallyHidden from '@reach/visually-hidden'
 import BlogPostSnippet from '../components/blog-post-snippet'
 import SEO from '../components/seo'
 
-let BlogPage = ({ pageContext: { posts } }) => {
+let BlogPage = ({ pageContext: { posts, tag } }) => {
   posts = [] || posts.map(p => ({
     ...p,
     preface: p.preface.childContentfulRichText.html,
@@ -27,7 +27,7 @@ let BlogPage = ({ pageContext: { posts } }) => {
             Some posts might be here...
           </Box>
         ) : (
-          posts.map(post => <BlogPostSnippet key={post.slug} post={post} />)
+          posts.map(post => <BlogPostSnippet key={post.slug} post={post} selectedTag={tag} />)
         )}
       </Box>
     </>

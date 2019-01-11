@@ -6,6 +6,7 @@ let Tag = styled.small`
   &:hover {
     color: #4078c0;
   }
+  ${({ active }) => (active ? 'color: #4078c0;' : '')}
 `
 
 export default Tag
