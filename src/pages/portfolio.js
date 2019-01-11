@@ -13,7 +13,7 @@ let formatDate = format('MMMM, yyyy')
 let isMobile =
   typeof window !== 'undefined' && typeof window.orientation !== 'undefined'
 
-let buildSchemaOrg = projects => () => [
+let buildSchemaOrg = projects => ({ author }) => [
   {
     '@context': 'http://schema.org',
     '@type': 'CollectionPage',
@@ -22,26 +22,19 @@ let buildSchemaOrg = projects => () => [
       name: 'Projects',
       itemListOrder: 'http://schema.org/ItemListOrderDescending',
       itemListElement: projects.map(
-        ({ name, url, description, technologies, customer }) => {
-          let author = {
-            '@type': 'Person',
-            name: 'Nikita Kirsanov',
-          }
-
-          return {
-            '@type': url ? 'WebSite' : 'CreativeWork',
-            name,
-            url: url || undefined,
-            description: description || undefined,
-            author,
-            creator: author,
-            keywords: technologies.join(','),
-            funder: {
-              '@type': 'Organization',
-              name: customer,
-            },
-          }
-        }
+        ({ name, url, description, technologies, customer }) => ({
+          '@type': url ? 'WebSite' : 'CreativeWork',
+          name,
+          url: url || undefined,
+          description: description || undefined,
+          author,
+          creator: author,
+          keywords: technologies.join(','),
+          funder: {
+            '@type': 'Organization',
+            name: customer,
+          },
+        })
       ),
     },
   },

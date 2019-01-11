@@ -55,7 +55,16 @@ let SEO = ({ title, isBlogPost, schemaOrgItems = () => [] }) => (
 
           {/* Schema.org tags */}
           <script type="application/ld+json">
-            {JSON.stringify([baseSchema, ...schemaOrgItems({ url })])}
+            {JSON.stringify([
+              baseSchema,
+              ...schemaOrgItems({
+                url,
+                author: {
+                  '@type': 'Person',
+                  name: 'Nikita Kirsanov',
+                },
+              }),
+            ])}
           </script>
         </Helmet>
       )

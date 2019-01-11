@@ -4,8 +4,23 @@ import { differenceInWeeks, format } from 'date-fns/fp'
 import { Box, Flex } from '@rebass/grid'
 
 import Tag from '../components/tag'
+import SEO from '../components/seo'
 
 let formatDate = format('MMMM dd, yyyy')
+
+let buildSchemaOrg = ({ title, createdAt, updatedAt, tags }) => ({
+  author,
+}) => [
+  {
+    '@context': 'http://schema.org',
+    '@type': 'BlogPosting',
+    dateModified: updatedAt,
+    datePublished: createdAt,
+    headline: title,
+    keywords: tags.join(', '),
+    author,
+  },
+]
 
 let BlogPost = ({
   data: {
@@ -13,6 +28,12 @@ let BlogPost = ({
   },
 }) => (
   <>
+    <SEO
+      title={title}
+      isBlogPost
+      schemaOrgItems={buildSchemaOrg({ title, createdAt, updatedAt, tags })}
+    />
+
     <h1>{title}</h1>
 
     <small>{formatDate(createdAt)}</small>
