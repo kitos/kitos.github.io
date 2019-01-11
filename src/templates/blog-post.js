@@ -1,9 +1,8 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
-import { format, differenceInWeeks } from 'date-fns/fp'
+import { differenceInWeeks, format } from 'date-fns/fp'
 import { Box, Flex } from '@rebass/grid'
 
-import Layout from '../components/layout'
 import Tag from '../components/tag'
 
 let formatDate = format('MMMM dd, yyyy')
@@ -13,7 +12,7 @@ let BlogPost = ({
     post: { title, createdAt, updatedAt, tags, content },
   },
 }) => (
-  <Layout>
+  <>
     <h1>{title}</h1>
 
     <small>{formatDate(createdAt)}</small>
@@ -41,7 +40,7 @@ let BlogPost = ({
     <div
       dangerouslySetInnerHTML={{ __html: content.childContentfulRichText.html }}
     />
-  </Layout>
+  </>
 )
 
 export default BlogPost

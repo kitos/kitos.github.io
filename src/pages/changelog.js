@@ -1,11 +1,8 @@
 import React from 'react'
-import Layout from '../components/layout'
 import { graphql } from 'gatsby'
 
 let ChangelogPage = ({ data: { changelog } }) => (
-  <Layout pageTitle="Changelog">
-    <div dangerouslySetInnerHTML={{ __html: changelog.html }} />
-  </Layout>
+  <div dangerouslySetInnerHTML={{ __html: changelog.html }} />
 )
 
 export let query = graphql`

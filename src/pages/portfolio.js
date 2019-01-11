@@ -4,14 +4,48 @@ import { format } from 'date-fns/fp'
 import { Box, Flex } from '@rebass/grid'
 import VisuallyHidden from '@reach/visually-hidden'
 
-import Layout from '../components/layout'
 import Badge from '../components/badge'
 import Drawer from '../components/drawer'
+import SEO from '../components/seo'
 
 let formatDate = format('MMMM, yyyy')
 
 let isMobile =
   typeof window !== 'undefined' && typeof window.orientation !== 'undefined'
+
+let buildSchemaOrg = projects => () => [
+  {
+    '@context': 'http://schema.org',
+    '@type': 'CollectionPage',
+    mainEntity: {
+      '@type': 'ItemList',
+      name: 'Projects',
+      itemListOrder: 'http://schema.org/ItemListOrderDescending',
+      itemListElement: projects.map(
+        ({ name, url, description, technologies, customer }) => {
+          let author = {
+            '@type': 'Person',
+            name: 'Nikita Kirsanov',
+          }
+
+          return {
+            '@type': url ? 'WebSite' : 'CreativeWork',
+            name,
+            url: url || undefined,
+            description: description || undefined,
+            author,
+            creator: author,
+            keywords: technologies.join(','),
+            funder: {
+              '@type': 'Organization',
+              name: customer,
+            },
+          }
+        }
+      ),
+    },
+  },
+]
 
 let PortfolioPage = ({
   data: { portfolios: { edges: projects = [] } = {} } = {},
@@ -20,42 +54,9 @@ let PortfolioPage = ({
   projects = projects.map(p => p.node)
 
   return (
-    <Layout
-      pageTitle="Portfolio"
-      schemaOrgItems={() => [
-        {
-          '@context': 'http://schema.org',
-          '@type': 'CollectionPage',
-          mainEntity: {
-            '@type': 'ItemList',
-            name: 'Projects',
-            itemListOrder: 'http://schema.org/ItemListOrderDescending',
-            itemListElement: projects.map(
-              ({ name, url, description, technologies, customer }) => {
-                let author = {
-                  '@type': 'Person',
-                  name: 'Nikita Kirsanov',
-                }
+    <>
+      <SEO title="Portfolio" schemaOrgItems={buildSchemaOrg(projects)} />
 
-                return {
-                  '@type': url ? 'WebSite' : 'CreativeWork',
-                  name,
-                  url: url || undefined,
-                  description: description || undefined,
-                  author,
-                  creator: author,
-                  keywords: technologies.join(','),
-                  funder: {
-                    '@type': 'Organization',
-                    name: customer,
-                  },
-                }
-              }
-            ),
-          },
-        },
-      ]}
-    >
       <VisuallyHidden>
         <h2>Portfolio</h2>
       </VisuallyHidden>
@@ -139,7 +140,7 @@ let PortfolioPage = ({
           </Flex>
         </article>
       ))}
-    </Layout>
+    </>
   )
 }
 

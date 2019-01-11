@@ -1,13 +1,9 @@
 import React from 'react'
-import styled, {
-  ThemeProvider,
-  createGlobalStyle,
-} from 'styled-components/macro'
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components/macro'
 import { Box } from '@rebass/grid'
 
 import Header from './header'
 import Footer from './footer'
-import SEO from './seo'
 
 let theme = {
   pageWidth: '800px',
@@ -49,27 +45,23 @@ let GlobalStyle = createGlobalStyle`
 `
 
 const Layout = ({ pageTitle, schemaOrgItems, children }) => (
-  <>
-    <SEO title={pageTitle} schemaOrgItems={schemaOrgItems} />
+  <ThemeProvider theme={theme}>
+    <>
+      <GlobalStyle />
 
-    <ThemeProvider theme={theme}>
-      <>
-        <GlobalStyle />
+      <HeaderWrapper>
+        <Header />
+      </HeaderWrapper>
 
-        <HeaderWrapper>
-          <Header />
-        </HeaderWrapper>
+      <PageWrapper as="main" px={[20, 0]}>
+        {children}
+      </PageWrapper>
 
-        <PageWrapper as="main" px={[20, 0]}>
-          {children}
-        </PageWrapper>
-
-        <FooterWrapper>
-          <Footer />
-        </FooterWrapper>
-      </>
-    </ThemeProvider>
-  </>
+      <FooterWrapper>
+        <Footer />
+      </FooterWrapper>
+    </>
+  </ThemeProvider>
 )
 
 export default Layout

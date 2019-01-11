@@ -2,11 +2,11 @@ import React from 'react'
 import { Box } from '@rebass/grid'
 import VisuallyHidden from '@reach/visually-hidden'
 
-import Layout from '../components/layout'
 import BlogPostSnippet from '../components/blog-post-snippet'
+import SEO from '../components/seo'
 
 let BlogPage = ({ pageContext: { posts } }) => {
-  posts = posts.map(p => ({
+  posts = [] || posts.map(p => ({
     ...p,
     preface: p.preface.childContentfulRichText.html,
     // TODO: time to read in gatsby-transformer-contentful-richtext
@@ -14,7 +14,9 @@ let BlogPage = ({ pageContext: { posts } }) => {
   }))
 
   return (
-    <Layout pageTitle="Blog">
+    <>
+      <SEO title="Blog" />
+
       <VisuallyHidden>
         <h2>Blog</h2>
       </VisuallyHidden>
@@ -28,7 +30,7 @@ let BlogPage = ({ pageContext: { posts } }) => {
           posts.map(post => <BlogPostSnippet key={post.slug} post={post} />)
         )}
       </Box>
-    </Layout>
+    </>
   )
 }
 

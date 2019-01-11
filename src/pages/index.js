@@ -2,9 +2,9 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Box, Flex } from '@rebass/grid'
 
-import Layout from '../components/layout'
 import { Shield } from '../components/shield'
 import Badge from '../components/badge'
+import SEO from '../components/seo'
 
 const IndexPage = ({ data: { about, portfolio, talks } }) => {
   let projectTechnologies = portfolio.edges.reduce(
@@ -45,7 +45,9 @@ const IndexPage = ({ data: { about, portfolio, talks } }) => {
   )
 
   return (
-    <Layout pageTitle="About">
+    <>
+      <SEO title="About" />
+
       <Flex my="30px" flexWrap="wrap">
         {about.shields.map(s => {
           let [label, value] = s.split('|')
@@ -78,7 +80,7 @@ const IndexPage = ({ data: { about, portfolio, talks } }) => {
               .childContentfulRichText.html,
         }}
       />
-    </Layout>
+    </>
   )
 }
 

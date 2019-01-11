@@ -2,8 +2,30 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Box, Flex } from '@rebass/grid'
 
-import Layout from '../components/layout'
 import VideoCard from '../components/video-card'
+import SEO from '../components/seo'
+
+let buildSchemaOrg = videos => () => [
+  {
+    '@context': 'http://schema.org',
+    '@type': 'CollectionPage',
+    mainEntity: {
+      '@type': 'ItemList',
+      name: 'Videos',
+      itemListOrder: 'http://schema.org/ItemListOrderDescending',
+      itemListElement: videos.map(
+        ({ title, url, snippet, contentDetails }) => ({
+          '@type': 'VideoObject',
+          name: title,
+          contentUrl: url,
+          uploadDate: snippet.publishedAt,
+          duration: contentDetails.duration,
+          thumbnailUrl: snippet.thumbnails.maxres.url,
+        })
+      ),
+    },
+  },
+]
 
 let PublicActivityPage = ({
   data: { resp: { edges: videos = [] } = {} } = {},
@@ -14,30 +36,9 @@ let PublicActivityPage = ({
   }))
 
   return (
-    <Layout
-      pageTitle="Public activity"
-      schemaOrgItems={() => [
-        {
-          '@context': 'http://schema.org',
-          '@type': 'CollectionPage',
-          mainEntity: {
-            '@type': 'ItemList',
-            name: 'Videos',
-            itemListOrder: 'http://schema.org/ItemListOrderDescending',
-            itemListElement: videos.map(
-              ({ title, url, snippet, contentDetails }) => ({
-                '@type': 'VideoObject',
-                name: title,
-                contentUrl: url,
-                uploadDate: snippet.publishedAt,
-                duration: contentDetails.duration,
-                thumbnailUrl: snippet.thumbnails.maxres.url,
-              })
-            ),
-          },
-        },
-      ]}
-    >
+    <>
+      <SEO title="Public activity" schemaOrgItems={buildSchemaOrg(videos)} />
+
       <h2>Talks</h2>
 
       <Flex as="ul" m={'0 -20px'} flexWrap="wrap" css={{ listStyle: 'none' }}>
@@ -47,7 +48,7 @@ let PublicActivityPage = ({
           </Box>
         ))}
       </Flex>
-    </Layout>
+    </>
   )
 }
 
