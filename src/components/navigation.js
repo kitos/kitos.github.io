@@ -25,11 +25,14 @@ let MenuLink = styled(Box)`
   border-bottom: none;
 `
 
-let NavLink = ({ className, ...props }) => (
+let NavLink = ({ to, className, ...props }) => (
   <Link
+    to={to}
     className={className}
-    getProps={({ isCurrent }) =>
-      isCurrent ? { className: `${className} active` } : null
+    getProps={({ isCurrent, isPartiallyCurrent }) =>
+      isCurrent || (to !== '/' && isPartiallyCurrent)
+        ? { className: `${className} active` }
+        : null
     }
     {...props}
   />
