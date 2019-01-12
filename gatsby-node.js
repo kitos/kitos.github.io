@@ -77,7 +77,7 @@ let timeToRead = html => {
 exports.createPages = ({ graphql, actions: { createPage } }) =>
   graphql(`
     {
-      posts: allContentfulBlog {
+      posts: allContentfulBlog(sort: { fields: [createdAt], order: DESC }) {
         edges {
           node {
             slug
