@@ -6,6 +6,8 @@
   "author": "Nikita Kirsanov <kitos.kirsanov@gmail.com>",
   "dependencies": {
     "@contentful/gatsby-transformer-contentful-richtext": "^12.1.2",
+    "@contentful/rich-text-html-renderer": "^12.1.2",
+    "@contentful/rich-text-types": "^12.1.2",
     "@reach/visually-hidden": "^0.1.1",
     "@rebass/grid": "^6.0.0-7",
     "axios": "^0.18.0",

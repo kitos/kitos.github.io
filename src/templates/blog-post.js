@@ -1,5 +1,7 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
+import { BLOCKS } from '@contentful/rich-text-types'
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 import { differenceInWeeks, format } from 'date-fns/fp'
 import { Box, Flex } from '@rebass/grid'
 
@@ -59,7 +61,16 @@ let BlogPost = ({
     </Flex>
 
     <div
-      dangerouslySetInnerHTML={{ __html: content.childContentfulRichText.html }}
+      dangerouslySetInnerHTML={{
+        __html: documentToHtmlString(JSON.parse(content.content), {
+          renderNode: {
+            [BLOCKS.EMBEDDED_ASSET]: node =>
+              `<img src="${
+                node.data.target.fields.file['en-US'].url
+              }" style="max-width: 250px" />`,
+          },
+        }),
+      }}
     />
   </>
 )
@@ -74,9 +85,7 @@ export const query = graphql`
       updatedAt
       tags
       content {
-        childContentfulRichText {
-          html
-        }
+        content
       }
     }
   }
