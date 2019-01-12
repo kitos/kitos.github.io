@@ -103,7 +103,8 @@ exports.createPages = ({ graphql, actions: { createPage } }) =>
     let posts = data.posts.edges.map(({ node: n }) => ({
       ...n,
       preface: n.preface.childContentfulRichText.html,
-      content: n.content.childContentfulRichText.html,
+      // we do not need heavy content on blog post list pages
+      content: undefined,
       // it should word out of the box one day...
       // https://github.com/contentful/rich-text/pull/60
       timeToRead: timeToRead(n.content.childContentfulRichText.html),
