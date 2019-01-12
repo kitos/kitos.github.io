@@ -1,4 +1,5 @@
 const pkg = require('./package')
+const rssPlugin = require('./src/gatsby/rss-plugin')
 
 module.exports = {
   siteMetadata: {
@@ -16,6 +17,7 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-styled-components',
+    rssPlugin,
     {
       resolve: 'gatsby-plugin-layout',
       options: {
