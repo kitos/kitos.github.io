@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 import { format } from 'date-fns/fp'
 
-import Tag from './tag'
+import BlogTags from './blog-tags'
 
 let DateWithTimeline = styled.small`
   position: relative;
@@ -35,6 +35,7 @@ let BlogPostSnippet = ({
 }) => (
   <Flex as="section" alignItems="center">
     <DateWithTimeline>{format('MMMM dd, yyyy', createdAt)}</DateWithTimeline>
+
     <Box
       pl={20}
       css={`
@@ -49,21 +50,7 @@ let BlogPostSnippet = ({
 
       <div dangerouslySetInnerHTML={{ __html: preface }} />
 
-      <Flex
-        as="ul"
-        m={0}
-        css={`
-          list-style: none;
-        `}
-      >
-        {tags.map(t => (
-          <Box as="li" key={t} mr="5px">
-            <Link to={`/blog/tag/${t}`}>
-              <Tag active={t === selectedTag}>#{t}</Tag>
-            </Link>
-          </Box>
-        ))}
-      </Flex>
+      <BlogTags tags={tags} selectedTag={selectedTag} />
     </Box>
   </Flex>
 )

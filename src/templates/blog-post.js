@@ -1,12 +1,11 @@
 import React from 'react'
-import { graphql, Link } from 'gatsby'
+import { graphql } from 'gatsby'
 import { BLOCKS } from '@contentful/rich-text-types'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 import { differenceInWeeks, format } from 'date-fns/fp'
-import { Box, Flex } from '@rebass/grid'
 
-import Tag from '../components/tag'
 import SEO from '../components/seo'
+import BlogTags from '../components/blog-post-snippet'
 
 let formatDate = format('MMMM dd, yyyy')
 
@@ -44,21 +43,7 @@ let BlogPost = ({
       <small> (Last update at {formatDate(updatedAt)})</small>
     )}
 
-    <Flex
-      as="ul"
-      m={0}
-      css={`
-        list-style: none;
-      `}
-    >
-      {tags.map(t => (
-        <Box as="li" key={t} mr="5px">
-          <Link to={`/blog/tag/${t}`}>
-            <Tag>#{t}</Tag>
-          </Link>
-        </Box>
-      ))}
-    </Flex>
+    <BlogTags tags={tags} />
 
     <div
       dangerouslySetInnerHTML={{
