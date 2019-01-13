@@ -53,7 +53,7 @@ const Layout = ({ pageTitle, schemaOrgItems, children }) => (
         <Header />
       </HeaderWrapper>
 
-      <PageWrapper as="main" px={[20, 0]}>
+      <PageWrapper as="main" px={[20, 20, 0]}>
         {children}
       </PageWrapper>
 
