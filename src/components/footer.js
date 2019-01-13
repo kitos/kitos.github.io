@@ -29,6 +29,7 @@ let Footer = () => (
       query SiteFooterQuery {
         site {
           siteMetadata {
+            siteUrl
             version
           }
         }
@@ -60,6 +61,14 @@ let Footer = () => (
 
           <BottomLink as={Link} to="/changelog/">
             changelog
+          </BottomLink>
+
+          <BottomLink
+            href={`${meta.siteUrl}/rss.xml`}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            rss
           </BottomLink>
         </div>
       </F>
