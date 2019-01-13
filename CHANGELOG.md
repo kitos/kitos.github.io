@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.6.0"></a>
+# [1.6.0](https://github.com/kitos/kitos.github.io/compare/v1.5.0...v1.6.0) (2019-01-13)
+
+
+### Bug Fixes
+
+* :bug: fix header images flickering (layout component unmounting) ([17c17d0](https://github.com/kitos/kitos.github.io/commit/17c17d0))
+* :bug: remove redundant slash from siteUrl ([b5aa304](https://github.com/kitos/kitos.github.io/commit/b5aa304))
+* :poop: rename schema.org collection of videos to "Videos" ([9aaec5e](https://github.com/kitos/kitos.github.io/commit/9aaec5e))
+
+
+### Features
+
+*  :sparkles: implement time to read ([1087196](https://github.com/kitos/kitos.github.io/commit/1087196))
+* :globe_with_meridians: add schema org for blog post ([5550f11](https://github.com/kitos/kitos.github.io/commit/5550f11))
+* :lipstick: filter posts by selected tag ([043c396](https://github.com/kitos/kitos.github.io/commit/043c396))
+* :lipstick: highlight selected tag ([a560ea4](https://github.com/kitos/kitos.github.io/commit/a560ea4))
+* :lipstick: make blog nav link active on blog post pages ([1b5070f](https://github.com/kitos/kitos.github.io/commit/1b5070f))
+* :poop: add alt to blog images ([0ba333c](https://github.com/kitos/kitos.github.io/commit/0ba333c))
+* :poop: display blog images ([b7f8fb0](https://github.com/kitos/kitos.github.io/commit/b7f8fb0))
+* :sparkles: add blog post page ([e4707de](https://github.com/kitos/kitos.github.io/commit/e4707de))
+* :sparkles: add blog snippets ([57b365c](https://github.com/kitos/kitos.github.io/commit/57b365c))
+* :sparkles: add RSS feed for blog posts ([6c1f456](https://github.com/kitos/kitos.github.io/commit/6c1f456))
+* :sparkles: pull blog posts from contentfull ([a623b05](https://github.com/kitos/kitos.github.io/commit/a623b05))
+* :sparkles: sort blog posts by date ([dea2157](https://github.com/kitos/kitos.github.io/commit/dea2157))
+* :spy: add more meta tags ([7824a4c](https://github.com/kitos/kitos.github.io/commit/7824a4c))
+* :spy: add page titles ([c814508](https://github.com/kitos/kitos.github.io/commit/c814508))
+* :spy: add schema org ([8a6c1ec](https://github.com/kitos/kitos.github.io/commit/8a6c1ec))
+* :spy: add schema org for portfolio ([4331f83](https://github.com/kitos/kitos.github.io/commit/4331f83))
+* :spy: add schema org for videos; retrieve contentDetails from youtube ([5cc7cb7](https://github.com/kitos/kitos.github.io/commit/5cc7cb7))
+
+
+
 <a name="1.5.0"></a>
 # [1.5.0](https://github.com/kitos/kitos.github.io/compare/v1.4.0...v1.5.0) (2018-12-23)
 
