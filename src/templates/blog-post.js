@@ -64,9 +64,13 @@ let BlogPost = ({
       dangerouslySetInnerHTML={{
         __html: documentToHtmlString(JSON.parse(content.content), {
           renderNode: {
-            [BLOCKS.EMBEDDED_ASSET]: node =>
-              `<img src="${
-                node.data.target.fields.file['en-US'].url
+            [BLOCKS.EMBEDDED_ASSET]: ({
+              data: {
+                target: { fields },
+              },
+            }) =>
+              `<img src="${fields.file['en-US'].url}" alt="${
+                fields.description['en-US']
               }" style="max-width: 250px" />`,
           },
         }),
