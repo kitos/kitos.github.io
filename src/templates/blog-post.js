@@ -5,7 +5,7 @@ import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 import { differenceInWeeks, format } from 'date-fns/fp'
 
 import SEO from '../components/seo'
-import BlogTags from '../components/blog-post-snippet'
+import BlogTags from '../components/blog-tags'
 
 let formatDate = format('MMMM dd, yyyy')
 
