@@ -8,6 +8,7 @@ import { SelectionReference, Tooltip } from '../components/tooltip'
 import { TwitterIcon } from '../components/icons'
 import SEO from '../components/seo'
 import RichtextDocumentRenderer from '../components/richtext-document-renderer'
+import { useOuterClickHandler } from '../components/outer-click-hook'
 
 let formatDate = format('MMMM dd, yyyy')
 
@@ -30,19 +31,10 @@ let BlogPost = ({
     post: { title, createdAt, updatedAt, tags, content },
   },
 }) => {
+  let tooltipClassname = 'tooltip'
   let [tooltipText, setTooltipText] = useState(null)
 
-  useEffect(() => {
-    let closeTooltip = e => {
-      if (!e.target.closest('.tooltip')) {
-        setTooltipText(null)
-      }
-    }
-
-    document.addEventListener('mouseup', closeTooltip, true)
-
-    return () => document.removeEventListener('mouseup', closeTooltip, true)
-  }, [])
+  useOuterClickHandler(() => setTooltipText(null), `.${tooltipClassname}`)
 
   return (
     <Manager>
@@ -74,7 +66,7 @@ let BlogPost = ({
         )}
       </SelectionReference>
 
-      <Tooltip isOpen={!!tooltipText}>
+      <Tooltip isOpen={!!tooltipText} className={tooltipClassname}>
         <a
           href={`https://twitter.com/intent/tweet?text=“${tooltipText}” — @kitos_kirsanov&url=${
             window.location.href.split('?')[0]

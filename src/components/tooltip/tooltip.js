@@ -46,7 +46,7 @@ let Arrow = styled.div`
   }
 `
 
-let Tooltip = ({ isOpen, referenceElement, children }) => (
+let Tooltip = ({ isOpen, className, children }) => (
   <Transition
     items={isOpen}
     from={{ transform: 'translateY(20px)', opacity: 0 }}
@@ -56,13 +56,13 @@ let Tooltip = ({ isOpen, referenceElement, children }) => (
     {transitionIsOpen =>
       transitionIsOpen &&
       (transitionStyle => (
-        <Popper referenceElement={referenceElement}>
+        <Popper>
           {({ ref, style, placement, arrowProps }) => (
             <div
               ref={ref}
               style={style}
               data-placement={placement}
-              className="tooltip"
+              className={className}
             >
               <div
                 style={transitionStyle}
