@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { graphql } from 'gatsby'
 import { differenceInWeeks, format } from 'date-fns/fp'
 import { Manager } from 'react-popper'
@@ -72,6 +72,7 @@ let BlogPost = ({
             window.location.href.split('?')[0]
           }`}
           target="_blank"
+          rel="noopener noreferrer"
           title="tweet"
           aria-label="tweet"
           style={{ lineHeight: 0, display: 'block' }}

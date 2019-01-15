@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Reference } from 'react-popper'
 
 const PADDING = 10
