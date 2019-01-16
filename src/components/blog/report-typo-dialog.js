@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react'
 import { Box, Flex } from '@rebass/grid'
 
-import { Footer } from './popover'
-import { ConfirmationDialog, Dialog } from './dialog'
-import Input from './input'
-import Button from './button'
+import { Footer } from '../popover'
+import { ConfirmationDialog, Dialog } from '../dialog'
+import Input from '../input'
+import Button from '../button'
 
 let toQuery = obj =>
   Object.keys(obj)

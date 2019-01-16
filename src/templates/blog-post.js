@@ -5,13 +5,13 @@ import { differenceInWeeks, format } from 'date-fns/fp'
 import { Manager } from 'react-popper'
 import { Flex } from '@rebass/grid'
 
-import BlogTags from '../components/blog-tags'
+import BlogTags from '../components/blog/blog-tags'
 import { SelectionReference, Tooltip } from '../components/tooltip'
 import { TwitterIcon } from '../components/icons'
 import SEO from '../components/seo'
 import RichtextDocumentRenderer from '../components/richtext-document-renderer'
 import { useOuterClickHandler } from '../components/outer-click-hook'
-import ReportTypoDialog from '../components/report-typo-dialog'
+import ReportTypoDialog from '../components/blog/report-typo-dialog'
 import { UnstyledButton } from '../components/button'
 
 let formatDate = format('MMMM dd, yyyy')

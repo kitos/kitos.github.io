@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'gatsby'
 import { Box, Flex } from '@rebass/grid'
 
-import Tag from './tag'
+import Tag from '../tag'
 
 let BlogTags = ({ tags, selectedTag }) => (
   <Flex
