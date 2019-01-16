@@ -53,7 +53,7 @@ let Navigation = () => (
       </MenuItem>
       <MenuItem>
         <MenuLink as={NavLink} to="/public-activity/">
-          Public activity
+          Speaker
         </MenuLink>
       </MenuItem>
       <MenuItem>
