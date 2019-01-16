@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { graphql } from 'gatsby'
+import 'styled-components/macro'
 import { differenceInWeeks, format } from 'date-fns/fp'
 import { Manager } from 'react-popper'
+import { Flex } from '@rebass/grid'
 
 import BlogTags from '../components/blog-tags'
 import { SelectionReference, Tooltip } from '../components/tooltip'
@@ -9,6 +11,8 @@ import { TwitterIcon } from '../components/icons'
 import SEO from '../components/seo'
 import RichtextDocumentRenderer from '../components/richtext-document-renderer'
 import { useOuterClickHandler } from '../components/outer-click-hook'
+import ReportTypoDialog from '../components/report-typo-dialog'
+import { UnstyledButton } from '../components/button'
 
 let formatDate = format('MMMM dd, yyyy')
 
@@ -31,10 +35,13 @@ let BlogPost = ({
     post: { title, createdAt, updatedAt, tags, content },
   },
 }) => {
+  let postUrl =
+    typeof window !== 'undefined' && window.location.href.split('?')[0]
   let tooltipClassname = 'tooltip'
-  let [tooltipText, setTooltipText] = useState(null)
+  let [selectedText, setSelectedText] = useState(null)
+  let [showDialog, toggleDialog] = useState(false)
 
-  useOuterClickHandler(() => setTooltipText(null), `.${tooltipClassname}`)
+  useOuterClickHandler(() => setSelectedText(null), `.${tooltipClassname}`)
 
   return (
     <Manager>
@@ -57,7 +64,7 @@ let BlogPost = ({
       <SelectionReference
         onSelect={selection => {
           if (selection && !selection.isCollapsed) {
-            setTooltipText(selection.toString())
+            setSelectedText(selection.toString())
           }
         }}
       >
@@ -66,20 +73,42 @@ let BlogPost = ({
         )}
       </SelectionReference>
 
-      <Tooltip isOpen={!!tooltipText} className={tooltipClassname}>
-        <a
-          href={`https://twitter.com/intent/tweet?text=“${tooltipText}” — @kitos_kirsanov&url=${
-            window.location.href.split('?')[0]
-          }`}
-          target="_blank"
-          rel="noopener noreferrer"
-          title="tweet"
-          aria-label="tweet"
-          style={{ lineHeight: 0, display: 'block' }}
-        >
-          <TwitterIcon width={30} mode="blueOnWhite" />
-        </a>
+      <Tooltip isOpen={!!selectedText} className={tooltipClassname}>
+        <Flex>
+          <a
+            href={`https://twitter.com/intent/tweet?text=“${selectedText}” — @kitos_kirsanov&url=${postUrl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="tweet"
+            aria-label="tweet"
+            css={`
+              display: block;
+              line-height: 0;
+              padding-right: 5px;
+              margin-right: 10px;
+              border-right: 1px solid lightgray;
+            `}
+            style={{ lineHeight: 0, display: 'block' }}
+          >
+            <TwitterIcon width={30} mode="blueOnWhite" />
+          </a>
+
+          <UnstyledButton
+            title="Report typo/mistake"
+            aria-label="Report typo/mistake"
+            onClick={() => toggleDialog(true)}
+          >
+            ✏️
+          </UnstyledButton>
+        </Flex>
       </Tooltip>
+
+      <ReportTypoDialog
+        post={{ title, link: postUrl }}
+        typo={selectedText}
+        isOpen={showDialog}
+        onDismiss={() => toggleDialog(false)}
+      />
     </Manager>
   )
 }

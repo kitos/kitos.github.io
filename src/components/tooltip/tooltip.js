@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { css } from 'styled-components/macro'
 import { Popper } from 'react-popper'
 import { Transition } from 'react-spring'
+import Popover from '../popover'
 
 let arrowSize = 6
 
@@ -64,18 +65,7 @@ let Tooltip = ({ isOpen, className, children }) => (
               data-placement={placement}
               className={className}
             >
-              <div
-                style={transitionStyle}
-                css={`
-                  background: #fff;
-                  border: 1px solid rgba(27, 31, 35, 0.15);
-                  border-radius: 4px;
-                  padding: 10px;
-                  box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
-                `}
-              >
-                {children}
-              </div>
+              <Popover style={transitionStyle}>{children}</Popover>
 
               <Arrow
                 {...arrowProps}
