@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.7.0"></a>
+# [1.7.0](https://github.com/kitos/kitos.github.io/compare/v1.6.0...v1.7.0) (2019-01-16)
+
+
+### Bug Fixes
+
+* :lipstick: add paddings to main pages content for tablets ([5a0ed6f](https://github.com/kitos/kitos.github.io/commit/5a0ed6f))
+
+
+### Features
+
+* :lipstick: make tooltip to appear according to its placement; add scale to its animation ([613bf61](https://github.com/kitos/kitos.github.io/commit/613bf61))
+* :sparkles: add link to RSS feat ([875a4e6](https://github.com/kitos/kitos.github.io/commit/875a4e6))
+* :sparkles: resolve [#7](https://github.com/kitos/kitos.github.io/issues/7) - add "Report about typo/mistake" feature for blog posts ([d147f4b](https://github.com/kitos/kitos.github.io/commit/d147f4b))
+* :sparkles: show "tweet" tooltip when blog post text selected ([56178c2](https://github.com/kitos/kitos.github.io/commit/56178c2))
+
+
+
 <a name="1.6.0"></a>
 # [1.6.0](https://github.com/kitos/kitos.github.io/compare/v1.5.0...v1.6.0) (2019-01-13)
 
