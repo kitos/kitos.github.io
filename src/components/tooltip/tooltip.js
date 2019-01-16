@@ -48,39 +48,48 @@ let Arrow = styled.div`
 `
 
 let Tooltip = ({ isOpen, className, children }) => (
-  <Transition
-    items={isOpen}
-    from={{ transform: 'translateY(20px)', opacity: 0 }}
-    enter={{ transform: 'translateY(0)', opacity: 1 }}
-    leave={{ transform: 'translateY(20px)', opacity: 0 }}
-  >
-    {transitionIsOpen =>
-      transitionIsOpen &&
-      (transitionStyle => (
-        <Popper>
-          {({ ref, style, placement, arrowProps }) => (
-            <div
-              ref={ref}
-              style={style}
-              data-placement={placement}
-              className={className}
-            >
-              <Popover style={transitionStyle}>{children}</Popover>
+  <Popper>
+    {({ ref, style, placement, arrowProps }) => {
+      let translateSign = placement === 'bottom' ? '-' : ''
 
-              <Arrow
-                {...arrowProps}
-                style={{
-                  ...arrowProps.style,
-                  opacity: transitionStyle.opacity,
-                }}
-                placement={placement}
-              />
-            </div>
-          )}
-        </Popper>
-      ))
-    }
-  </Transition>
+      return (
+        <Transition
+          items={isOpen}
+          from={{
+            transform: `translateY(${translateSign}30px) scale(0.9)`,
+            opacity: 0,
+          }}
+          enter={{ transform: `translateY(0) scale(1)`, opacity: 1 }}
+          leave={{
+            transform: `translateY(${translateSign}30px) scale(0.9)`,
+            opacity: 0,
+          }}
+        >
+          {transitionIsOpen =>
+            transitionIsOpen &&
+            (transitionStyle => (
+              <div
+                ref={ref}
+                style={style}
+                data-placement={placement}
+                className={className}
+              >
+                <Popover style={transitionStyle}>{children}</Popover>
+
+                <Arrow
+                  {...{ ...arrowProps, placement }}
+                  style={{
+                    ...arrowProps.style,
+                    opacity: transitionStyle.opacity,
+                  }}
+                />
+              </div>
+            ))
+          }
+        </Transition>
+      )
+    }}
+  </Popper>
 )
 
 export default Tooltip
