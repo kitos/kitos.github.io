@@ -2,8 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Box, Flex } from '@rebass/grid'
 
-import VideoCard from '../components/video-card'
-import SEO from '../components/seo'
+import { VideoCard, SEO } from '../components'
 
 let buildSchemaOrg = videos => () => [
   {

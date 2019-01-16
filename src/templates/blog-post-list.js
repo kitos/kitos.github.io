@@ -2,8 +2,8 @@ import React from 'react'
 import { Box } from '@rebass/grid'
 import VisuallyHidden from '@reach/visually-hidden'
 
-import BlogPostSnippet from '../components/blog/blog-post-snippet'
-import SEO from '../components/seo'
+import { BlogPostSnippet } from '../components/blog'
+import { SEO } from '../components'
 
 let BlogPage = ({ pageContext: { posts, tag } }) => (
   <>

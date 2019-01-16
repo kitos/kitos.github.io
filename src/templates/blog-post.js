@@ -2,9 +2,8 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { differenceInWeeks, format } from 'date-fns/fp'
 
-import BlogTags from '../components/blog/blog-tags'
-import SEO from '../components/seo'
-import BlogPostContent from '../components/blog/blog-post-content'
+import { BlogTags, BlogPostContent } from '../components/blog'
+import { SEO } from '../components'
 
 let formatDate = format('MMMM dd, yyyy')
 

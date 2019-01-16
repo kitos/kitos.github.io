@@ -13,3 +13,4 @@ let Badge = styled.span`
 `
 
 export default Badge
+export { Badge }

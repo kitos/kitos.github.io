@@ -2,9 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Box, Flex } from '@rebass/grid'
 
-import { Shield } from '../components/shield'
-import Badge from '../components/badge'
-import SEO from '../components/seo'
+import { Shield, Badge, SEO } from '../components'
 
 const IndexPage = ({ data: { about, portfolio, talks } }) => {
   let projectTechnologies = portfolio.edges.reduce(

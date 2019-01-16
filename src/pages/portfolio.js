@@ -4,9 +4,7 @@ import { format } from 'date-fns/fp'
 import { Box, Flex } from '@rebass/grid'
 import VisuallyHidden from '@reach/visually-hidden'
 
-import Badge from '../components/badge'
-import Drawer from '../components/drawer'
-import SEO from '../components/seo'
+import { Badge, Drawer, SEO } from '../components'
 
 let formatDate = format('MMMM, yyyy')
 

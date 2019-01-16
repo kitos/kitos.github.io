@@ -82,3 +82,4 @@ let VideoCard = ({
 }
 
 export default VideoCard
+export { VideoCard }
