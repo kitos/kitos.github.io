@@ -7,10 +7,9 @@ import { SelectionReference, Tooltip } from '../tooltip'
 import { TwitterIcon } from '../icons'
 import { UnstyledButton } from '../button'
 import { useOuterClickHandler } from '../outer-click-hook'
-import RichtextDocumentRenderer from '../richtext-document-renderer'
 import ReportTypoDialog from './report-typo-dialog'
 
-let BlogPostContent = ({ post: { title, content } }) => {
+let BlogPostContent = ({ post: { title, html } }) => {
   let postUrl =
     typeof window !== 'undefined' && window.location.href.split('?')[0]
   let tooltipClassname = 'tooltip'
@@ -29,7 +28,7 @@ let BlogPostContent = ({ post: { title, content } }) => {
         }}
       >
         {getProps => (
-          <RichtextDocumentRenderer {...getProps()} content={content.content} />
+          <div {...getProps()} dangerouslySetInnerHTML={{ __html: html }} />
         )}
       </SelectionReference>
 

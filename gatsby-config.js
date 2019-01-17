@@ -1,5 +1,6 @@
 const pkg = require('./package')
 const rssPlugin = require('./src/gatsby/rss-plugin')
+const contentfulRichtextPlugin = require('./src/gatsby/contentful-richtext-plugin')
 
 module.exports = {
   siteMetadata: {
@@ -52,6 +53,7 @@ module.exports = {
         plugins: ['@contentful/gatsby-transformer-contentful-richtext'],
       },
     },
+    contentfulRichtextPlugin,
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {

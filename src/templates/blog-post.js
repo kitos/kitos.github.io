@@ -43,7 +43,7 @@ let BlogPost = ({
 
     <BlogTags tags={tags} />
 
-    <BlogPostContent post={{ title, content }} />
+    <BlogPostContent post={{ title, html: content.childContentfulRichText.html }} />
   </>
 )
 
@@ -57,7 +57,9 @@ export const query = graphql`
       updatedAt
       tags
       content {
-        content
+        childContentfulRichText {
+          html
+        }
       }
     }
   }
