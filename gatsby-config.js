@@ -34,12 +34,6 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
         path: `${__dirname}/CHANGELOG.md`,
       },
     },
@@ -49,7 +43,6 @@ module.exports = {
         plugins: ['gatsby-remark-emoji'],
       },
     },
-    'gatsby-transformer-yaml',
     {
       resolve: `gatsby-source-contentful`,
       options: {
