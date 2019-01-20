@@ -1,6 +1,8 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import { differenceInWeeks, format } from 'date-fns/fp'
+import { Box } from '@rebass/grid'
+import { Like } from 'react-facebook'
 
 import { BlogTags, BlogPostContent } from '../components/blog'
 import { SEO } from '../components'
@@ -22,30 +24,42 @@ let buildSchemaOrg = ({ title, createdAt, updatedAt, tags }) => ({
 ]
 
 let BlogPost = ({
+  pageContext: { slug },
   data: {
     post: { title, createdAt, updatedAt, tags, content },
+    site,
   },
-}) => (
-  <>
-    <SEO
-      title={title}
-      isBlogPost
-      schemaOrgItems={buildSchemaOrg({ title, createdAt, updatedAt, tags })}
-    />
+}) => {
+  let postUrl = `${site.meta.siteUrl}/blog/${slug}/`
 
-    <h1>{title}</h1>
+  return (
+    <>
+      <SEO
+        title={title}
+        isBlogPost
+        schemaOrgItems={buildSchemaOrg({ title, createdAt, updatedAt, tags })}
+      />
 
-    <small>{formatDate(createdAt)}</small>
+      <h1>{title}</h1>
 
-    {differenceInWeeks(createdAt, updatedAt) > 1 && (
-      <small> (Last update at {formatDate(updatedAt)})</small>
-    )}
+      <small>{formatDate(createdAt)}</small>
 
-    <BlogTags tags={tags} />
+      {differenceInWeeks(createdAt, updatedAt) > 1 && (
+        <small> (Last update at {formatDate(updatedAt)})</small>
+      )}
 
-    <BlogPostContent post={{ title, html: content.childContentfulRichText.html }} />
-  </>
-)
+      <BlogTags tags={tags} />
+
+      <BlogPostContent
+        post={{ title, postUrl, html: content.childContentfulRichText.html }}
+      />
+
+      <Box mt={20}>
+        <Like href={postUrl} colorScheme="dark" showFaces share />
+      </Box>
+    </>
+  )
+}
 
 export default BlogPost
 
@@ -60,6 +74,12 @@ export const query = graphql`
         childContentfulRichText {
           html
         }
+      }
+    }
+
+    site {
+      meta: siteMetadata {
+        siteUrl
       }
     }
   }

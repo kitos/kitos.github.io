@@ -9,9 +9,7 @@ import { UnstyledButton } from '../button'
 import { useOuterClickHandler } from '../outer-click-hook'
 import ReportTypoDialog from './report-typo-dialog'
 
-let BlogPostContent = ({ post: { title, html } }) => {
-  let postUrl =
-    typeof window !== 'undefined' && window.location.href.split('?')[0]
+let BlogPostContent = ({ post: { title, postUrl, html } }) => {
   let tooltipClassname = 'tooltip'
   let [selectedText, setSelectedText] = useState(null)
   let [showDialog, toggleDialog] = useState(false)

@@ -1,6 +1,10 @@
 import React from 'react'
-import styled, { createGlobalStyle, ThemeProvider } from 'styled-components/macro'
+import styled, {
+  createGlobalStyle,
+  ThemeProvider,
+} from 'styled-components/macro'
 import { Box } from '@rebass/grid'
+import { FacebookProvider } from 'react-facebook'
 
 import Header from './header'
 import Footer from './footer'
@@ -46,21 +50,23 @@ let GlobalStyle = createGlobalStyle`
 
 const Layout = ({ pageTitle, schemaOrgItems, children }) => (
   <ThemeProvider theme={theme}>
-    <>
-      <GlobalStyle />
+    <FacebookProvider appId="832164347114591">
+      <>
+        <GlobalStyle />
 
-      <HeaderWrapper>
-        <Header />
-      </HeaderWrapper>
+        <HeaderWrapper>
+          <Header />
+        </HeaderWrapper>
 
-      <PageWrapper as="main" px={[20, 20, 0]}>
-        {children}
-      </PageWrapper>
+        <PageWrapper as="main" px={[20, 20, 0]}>
+          {children}
+        </PageWrapper>
 
-      <FooterWrapper>
-        <Footer />
-      </FooterWrapper>
-    </>
+        <FooterWrapper>
+          <Footer />
+        </FooterWrapper>
+      </>
+    </FacebookProvider>
   </ThemeProvider>
 )
 
