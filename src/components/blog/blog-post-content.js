@@ -9,6 +9,7 @@ import { TwitterIcon } from '../icons'
 import { UnstyledButton } from '../button'
 import { useOuterClickHandler } from '../outer-click-hook'
 import ReportTypoDialog from './report-typo-dialog'
+import { useLazyIframe } from '../lazy-iframe-hook'
 
 let BlogPostContent = ({ post: { title, postUrl, html } }) => {
   let tooltipClassname = 'tooltip'
@@ -16,6 +17,7 @@ let BlogPostContent = ({ post: { title, postUrl, html } }) => {
   let [showDialog, toggleDialog] = useState(false)
 
   useOuterClickHandler(() => setSelectedText(null), `.${tooltipClassname}`)
+  useLazyIframe()
 
   return (
     <Manager>
