@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.8.0"></a>
+# [1.8.0](https://github.com/kitos/kitos.github.io/compare/v1.7.0...v1.8.0) (2019-01-22)
+
+
+### Features
+
+* :sparkles: :lipstick: highlight code with prismjs; transform codesandbox links to iframe ([35ab6af](https://github.com/kitos/kitos.github.io/commit/35ab6af))
+* :sparkles: add facebook like button ([136f7a1](https://github.com/kitos/kitos.github.io/commit/136f7a1))
+* :sparkles: do not show blog post drafts ([aaa1dc8](https://github.com/kitos/kitos.github.io/commit/aaa1dc8))
+
+
+
 <a name="1.7.0"></a>
 # [1.7.0](https://github.com/kitos/kitos.github.io/compare/v1.6.0...v1.7.0) (2019-01-16)
 
