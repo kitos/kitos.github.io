@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import 'styled-components/macro'
 import { Flex } from '@rebass/grid'
 import { Manager } from 'react-popper'
+import 'prismjs/themes/prism-coy.css'
 
 import { SelectionReference, Tooltip } from '../tooltip'
 import { TwitterIcon } from '../icons'
