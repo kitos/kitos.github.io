@@ -35,7 +35,7 @@ module.exports = {
             fields.description['en-US']
           }" style="max-width: 250px" />`,
         [INLINES.HYPERLINK]: (node, next) =>
-          node.data.uri.includes('codesandbox.io')
+          node.data.uri.includes('codesandbox.io/embed')
             ? renderCodesandboxIframe(node, next)
             : renderAnchor(node, next),
       },
