@@ -5,11 +5,9 @@ import { Box, Flex } from '@rebass/grid'
 import VisuallyHidden from '@reach/visually-hidden'
 
 import { Badge, Drawer, SEO } from '../components'
+import { isMobile } from '../utils'
 
 let formatDate = format('MMMM, yyyy')
-
-let isMobile =
-  typeof window !== 'undefined' && typeof window.orientation !== 'undefined'
 
 let buildSchemaOrg = projects => ({ author }) => [
   {

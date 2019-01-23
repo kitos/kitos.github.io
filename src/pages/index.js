@@ -2,7 +2,8 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Box, Flex } from '@rebass/grid'
 
-import { Shield, Badge, SEO } from '../components'
+import { SEO, Shield } from '../components'
+import Skills from '../components/about/skills'
 
 const IndexPage = ({ data: { about, portfolio, talks } }) => {
   let projectTechnologies = portfolio.edges.reduce(
@@ -60,16 +61,7 @@ const IndexPage = ({ data: { about, portfolio, talks } }) => {
 
       <h2>Skills</h2>
 
-      <Flex flexWrap="wrap">
-        {skills.map(({ name, mentions }) => (
-          <Box as={Badge} key={name} mr="5px" mb="5px">
-            {name} <b>|</b>{' '}
-            <span title="Mentioned in portfolio and public activities.">
-              {mentions}
-            </span>
-          </Box>
-        ))}
-      </Flex>
+      <Skills skills={skills} />
 
       <div
         dangerouslySetInnerHTML={{

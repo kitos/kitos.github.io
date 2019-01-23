@@ -55,6 +55,7 @@ let Button = styled.button`
 let UnstyledButton = styled.button`
   border: none;
   background: none;
+  outline: none;
   padding: 0;
   cursor: pointer;
 `
