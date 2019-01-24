@@ -32,6 +32,7 @@ let PublicActivityPage = ({
   videos = videos.map(v => ({
     ...v.node,
     ...v.node.fields.snippet,
+    slug: v.node.fields.slug,
   }))
 
   return (
@@ -42,7 +43,13 @@ let PublicActivityPage = ({
 
       <Flex as="ul" m={'0 -20px'} flexWrap="wrap" css={{ listStyle: 'none' }}>
         {videos.map(v => (
-          <Box as="li" key={v.id} width={[1, 'calc(50% - 20px)']} m={10}>
+          <Box
+            as="li"
+            id={v.slug}
+            key={v.id}
+            width={[1, 'calc(50% - 20px)']}
+            m={10}
+          >
             <VideoCard video={v} />
           </Box>
         ))}
@@ -61,6 +68,7 @@ export let query = graphql`
           tags
 
           fields {
+            slug
             snippet {
               id
               contentDetails {

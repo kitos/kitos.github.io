@@ -63,7 +63,7 @@ let PortfolioPage = ({
       {projects.map(project => (
         <article key={project.name}>
           <header>
-            <h2>
+            <h2 id={project.fields.slug}>
               {project.url ? (
                 <a
                   href={project.url}
@@ -140,6 +140,9 @@ export let query = graphql`
     ) {
       edges {
         node {
+          fields {
+            slug
+          }
           name
           url
           customer

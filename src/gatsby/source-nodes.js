@@ -1,4 +1,5 @@
 const axios = require('axios')
+const slugify = require('@sindresorhus/slugify')
 
 let youtube = axios.create({
   baseURL: 'https://www.googleapis.com/youtube/v3/',
@@ -7,7 +8,7 @@ let youtube = axios.create({
   },
 })
 
-let enrichPublicActivityVideosWithYouTubeSnippets = async ({
+let enrichPublicActivityVideos = async ({
   actions: { createNodeField },
   getNodes,
 }) => {
@@ -37,8 +38,28 @@ let enrichPublicActivityVideosWithYouTubeSnippets = async ({
       name: 'snippet',
       value: snippet,
     })
+
+    createNodeField({
+      node: video,
+      name: 'slug',
+      value: slugify(video.title),
+    })
   })
 }
 
+let addSlugToPortfolioProjects = ({ actions: { createNodeField }, getNodes }) =>
+  getNodes()
+    .filter(n => n.internal.type === 'ContentfulPortfolio')
+    .forEach(node =>
+      createNodeField({
+        node,
+        name: 'slug',
+        value: slugify(node.name),
+      })
+    )
+
 module.exports = (...args) =>
-  Promise.all([enrichPublicActivityVideosWithYouTubeSnippets(...args)])
+  Promise.all([
+    enrichPublicActivityVideos(...args),
+    addSlugToPortfolioProjects(...args),
+  ])
