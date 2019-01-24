@@ -1,4 +1,9 @@
 const pkg = require('./package')
+
+require('dotenv').config({
+  path: `.env.development`,
+})
+
 const rssPlugin = require('./src/gatsby/rss-plugin')
 const contentfulRichtextPlugin = require('./src/gatsby/contentful-richtext-plugin')
 
@@ -48,9 +53,7 @@ module.exports = {
       resolve: `gatsby-source-contentful`,
       options: {
         spaceId: `6dybdba3jdxv`,
-        accessToken:
-          process.env.CONTENTFUL_ACCESS_TOKEN,
-        plugins: ['@contentful/gatsby-transformer-contentful-richtext'],
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
     contentfulRichtextPlugin,
