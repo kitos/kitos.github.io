@@ -131,7 +131,7 @@ exports.createPages = ({ graphql, actions: { createPage } }) =>
     // create blog tag root pages
     postsByTag.forEach((posts, tag) =>
       createPage({
-        path: `/blog/${tag ? `tag/${tag}` : ''}/`,
+        path: `/blog/${tag ? `tag/${tag}/` : ''}`,
         component: path.resolve('./src/templates/blog-post-list.js'),
         context: {
           tag,
