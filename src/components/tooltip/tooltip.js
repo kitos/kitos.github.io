@@ -47,13 +47,15 @@ let Arrow = styled.div`
   }
 `
 
-let Tooltip = ({ isOpen, className, children }) => (
-  <Popper>
+let Tooltip = ({ isOpen, className, children, referenceElement }) => (
+  <Popper referenceElement={referenceElement}>
     {({ ref, style, placement, arrowProps }) => {
       let translateSign = placement === 'bottom' ? '-' : ''
 
       return (
         <Transition
+          unique
+          reset
           items={isOpen}
           from={{
             transform: `translateY(${translateSign}30px) scale(0.9)`,

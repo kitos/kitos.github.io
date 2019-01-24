@@ -1,6 +1,12 @@
 import React from 'react'
 import { graphql, StaticQuery } from 'gatsby'
+
 import Skills from './skills'
+
+let append = mapOfArrays => (key, value) =>
+  mapOfArrays.has(key)
+    ? mapOfArrays.set(key, [...mapOfArrays.get(key), value])
+    : mapOfArrays.set(key, [value])
 
 let SkillsContainer = () => (
   <StaticQuery
@@ -9,6 +15,10 @@ let SkillsContainer = () => (
         portfolio: allContentfulPortfolio {
           edges {
             node {
+              fields {
+                slug
+              }
+              name
               startDate
               endDate
               technologies
@@ -20,12 +30,14 @@ let SkillsContainer = () => (
           edges {
             node {
               fields {
+                slug
                 snippet {
                   snippet {
                     publishedAt
                   }
                 }
               }
+              title
               tags
             }
           }
@@ -33,23 +45,38 @@ let SkillsContainer = () => (
       }
     `}
     render={({ portfolio, talks }) => {
+      let projectsBySkill = new Map()
+      let appendToProjects = append(projectsBySkill)
+
       let projectTechnologies = portfolio.edges.reduce(
         (arr, { node }) =>
           arr.concat(
-            node.technologies.map(name => ({
-              name,
-              lastUsed: node.startDate || node.endDate,
-            }))
+            node.technologies.map(name => {
+              appendToProjects(name, node)
+
+              return {
+                name,
+                lastUsed: node.startDate || node.endDate,
+              }
+            })
           ),
         []
       )
+
+      let talksBySkill = new Map()
+      let appendToTalks = append(talksBySkill)
+
       let talkTags = talks.edges.reduce(
         (arr, { node }) =>
           arr.concat(
-            node.tags.map(name => ({
-              name,
-              lastUsed: node.fields.snippet.snippet.publishedAt,
-            }))
+            node.tags.map(name => {
+              appendToTalks(name, node)
+
+              return {
+                name,
+                lastUsed: node.fields.snippet.snippet.publishedAt,
+              }
+            })
           ),
         []
       )
@@ -61,10 +88,15 @@ let SkillsContainer = () => (
 
           return map.has(name)
             ? map.set(name, {
-                ...skill,
+                ...map.get(name),
                 mentions: map.get(name).mentions + 1,
               })
-            : map.set(name, { ...skill, mentions: 1 })
+            : map.set(name, {
+                ...skill,
+                mentions: 1,
+                projects: projectsBySkill.get(name),
+                talks: talksBySkill.get(name),
+              })
         }, new Map())
 
       let skills = Array.from(skillsMap.values()).sort(
