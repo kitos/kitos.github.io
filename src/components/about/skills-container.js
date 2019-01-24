@@ -8,6 +8,9 @@ let append = mapOfArrays => (key, value) =>
     ? mapOfArrays.set(key, [...mapOfArrays.get(key), value])
     : mapOfArrays.set(key, [value])
 
+let flatMap = (cb, arr) =>
+  arr.reduce((result, item, i) => result.concat(cb(item, i, arr)), [])
+
 let SkillsContainer = () => (
   <StaticQuery
     query={graphql`
@@ -48,37 +51,33 @@ let SkillsContainer = () => (
       let projectsBySkill = new Map()
       let appendToProjects = append(projectsBySkill)
 
-      let projectTechnologies = portfolio.edges.reduce(
-        (arr, { node }) =>
-          arr.concat(
-            node.technologies.map(name => {
-              appendToProjects(name, node)
+      let projectTechnologies = flatMap(
+        ({ node }) =>
+          node.technologies.map(name => {
+            appendToProjects(name, node)
 
-              return {
-                name,
-                lastUsed: node.startDate || node.endDate,
-              }
-            })
-          ),
-        []
+            return {
+              name,
+              lastUsed: node.startDate || node.endDate,
+            }
+          }),
+        portfolio.edges
       )
 
       let talksBySkill = new Map()
       let appendToTalks = append(talksBySkill)
 
-      let talkTags = talks.edges.reduce(
-        (arr, { node }) =>
-          arr.concat(
-            node.tags.map(name => {
-              appendToTalks(name, node)
+      let talkTags = flatMap(
+        ({ node }) =>
+          node.tags.map(name => {
+            appendToTalks(name, node)
 
-              return {
-                name,
-                lastUsed: node.fields.snippet.snippet.publishedAt,
-              }
-            })
-          ),
-        []
+            return {
+              name,
+              lastUsed: node.fields.snippet.snippet.publishedAt,
+            }
+          }),
+        talks.edges
       )
 
       let skillsMap = projectTechnologies
