@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.10.0"></a>
+# [1.10.0](https://github.com/kitos/kitos.github.io/compare/v1.9.0...v1.10.0) (2019-01-26)
+
+
+### Bug Fixes
+
+* :bug: remove extra slash from blog url ([29c6e58](https://github.com/kitos/kitos.github.io/commit/29c6e58))
+* :bug: transform to iframe only embed links ([1303782](https://github.com/kitos/kitos.github.io/commit/1303782))
+
+
+### Features
+
+* :lipstick: add expander for skills; extract Skills component ([098716d](https://github.com/kitos/kitos.github.io/commit/098716d))
+* :lipstick: animate skills ([a66b603](https://github.com/kitos/kitos.github.io/commit/a66b603))
+* :lipstick: do not display blog timeline on mobile devices ([6a534df](https://github.com/kitos/kitos.github.io/commit/6a534df))
+* :sparkles: show tooltip with entities where skill was mentioned on click to badge ([225ff63](https://github.com/kitos/kitos.github.io/commit/225ff63))
+* add slug fields to portfolio projects and videos; use them as DOM ids to be able to scroll to them ([6d9f562](https://github.com/kitos/kitos.github.io/commit/6d9f562))
+
+
+
 <a name="1.9.0"></a>
 # [1.9.0](https://github.com/kitos/kitos.github.io/compare/v1.8.0...v1.9.0) (2019-01-23)
 
