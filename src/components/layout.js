@@ -8,6 +8,7 @@ import { FacebookProvider } from 'react-facebook'
 
 import Header from './header'
 import Footer from './footer'
+import { breakpoints } from '../utils'
 
 let theme = {
   pageWidth: '800px',
@@ -16,6 +17,7 @@ let theme = {
     lightgray: '#e1e4e7',
     pale: '#fafbfc',
   },
+  breakpoints,
 }
 
 let PageWrapper = styled(Box)`
