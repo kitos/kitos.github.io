@@ -5,17 +5,16 @@ import { Footer } from '../popover'
 import { ConfirmationDialog, Dialog } from '../dialog'
 import Input from '../input'
 import Button from '../button'
-
-let toQuery = obj =>
-  Object.keys(obj)
-    .map(k => `${k}=${obj[k]}`)
-    .join('&')
+import { toQueryString } from '../../utils'
 
 let submitTypo = ({ title, link, source, suggestion }) =>
   fetch(
-    `https://us-central1-personal-site-223608.cloudfunctions.net/create-blog-typo-issue?${toQuery(
-      { title, link, source, suggestion }
-    )}`
+    `${process.env.GATSBY_CLOUD_FUNCTION_CREATE_GH_ISSUE}?${toQueryString({
+      title,
+      link,
+      source,
+      suggestion,
+    })}`
   ).then(resp => resp.json())
 
 let SuccessDialog = ({ issueUrl, isOpen, onDismiss }) => (

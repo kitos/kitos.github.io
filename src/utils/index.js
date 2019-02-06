@@ -20,3 +20,8 @@ export let media = Object.keys(sizes).reduce((acc, label) => {
 
   return acc
 }, {})
+
+export let toQueryString = obj =>
+  Object.keys(obj)
+    .map(k => `${k}=${obj[k]}`)
+    .join('&')

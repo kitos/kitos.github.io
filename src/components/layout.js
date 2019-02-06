@@ -9,6 +9,7 @@ import { FacebookProvider } from 'react-facebook'
 import Header from './header'
 import Footer from './footer'
 import { breakpoints } from '../utils'
+import { ErrorBoundary } from './error-boundary'
 
 let theme = {
   pageWidth: '800px',
@@ -53,7 +54,7 @@ let GlobalStyle = createGlobalStyle`
 const Layout = ({ pageTitle, schemaOrgItems, children }) => (
   <ThemeProvider theme={theme}>
     <FacebookProvider appId="832164347114591">
-      <>
+      <ErrorBoundary>
         <GlobalStyle />
 
         <HeaderWrapper>
@@ -61,13 +62,13 @@ const Layout = ({ pageTitle, schemaOrgItems, children }) => (
         </HeaderWrapper>
 
         <PageWrapper as="main" px={[20, 20, 0]}>
-          {children}
+          <ErrorBoundary>{children}</ErrorBoundary>
         </PageWrapper>
 
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
-      </>
+      </ErrorBoundary>
     </FacebookProvider>
   </ThemeProvider>
 )
