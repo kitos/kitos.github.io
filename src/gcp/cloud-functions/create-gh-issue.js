@@ -25,19 +25,40 @@ ${suggestion}`,
   labels: ['blog:typo'],
 })
 
-exports.createIssue = async (request, response) => {
-  let payload = request.query
+let createBug = ({ message, stack, userAgent }) => ({
+  title: `Bug! "${message}"`,
+  body: `
+*This issue was automatically generated.*
 
+### Stack:
+
+\`\`\`
+${stack}
+\`\`\`
+
+### User agent:
+
+\`\`\`
+${userAgent}
+\`\`\``,
+  assignees: ['kitos'],
+  labels: ['bug'],
+})
+
+exports.createIssue = async (request, response) => {
   response.set('Access-Control-Allow-Origin', 'https://www.nikitakirsanov.com')
   response.set('Access-Control-Allow-Methods', 'GET')
 
   try {
+    let userAgent = request.headers['user-agent']
+    let { type = 'typo', ...payload } = request.query
+    let issue =
+      type === 'typo'
+        ? createTypoIssue(payload)
+        : createBug({ ...payload, userAgent })
     let {
       data: { html_url },
-    } = await github.post(
-      '/repos/kitos/kitos.github.io/issues',
-      createTypoIssue(payload)
-    )
+    } = await github.post('/repos/kitos/kitos.github.io/issues', issue)
 
     response.status(200).send({ url: html_url })
   } catch (e) {
