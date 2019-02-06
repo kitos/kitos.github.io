@@ -38,13 +38,28 @@ const hash = obj =>
 
 let createBug = async ({ message, stack, userAgent }) => {
   let issueHash = hash({ message, stack })
+  let userAgentHash = hash(userAgent)
   let hashLabel = `hash:${issueHash}`
+  let userAgentLabel = `ua-hash:${userAgentHash}`
   let { data: existingIssues } = await github.get(ISSUES_ROOT, {
     params: { labels: hashLabel },
   })
 
   if (existingIssues.length !== 0) {
-    return { data: existingIssues[0] }
+    let existingIssue = existingIssues[0]
+    let commentsPath = `${ISSUES_ROOT}/${existingIssue.number}/comments`
+    let { data: comments } = await github.get(commentsPath)
+    let hasSameUserAgent =
+      existingIssue.labels.some(({ name }) => name === userAgentLabel) ||
+      comments.some(({ body }) => body === userAgent)
+
+    if (!hasSameUserAgent) {
+      await github.post(commentsPath, {
+        body: userAgent,
+      })
+    }
+
+    return { data: existingIssue }
   }
 
   return github.post(ISSUES_ROOT, {
@@ -64,7 +79,7 @@ ${stack}
 ${userAgent}
 \`\`\``,
     assignees: ['kitos'],
-    labels: ['bug', hashLabel],
+    labels: ['bug', hashLabel, userAgentLabel],
   })
 }
 
