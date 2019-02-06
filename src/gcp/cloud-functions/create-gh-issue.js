@@ -76,7 +76,7 @@ ${referer}
 ### Stack:
 
 \`\`\`
-${stack}
+${stack.split('@').join('\n@')}
 \`\`\`
 
 ### User agent:
