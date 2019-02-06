@@ -12,7 +12,7 @@ const github = axios.create({
 
 const ISSUES_ROOT = '/repos/kitos/kitos.github.io/issues'
 
-let createTypoIssue = ({ title, link, source, suggestion }) =>
+let createTypoIssue = ({ request: { title, link, source, suggestion } }) =>
   github.post(ISSUES_ROOT, {
     title: `Typo in blog post "${title}"`,
     body: `
@@ -36,8 +36,10 @@ const hash = obj =>
     .digest('hex')
     .substr(0, 6)
 
-let createBug = async ({ message, stack, userAgent }) => {
-  let issueHash = hash({ message, stack })
+let createBug = async ({ headers, request: { message, stack, userAgent } }) => {
+  let userAgent = headers['user-agent']
+  let referer = headers['referer']
+  let issueHash = hash({ message, referer, stack })
   let userAgentHash = hash(userAgent)
   let hashLabel = `hash:${issueHash}`
   let userAgentLabel = `ua-hash:${userAgentHash}`
@@ -67,6 +69,10 @@ let createBug = async ({ message, stack, userAgent }) => {
     body: `
 *This issue was automatically generated.*
 
+### Page url:
+
+${referer}
+
 ### Stack:
 
 \`\`\`
@@ -88,13 +94,10 @@ exports.createIssue = async (request, response) => {
   response.set('Access-Control-Allow-Methods', 'GET')
 
   try {
-    let userAgent = request.headers['user-agent']
     let { type = 'typo', ...payload } = request.query
     let {
       data: { html_url },
-    } = await (type === 'typo'
-      ? createTypoIssue(payload)
-      : createBug({ ...payload, userAgent }))
+    } = await (type === 'typo' ? createTypoIssue(request) : createBug(request))
 
     response.status(200).send({ url: html_url })
   } catch (e) {
