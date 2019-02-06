@@ -9,9 +9,10 @@ const github = axios.create({
   },
 })
 
-let createTypoIssue = ({ title, link, source, suggestion }) => ({
-  title: `Typo in blog post "${title}"`,
-  body: `
+let createTypoIssue = ({ title, link, source, suggestion }) =>
+  github.post('/repos/kitos/kitos.github.io/issues', {
+    title: `Typo in blog post "${title}"`,
+    body: `
 There is a typo post [${title}](${link}).
 
 ### Source:
@@ -21,13 +22,14 @@ ${source}
 ### Suggestion:
 
 ${suggestion}`,
-  assignees: ['kitos'],
-  labels: ['blog:typo'],
-})
+    assignees: ['kitos'],
+    labels: ['blog:typo'],
+  })
 
-let createBug = ({ message, stack, userAgent }) => ({
-  title: `Bug! "${message}"`,
-  body: `
+let createBug = ({ message, stack, userAgent }) =>
+  github.post('/repos/kitos/kitos.github.io/issues', {
+    title: `Bug! "${message}"`,
+    body: `
 *This issue was automatically generated.*
 
 ### Stack:
@@ -41,9 +43,9 @@ ${stack}
 \`\`\`
 ${userAgent}
 \`\`\``,
-  assignees: ['kitos'],
-  labels: ['bug'],
-})
+    assignees: ['kitos'],
+    labels: ['bug'],
+  })
 
 exports.createIssue = async (request, response) => {
   response.set('Access-Control-Allow-Origin', 'https://www.nikitakirsanov.com')
@@ -52,13 +54,11 @@ exports.createIssue = async (request, response) => {
   try {
     let userAgent = request.headers['user-agent']
     let { type = 'typo', ...payload } = request.query
-    let issue =
-      type === 'typo'
-        ? createTypoIssue(payload)
-        : createBug({ ...payload, userAgent })
     let {
       data: { html_url },
-    } = await github.post('/repos/kitos/kitos.github.io/issues', issue)
+    } = await (type === 'typo'
+      ? createTypoIssue(payload)
+      : createBug({ ...payload, userAgent }))
 
     response.status(200).send({ url: html_url })
   } catch (e) {
