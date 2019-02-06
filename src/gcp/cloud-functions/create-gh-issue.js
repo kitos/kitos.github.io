@@ -1,4 +1,5 @@
 const axios = require('axios')
+const crypto = require('crypto')
 
 const github = axios.create({
   baseURL: 'https://api.github.com',
@@ -9,8 +10,10 @@ const github = axios.create({
   },
 })
 
+const ISSUES_ROOT = '/repos/kitos/kitos.github.io/issues'
+
 let createTypoIssue = ({ title, link, source, suggestion }) =>
-  github.post('/repos/kitos/kitos.github.io/issues', {
+  github.post(ISSUES_ROOT, {
     title: `Typo in blog post "${title}"`,
     body: `
 There is a typo post [${title}](${link}).
@@ -26,8 +29,25 @@ ${suggestion}`,
     labels: ['blog:typo'],
   })
 
-let createBug = ({ message, stack, userAgent }) =>
-  github.post('/repos/kitos/kitos.github.io/issues', {
+const hash = obj =>
+  crypto
+    .createHash('md5')
+    .update(JSON.stringify(obj))
+    .digest('hex')
+    .substr(0, 6)
+
+let createBug = async ({ message, stack, userAgent }) => {
+  let issueHash = hash({ message, stack })
+  let hashLabel = `hash:${issueHash}`
+  let { data: existingIssues } = await github.get(ISSUES_ROOT, {
+    params: { labels: hashLabel },
+  })
+
+  if (existingIssues.length !== 0) {
+    return { data: existingIssues[0] }
+  }
+
+  return github.post(ISSUES_ROOT, {
     title: `Bug! "${message}"`,
     body: `
 *This issue was automatically generated.*
@@ -44,8 +64,9 @@ ${stack}
 ${userAgent}
 \`\`\``,
     assignees: ['kitos'],
-    labels: ['bug'],
+    labels: ['bug', hashLabel],
   })
+}
 
 exports.createIssue = async (request, response) => {
   response.set('Access-Control-Allow-Origin', 'https://www.nikitakirsanov.com')
