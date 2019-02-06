@@ -36,7 +36,7 @@ const hash = obj =>
     .digest('hex')
     .substr(0, 6)
 
-let createBug = async ({ headers, request: { message, stack, userAgent } }) => {
+let createBug = async ({ headers, request: { message, stack } }) => {
   let userAgent = headers['user-agent']
   let referer = headers['referer']
   let issueHash = hash({ message, referer, stack })
