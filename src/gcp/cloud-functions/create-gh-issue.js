@@ -12,7 +12,7 @@ const github = axios.create({
 
 const ISSUES_ROOT = '/repos/kitos/kitos.github.io/issues'
 
-let createTypoIssue = ({ request: { title, link, source, suggestion } }) =>
+let createTypoIssue = ({ query: { title, link, source, suggestion } }) =>
   github.post(ISSUES_ROOT, {
     title: `Typo in blog post "${title}"`,
     body: `
@@ -36,7 +36,7 @@ const hash = obj =>
     .digest('hex')
     .substr(0, 6)
 
-let createBug = async ({ headers, request: { message, stack } }) => {
+let createBug = async ({ headers, query: { message, stack } }) => {
   let userAgent = headers['user-agent']
   let referer = headers['referer']
   let issueHash = hash({ message, referer, stack })
