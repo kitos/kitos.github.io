@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.11.0"></a>
+# [1.11.0](https://github.com/kitos/kitos.github.io/compare/v1.10.0...v1.11.0) (2019-02-19)
+
+
+### Bug Fixes
+
+* :bug: add intersection-observer. fixes [#75](https://github.com/kitos/kitos.github.io/issues/75) [#79](https://github.com/kitos/kitos.github.io/issues/79) [#80](https://github.com/kitos/kitos.github.io/issues/80) [#82](https://github.com/kitos/kitos.github.io/issues/82) ([8417dad](https://github.com/kitos/kitos.github.io/commit/8417dad))
+* :lipstick: increase image size; center it ([9cc3fd3](https://github.com/kitos/kitos.github.io/commit/9cc3fd3))
+* :poop: use correct property ([3391c6d](https://github.com/kitos/kitos.github.io/commit/3391c6d))
+
+
+### Features
+
+* :sparkles: add ability to report bugs in cloud function ([97b061f](https://github.com/kitos/kitos.github.io/commit/97b061f))
+* :sparkles: add comments with new user agents where issue were reproduced ([3ba0844](https://github.com/kitos/kitos.github.io/commit/3ba0844))
+* :sparkles: add disqus comments ([0980ba9](https://github.com/kitos/kitos.github.io/commit/0980ba9))
+* :sparkles: add error boundary with automatically reports an issue on catch ([a7fe597](https://github.com/kitos/kitos.github.io/commit/a7fe597))
+* :sparkles: prevent issues duplication in cloud function ([dd50e5c](https://github.com/kitos/kitos.github.io/commit/dd50e5c))
+
+
+
 <a name="1.10.0"></a>
 # [1.10.0](https://github.com/kitos/kitos.github.io/compare/v1.9.0...v1.10.0) (2019-01-26)
 
