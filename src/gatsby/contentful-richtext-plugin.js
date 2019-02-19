@@ -33,7 +33,7 @@ module.exports = {
         }) =>
           `<img src="${fields.file['en-US'].url}" alt="${
             fields.description['en-US']
-          }" style="display: block; max-width: 450px; margin: 0 auto" />`,
+          }" style="display: block; width: 100%; max-width: 450px; margin: 0 auto" />`,
         [INLINES.HYPERLINK]: (node, next) =>
           node.data.uri.includes('codesandbox.io/embed')
             ? renderCodesandboxIframe(node, next)
