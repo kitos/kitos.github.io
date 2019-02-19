@@ -3,8 +3,9 @@ import { graphql } from 'gatsby'
 import { differenceInWeeks, format } from 'date-fns/fp'
 import { Box } from '@rebass/grid'
 import { Like } from 'react-facebook'
+import { DiscussionEmbed } from 'disqus-react'
 
-import { BlogTags, BlogPostContent } from '../components/blog'
+import { BlogPostContent, BlogTags } from '../components/blog'
 import { SEO } from '../components'
 
 let formatDate = format('MMMM dd, yyyy')
@@ -57,6 +58,15 @@ let BlogPost = ({
       <Box mt={20}>
         <Like href={postUrl} colorScheme="dark" showFaces share />
       </Box>
+
+      <DiscussionEmbed
+        shortname={process.env.GATSBY_DISQUS_SHORTNAME}
+        config={{
+          url: postUrl,
+          identifier: slug,
+          title,
+        }}
+      />
     </>
   )
 }
