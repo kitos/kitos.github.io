@@ -55,7 +55,7 @@ let BlogPost = ({
         post={{ title, postUrl, html: content.childContentfulRichText.html }}
       />
 
-      <Box mt={20}>
+      <Box my={20}>
         <Like href={postUrl} colorScheme="dark" showFaces share />
       </Box>
 
