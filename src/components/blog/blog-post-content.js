@@ -53,12 +53,16 @@ let BlogPostContent = ({ post: { title, postUrl, html } }) => {
           </a>
 
           <FeedbackConsumer>
-            {submitTypo => (
+            {shareFeedback => (
               <UnstyledButton
                 title="Report typo/mistake"
                 aria-label="Report typo/mistake"
                 onClick={() =>
-                  submitTypo({ title, link: postUrl, typo: selectedText })
+                  shareFeedback({
+                    type: 'typo',
+                    post: { title, link: postUrl },
+                    typo: selectedText,
+                  })
                 }
               >
                 ✏️

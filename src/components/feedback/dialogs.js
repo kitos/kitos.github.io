@@ -7,14 +7,11 @@ import Input from '../input'
 import Button from '../button'
 import { toQueryString } from '../../utils'
 
-let submitTypo = ({ title, link, source, suggestion }) =>
+let submitFeedback = payload =>
   fetch(
-    `${process.env.GATSBY_CLOUD_FUNCTION_CREATE_GH_ISSUE}?${toQueryString({
-      title,
-      link,
-      source,
-      suggestion,
-    })}`
+    `${process.env.GATSBY_CLOUD_FUNCTION_CREATE_GH_ISSUE}?${toQueryString(
+      payload
+    )}`
   ).then(resp => resp.json())
 
 let SuccessDialog = ({ issueUrl, isOpen, onDismiss }) => (
@@ -55,19 +52,28 @@ let FailDialog = ({ isOpen, onDismiss }) => (
   </ConfirmationDialog>
 )
 
-let FeedbackDialog = ({ post, typo, isOpen, onDismiss }) => {
+let FeedbackDialog = ({ type, isOpen, payload, onDismiss }) => {
   if (!isOpen) {
     return null
   }
 
-  let [source, setSource] = useState(typo)
-  let [suggestion, setSuggestion] = useState(typo)
+  let [feedbackType, setFeedbackType] = useState(type)
+  let [typoSource, setTypoSource] = useState(payload.typo)
+  let [content, setContent] = useState(payload.typo)
   let initialDialogFocusRef = useRef(null)
   let [{ dialogType, issueUrl }, toggleDialog] = useState({ dialogType: null })
 
   let handleSubmit = async () => {
     try {
-      let { url } = await submitTypo({ ...post, source, suggestion })
+      let { url } = await submitFeedback({
+        // common fields
+        type: feedbackType,
+        content,
+
+        // typos only
+        source: typoSource,
+        ...payload.post, // title, link
+      })
 
       toggleDialog({ dialogType: 'success', issueUrl: url })
     } catch (e) {
@@ -81,32 +87,54 @@ let FeedbackDialog = ({ post, typo, isOpen, onDismiss }) => {
     <FailDialog isOpen onDismiss={onDismiss} />
   ) : (
     <Dialog
-      title="Report a typo / mistake"
+      title="Leave feedback"
       isOpen
       onDismiss={onDismiss}
       initialFocusRef={initialDialogFocusRef}
     >
       <Flex as="label" flexDirection="column" mb={10}>
-        <Box mb={10}>Source</Box>
+        <Box mb={10}>Type</Box>
 
-        <Input
-          type="text"
-          value={source}
-          onChange={e => setSource(e.target.value)}
-          placeholder="Tell me what I've messed up..."
-        />
+        <select
+          style={{ height: 36 }}
+          value={feedbackType}
+          onChange={e => setFeedbackType(e.target.value)}
+        >
+          <option value="typo">✏️ Typo</option>
+          <option value="bug">🐛 Bug</option>
+          <option value="feedback">📫 Feedback</option>
+        </select>
       </Flex>
 
+      {feedbackType === 'typo' && (
+        <Flex as="label" flexDirection="column" mb={10}>
+          <Box mb={10}>Source</Box>
+
+          <Input
+            type="text"
+            value={typoSource}
+            onChange={e => setTypoSource(e.target.value)}
+            placeholder="Tell me what I've messed up..."
+          />
+        </Flex>
+      )}
+
       <Flex as="label" flexDirection="column">
-        <Box mb={10}>Suggestion</Box>
+        <Box mb={10}>
+          {feedbackType === 'typo'
+            ? 'Suggestion'
+            : feedbackType === 'bug'
+            ? 'Description'
+            : 'Text'}
+        </Box>
 
         <Input
           as="textarea"
-          value={suggestion}
-          onChange={e => setSuggestion(e.target.value)}
+          value={content}
+          onChange={e => setContent(e.target.value)}
           ref={initialDialogFocusRef}
           rows="3"
-          placeholder="I appreciate you help :-)"
+          placeholder="I appreciate you feedback :-)"
         />
       </Flex>
 

@@ -12,7 +12,7 @@ const github = axios.create({
 
 const ISSUES_ROOT = '/repos/kitos/kitos.github.io/issues'
 
-let createTypoIssue = ({ query: { title, link, source, suggestion } }) =>
+let createTypoIssue = ({ query: { title, link, source, content } }) =>
   github.post(ISSUES_ROOT, {
     title: `Typo in blog post "${title}"`,
     body: `
@@ -24,9 +24,17 @@ ${source}
 
 ### Suggestion:
 
-${suggestion}`,
+${content}`,
     assignees: ['kitos'],
     labels: ['blog:typo'],
+  })
+
+let createFeedbackIssue = ({ query: { content } }) =>
+  github.post(ISSUES_ROOT, {
+    title: 'Feedback',
+    body: content,
+    assignees: ['kitos'],
+    labels: ['feedback'],
   })
 
 const hash = obj =>
@@ -36,10 +44,13 @@ const hash = obj =>
     .digest('hex')
     .substr(0, 6)
 
-let createBug = async ({ headers, query: { message, stack } }) => {
+let createBug = async ({
+  headers,
+  query: { message = 'Reported by user', content, stack },
+}) => {
   let userAgent = headers['user-agent']
   let referer = headers['referer']
-  let issueHash = hash({ message, referer, stack })
+  let issueHash = hash({ message, referer, stack, content })
   let userAgentHash = hash(userAgent)
   let hashLabel = `hash:${issueHash}`
   let userAgentLabel = `ua-hash:${userAgentHash}`
@@ -73,11 +84,28 @@ let createBug = async ({ headers, query: { message, stack } }) => {
 
 ${referer}
 
+${
+      content
+        ? `
+### Description:
+
+${content}
+
+`
+        : ''
+    }
+
+${
+      stack
+        ? `
 ### Stack:
 
 \`\`\`
 ${stack.split('@').join('\n@')}
 \`\`\`
+`
+        : ''
+    }
 
 ### User agent:
 
@@ -94,10 +122,14 @@ exports.createIssue = async (request, response) => {
   response.set('Access-Control-Allow-Methods', 'GET')
 
   try {
-    let { type = 'typo', ...payload } = request.query
+    let { type } = request.query
     let {
       data: { html_url },
-    } = await (type === 'typo' ? createTypoIssue(request) : createBug(request))
+    } = await (type === 'typo'
+      ? createTypoIssue(request)
+      : type === 'feedback'
+      ? createFeedbackIssue(request)
+      : createBug(request))
 
     response.status(200).send({ url: html_url })
   } catch (e) {
