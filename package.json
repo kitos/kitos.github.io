@@ -5,7 +5,7 @@
   "private": true,
   "author": "Nikita Kirsanov <kitos.kirsanov@gmail.com>",
   "dependencies": {
-    "@contentful/gatsby-transformer-contentful-richtext": "^12.1.2",
+    "@contentful/gatsby-transformer-contentful-richtext": "^13.0.1",
     "@contentful/rich-text-html-renderer": "^12.1.2",
     "@contentful/rich-text-types": "^12.1.2",
     "@reach/dialog": "^0.1.2",
@@ -34,7 +34,6 @@
     "gatsby-transformer-sharp": "^2.1.9",
     "he": "^1.2.0",
     "intersection-observer": "^0.5.1",
-    "lodash.words": "^4.2.0",
     "prismjs": "^1.15.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",

@@ -1,7 +1,4 @@
 const path = require('path')
-const { createFilePath } = require(`gatsby-source-filesystem`)
-const sanitizeHtml = require('sanitize-html')
-const words = require('lodash.words')
 
 let groupPostsByTag = posts =>
   posts.reduce(
@@ -18,17 +15,7 @@ let groupPostsByTag = posts =>
     new Map()
   )
 
-let timeToRead = html => {
-  let plainText = sanitizeHtml(html, {
-    allowedTags: false,
-  })
-  let wordCount = words(plainText).length
-  let avgWPM = 200
-
-  return Math.floor(wordCount / avgWPM) || 1
-}
-
-exports.createPages = ({ graphql, actions: { createPage } }) =>
+module.exports = ({ graphql, actions: { createPage } }) =>
   graphql(`
     {
       posts: allContentfulBlog(sort: { fields: [createdAt], order: DESC }) {
@@ -47,7 +34,7 @@ exports.createPages = ({ graphql, actions: { createPage } }) =>
             tags
             content {
               childContentfulRichText {
-                html
+                timeToRead
               }
             }
           }
@@ -60,11 +47,7 @@ exports.createPages = ({ graphql, actions: { createPage } }) =>
       .map(({ node: n }) => ({
         ...n,
         preface: n.preface.childContentfulRichText.html,
-        // we do not need heavy content on blog post list pages
-        content: undefined,
-        // it should word out of the box one day...
-        // https://github.com/contentful/rich-text/pull/60
-        timeToRead: timeToRead(n.content.childContentfulRichText.html),
+        timeToRead: n.content.childContentfulRichText.timeToRead,
       }))
 
     // create blog post pages
