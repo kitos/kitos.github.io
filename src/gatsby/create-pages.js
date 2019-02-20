@@ -1,4 +1,6 @@
 const path = require('path')
+const intersection = require('lodash.intersection')
+const pick = require('lodash.pick')
 
 let groupPostsByTag = posts =>
   posts.reduce(
@@ -14,6 +16,17 @@ let groupPostsByTag = posts =>
       }, map),
     new Map()
   )
+
+let getSimilarPost = ({ slug, tags }, posts) =>
+  posts
+    .map(p => ({ ...p, similarity: intersection(p.tags, tags).length }))
+    .filter(p => p.slug !== slug && p.similarity !== 0)
+    .sort(
+      (a, b) =>
+        b.similarity - a.similarity || b.createdAt.localeCompare(a.createdAt)
+    )
+    .slice(0, 3)
+    .map(p => pick(p, ['slug', 'title', 'createdAt', 'timeToRead']))
 
 module.exports = ({ graphql, actions: { createPage } }) =>
   graphql(`
@@ -51,12 +64,13 @@ module.exports = ({ graphql, actions: { createPage } }) =>
       }))
 
     // create blog post pages
-    posts.forEach(({ slug }) =>
+    posts.forEach(post =>
       createPage({
-        path: `/blog/${slug}/`,
+        path: `/blog/${post.slug}/`,
         component: path.resolve('./src/templates/blog-post.js'),
         context: {
-          slug,
+          slug: post.slug,
+          similarPosts: getSimilarPost(post, posts),
         },
       })
     )
