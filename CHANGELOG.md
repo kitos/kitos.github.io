@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.13.0"></a>
+# [1.13.0](https://github.com/kitos/kitos.github.io/compare/v1.12.0...v1.13.0) (2019-02-20)
+
+
+### Features
+
+* :sparkles: allow users to leave feedback ([1e03cd4](https://github.com/kitos/kitos.github.io/commit/1e03cd4))
+
+
+
 <a name="1.12.0"></a>
 # [1.12.0](https://github.com/kitos/kitos.github.io/compare/v1.11.0...v1.12.0) (2019-02-20)
 
