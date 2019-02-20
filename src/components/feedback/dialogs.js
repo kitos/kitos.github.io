@@ -55,7 +55,7 @@ let FailDialog = ({ isOpen, onDismiss }) => (
   </ConfirmationDialog>
 )
 
-let ReportTypoDialog = ({ post, typo, isOpen, onDismiss }) => {
+let FeedbackDialog = ({ post, typo, isOpen, onDismiss }) => {
   if (!isOpen) {
     return null
   }
@@ -117,5 +117,5 @@ let ReportTypoDialog = ({ post, typo, isOpen, onDismiss }) => {
   )
 }
 
-export default ReportTypoDialog
-export { ReportTypoDialog }
+export default FeedbackDialog
+export { FeedbackDialog }

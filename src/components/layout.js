@@ -10,6 +10,7 @@ import Header from './header'
 import Footer from './footer'
 import { breakpoints } from '../utils'
 import { ErrorBoundary } from './error-boundary'
+import { FeedbackProvider } from './feedback'
 
 let theme = {
   pageWidth: '800px',
@@ -55,19 +56,21 @@ const Layout = ({ pageTitle, schemaOrgItems, children }) => (
   <ThemeProvider theme={theme}>
     <FacebookProvider appId="832164347114591">
       <ErrorBoundary>
-        <GlobalStyle />
+        <FeedbackProvider>
+          <GlobalStyle />
 
-        <HeaderWrapper>
-          <Header />
-        </HeaderWrapper>
+          <HeaderWrapper>
+            <Header />
+          </HeaderWrapper>
 
-        <PageWrapper as="main" px={[20, 20, 0]}>
-          <ErrorBoundary>{children}</ErrorBoundary>
-        </PageWrapper>
+          <PageWrapper as="main" px={[20, 20, 0]}>
+            <ErrorBoundary>{children}</ErrorBoundary>
+          </PageWrapper>
 
-        <FooterWrapper>
-          <Footer />
-        </FooterWrapper>
+          <FooterWrapper>
+            <Footer />
+          </FooterWrapper>
+        </FeedbackProvider>
       </ErrorBoundary>
     </FacebookProvider>
   </ThemeProvider>
