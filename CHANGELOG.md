@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.12.0"></a>
+# [1.12.0](https://github.com/kitos/kitos.github.io/compare/v1.11.0...v1.12.0) (2019-02-20)
+
+
+### Bug Fixes
+
+* :lipstick: fix image size for mobile devices ([858f47c](https://github.com/kitos/kitos.github.io/commit/858f47c))
+
+
+### Features
+
+* :sparkles: add "Read next" section ([4b282fb](https://github.com/kitos/kitos.github.io/commit/4b282fb))
+
+
+
 <a name="1.11.0"></a>
 # [1.11.0](https://github.com/kitos/kitos.github.io/compare/v1.10.0...v1.11.0) (2019-02-19)
 
