@@ -8,7 +8,7 @@ import { DiscussionEmbed } from 'disqus-react'
 import { BlogPostContent, BlogTags } from '../components/blog'
 import { SEO } from '../components'
 
-let formatDate = format('MMMM dd, yyyy')
+let formatDate = d => format('MMMM dd, yyyy', new Date(d))
 
 let buildSchemaOrg = ({ title, createdAt, updatedAt, tags }) => ({
   author,
@@ -45,7 +45,7 @@ let BlogPost = ({
 
       <small>{formatDate(createdAt)}</small>
 
-      {differenceInWeeks(createdAt, updatedAt) > 1 && (
+      {differenceInWeeks(new Date(createdAt), new Date(updatedAt)) > 1 && (
         <small> (Last update at {formatDate(updatedAt)})</small>
       )}
 

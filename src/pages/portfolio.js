@@ -7,7 +7,7 @@ import VisuallyHidden from '@reach/visually-hidden'
 import { Badge, Drawer, SEO } from '../components'
 import { isMobile } from '../utils'
 
-let formatDate = format('MMMM, yyyy')
+let formatDate = d => format('MMMM, yyyy', new Date(d))
 
 let buildSchemaOrg = projects => ({ author }) => [
   {
