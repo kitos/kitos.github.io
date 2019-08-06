@@ -23,6 +23,7 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-styled-components',
+    'gatsby-plugin-netlify-cms',
     rssPlugin,
     {
       resolve: 'gatsby-plugin-layout',
