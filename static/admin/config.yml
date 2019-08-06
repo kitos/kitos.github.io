@@ -18,6 +18,6 @@ collections:
       - { label: 'Title', name: 'title', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
       - { label: 'Featured Image', name: 'thumbnail', widget: 'image' }
-      - { label: 'Preface', name: 'preface', widget: 'markdown' }
+      - { label: 'Preface', name: 'preface', widget: 'text' }
       - { label: 'Body', name: 'body', widget: 'markdown' }
       - { label: 'Tags', name: 'tags', widget: 'list' }
