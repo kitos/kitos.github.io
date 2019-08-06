@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: kitos/kitos.github.io
   branch: develop
 
 publish_mode: editorial_workflow
@@ -10,7 +11,7 @@ public_folder: '/images/uploads'
 collections:
   - name: 'blog'
     label: 'Blog'
-    folder: '_posts/blog'
+    folder: 'src/_content/blog'
     create: true
     slug: '{{slug}}'
     fields:
