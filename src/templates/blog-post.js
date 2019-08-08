@@ -25,9 +25,10 @@ let buildSchemaOrg = ({ title, createdAt, updatedAt, tags }) => ({
 ]
 
 let BlogPost = ({
-  pageContext: { slug, similarPosts },
+  pageContext: { slug },
   data: {
     post: { title, createdAt, updatedAt, tags, content },
+    similarPosts,
     site,
   },
 }) => {
@@ -61,32 +62,35 @@ let BlogPost = ({
 
       <h2>Read next</h2>
 
-      <Flex
-        as="ul"
-        my={[2, 4]}
-        mx={[0, -2]}
-        flexDirection={['column', 'row']}
-        justifyContent="space-between"
-        css={`
-          list-style: none;
-        `}
-      >
-        {similarPosts.map(p => (
-          <Flex
-            as="li"
-            key={p.slug}
-            flex={1}
-            flexDirection="column"
-            mx={[0, 2]}
-          >
-            <Link to={`/blog/${p.slug}/`}>{p.title}</Link>
+      {similarPosts.edges.length > 0 && (
+        <Flex
+          as="ul"
+          my={[2, 4]}
+          mx={[0, -2]}
+          flexDirection={['column', 'row']}
+          justifyContent="space-between"
+          css={`
+            list-style: none;
+          `}
+        >
+          {similarPosts.edges.map(({ node: p }) => (
+            <Flex
+              as="li"
+              key={p.slug}
+              flex={1}
+              flexDirection="column"
+              mx={[0, 2]}
+            >
+              <Link to={`/blog/${p.slug}/`}>{p.title}</Link>
 
-            <Box as="small" mt={2}>
-              {formatDate(p.createdAt)} • {p.timeToRead} min read
-            </Box>
-          </Flex>
-        ))}
-      </Flex>
+              <Box as="small" mt={2}>
+                {formatDate(p.createdAt)} •{' '}
+                {p.content.childContentfulRichText.timeToRead} min read
+              </Box>
+            </Flex>
+          ))}
+        </Flex>
+      )}
 
       <DiscussionEmbed
         shortname={process.env.GATSBY_DISQUS_SHORTNAME}
@@ -103,7 +107,7 @@ let BlogPost = ({
 export default BlogPost
 
 export const query = graphql`
-  query($slug: String!) {
+  query($slug: String!, $similarPosts: [String!]!) {
     post: contentfulBlog(slug: { eq: $slug }) {
       title
       createdAt
@@ -112,6 +116,22 @@ export const query = graphql`
       content {
         childContentfulRichText {
           html
+        }
+      }
+    }
+
+    similarPosts: allContentfulBlog(filter: { slug: { in: $similarPosts } }) {
+      edges {
+        node {
+          slug
+          title
+          createdAt
+          updatedAt
+          content {
+            childContentfulRichText {
+              timeToRead
+            }
+          }
         }
       }
     }

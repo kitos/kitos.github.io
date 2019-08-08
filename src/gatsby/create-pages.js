@@ -1,6 +1,6 @@
 const path = require('path')
 const intersection = require('lodash.intersection')
-const pick = require('lodash.pick')
+const slugify = require('slugify')
 
 let groupPostsByTag = posts =>
   posts.reduce(
@@ -21,47 +21,42 @@ let getSimilarPost = ({ slug, tags }, posts) =>
   posts
     .map(p => ({ ...p, similarity: intersection(p.tags, tags).length }))
     .filter(p => p.slug !== slug && p.similarity !== 0)
-    .sort(
-      (a, b) =>
-        b.similarity - a.similarity || b.createdAt.localeCompare(a.createdAt)
-    )
+    .sort((a, b) => b.similarity - a.similarity || b.date.localeCompare(a.date))
     .slice(0, 3)
-    .map(p => pick(p, ['slug', 'title', 'createdAt', 'timeToRead']))
+    .map(({ slug }) => slug)
 
 module.exports = ({ graphql, actions: { createPage } }) =>
   graphql(`
     {
-      posts: allContentfulBlog(sort: { fields: [createdAt], order: DESC }) {
+      posts: allMarkdownRemark(
+        filter: { fileAbsolutePath: { regex: "_content/blog/" } }
+      ) {
         edges {
           node {
-            slug
-            draft
-            title
-            createdAt
-            updatedAt
-            preface {
-              childContentfulRichText {
-                html
-              }
-            }
-            tags
-            content {
-              childContentfulRichText {
-                timeToRead
-              }
+            id
+            frontmatter {
+              date
+              title
+              tags
             }
           }
         }
       }
     }
   `).then(({ data }) => {
-    let posts = data.posts.edges
-      .filter(e => !e.node.draft)
-      .map(({ node: n }) => ({
-        ...n,
-        preface: n.preface.childContentfulRichText.html,
-        timeToRead: n.content.childContentfulRichText.timeToRead,
-      }))
+    let posts = data.posts.edges.map(
+      ({
+        node: {
+          frontmatter: { title, tags = [], ...f },
+          ...post
+        },
+      }) => ({
+        slug: slugify(title.toLowerCase()),
+        tags,
+        ...post,
+        ...f,
+      })
+    )
 
     // create blog post pages
     posts.forEach(post =>
@@ -86,7 +81,11 @@ module.exports = ({ graphql, actions: { createPage } }) =>
         component: path.resolve('./src/templates/blog-post-list.js'),
         context: {
           tag,
-          posts,
+          ids: posts.map(({ id }) => id),
+          slugById: posts.reduce(
+            (map, { id, slug }) => ({ ...map, [id]: slug }),
+            {}
+          ),
         },
       })
     )

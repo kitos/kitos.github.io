@@ -41,11 +41,11 @@ let DateWithTimeline = styled.small`
 let formatDate = d => format('MMMM dd, yyyy', new Date(d))
 
 let BlogPostSnippet = ({
-  post: { slug, title, createdAt, preface, timeToRead, tags },
+  post: { slug, title, date, preface, timeToRead, tags },
   selectedTag,
 }) => (
   <Flex as="section" alignItems="stretch">
-    <DateWithTimeline>{formatDate(createdAt)}</DateWithTimeline>
+    <DateWithTimeline>{formatDate(date)}</DateWithTimeline>
 
     <Box pl={[0, 20]}>
       <h2>
@@ -54,12 +54,10 @@ let BlogPostSnippet = ({
 
       <small>
         {timeToRead} min read{' '}
-        <span css={media.tablet`display: none;`}>
-          • {formatDate(createdAt)}
-        </span>
+        <span css={media.tablet`display: none;`}>• {formatDate(date)}</span>
       </small>
 
-      <div dangerouslySetInnerHTML={{ __html: preface }} />
+      <p>{preface}</p>
 
       <BlogTags tags={tags} selectedTag={selectedTag} />
     </Box>

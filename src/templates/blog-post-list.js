@@ -1,11 +1,12 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 import { Box } from '@rebass/grid'
 import VisuallyHidden from '@reach/visually-hidden'
 
 import { BlogPostSnippet } from '../components/blog'
 import { SEO } from '../components'
 
-let BlogPage = ({ pageContext: { posts, tag } }) => (
+let BlogPage = ({ pageContext: { slugById }, data: { posts, tag } }) => (
   <>
     <SEO title="Blog" />
 
@@ -14,17 +15,46 @@ let BlogPage = ({ pageContext: { posts, tag } }) => (
     </VisuallyHidden>
 
     <Box mt={10}>
-      {posts.length === 0 ? (
+      {posts.edges.length === 0 ? (
         <Box as="b" style={{ display: 'block', textAlign: 'center' }}>
           Some posts might be here...
         </Box>
       ) : (
-        posts.map(post => (
-          <BlogPostSnippet key={post.slug} post={post} selectedTag={tag} />
-        ))
+        posts.edges
+          .map(({ node: { id, frontmatter, ...post } }) => ({
+            slug: slugById[id],
+            ...frontmatter,
+            ...post,
+          }))
+          .map(post => (
+            <BlogPostSnippet key={post.slug} post={post} selectedTag={tag} />
+          ))
       )}
     </Box>
   </>
 )
 
 export default BlogPage
+
+export const pageQuery = graphql`
+  query BlogPostList($ids: [String!]!) {
+    posts: allMarkdownRemark(
+      filter: { id: { in: $ids } }
+      sort: { fields: frontmatter___date, order: DESC }
+    ) {
+      edges {
+        node {
+          id
+
+          frontmatter {
+            title
+            date
+            tags
+            preface
+          }
+          timeToRead
+        }
+      }
+    }
+  }
+`

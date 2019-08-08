@@ -41,6 +41,13 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `images`,
+        path: `${__dirname}/src/_content`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
         path: `${__dirname}/CHANGELOG.md`,
       },
     },
