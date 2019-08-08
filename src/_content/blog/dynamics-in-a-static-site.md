@@ -1,6 +1,6 @@
 ---
 title: Dynamics in a static site
-date: 2019-08-07T21:38:57.492Z
+date: 2019-01-28T22:38:57.492Z
 thumbnail: /images/uploads/blog-tech-stack.jpg
 preface: >-
   In this article I want to extend functionality of tooltip we've previously
