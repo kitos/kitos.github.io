@@ -1,6 +1,6 @@
 ---
 title: The simplest example of scheduling on the main thread
-date: 2019-08-07T21:42:04.602Z
+date: 2019-02-19T22:42:04.602Z
 thumbnail: /images/uploads/blog-tech-stack.jpg
 preface: >-
   I have recently read several articles related to relatively new react
