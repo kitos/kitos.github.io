@@ -1,6 +1,6 @@
 ---
 title: Implementing medium like tooltip
-date: 2019-08-07T20:52:08.746Z
+date: 2019-01-20T21:52:08.746Z
 thumbnail: /images/uploads/blog-tech-stack.jpg
 preface: >-
   Do you know that if you select post text on medium a tooltip with several
