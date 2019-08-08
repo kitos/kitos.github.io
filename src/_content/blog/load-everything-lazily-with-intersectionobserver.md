@@ -1,6 +1,6 @@
 ---
 title: Load everything lazily with IntersectionObserver
-date: 2019-08-07T20:52:08.746Z
+date: 2019-01-23T21:52:08.746Z
 thumbnail: /images/uploads/blog-tech-stack.jpg
 preface: >-
   I believe it is clear for every web developer that we should care about size
