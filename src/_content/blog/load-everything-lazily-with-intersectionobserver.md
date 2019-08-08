@@ -8,7 +8,7 @@ preface: >-
   simple technique we can use to improve initial load of web pages.
 tags:
   - reactjs
-  - render-props
+  - react-hooks
   - web-api
 ---
 Just after I've released [1.8](https://www.nikitakirsanov.com/changelog/) version of site and published post [Implementing medium like tooltip](https://www.nikitakirsanov.com/blog/implementing-medium-like-tooltip/), I had understood its page loads 6 mb! And it is absolutely inappropriate for my blazing fast site. The most significant change of this release was integration with [codesandbox](https://codesandbox.io): all embedded links to it are transformed to iframes. Results I've got in _network_ tab of chrome dev tools also had met my expectations: most of resources were loaded by iframes.
