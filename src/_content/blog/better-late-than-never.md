@@ -1,12 +1,13 @@
 ---
+slug: better-late-than-never
 title: Better late than never
 date: 2019-01-10T22:20:34.479Z
 thumbnail: /images/uploads/blog-tech-stack.jpg
-preface: "I have been thinking about developing my personal blog for a least 5 years already. Finally I have enough experience and comfortable toolchain. Here is my first try to post something here ✨\U0001F973\U0001F389"
 tags:
   - gatsbyjs
   - reactjs
   - success_story
+preface: "I have been thinking about developing my personal blog for a least 5 years already. Finally I have enough experience and comfortable toolchain. Here is my first try to post something here ✨\U0001F973\U0001F389"
 ---
 ## First steps
 
