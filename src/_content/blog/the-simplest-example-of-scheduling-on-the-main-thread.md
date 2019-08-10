@@ -1,5 +1,6 @@
 ---
 slug: the-simplest-example-of-scheduling-on-the-main-thread
+lang: en
 title: The simplest example of scheduling on the main thread
 date: 2019-02-19T22:42:04.602Z
 thumbnail: /images/uploads/blog-tech-stack.jpg
