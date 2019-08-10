@@ -18,9 +18,9 @@ Obvious solution is to load iframes lazily - when they appear in the viewport. S
 
 First of all rename src attribute of iframe to something else (e.g. data-src), so it won't load anything during initial render.
 
-```html
+```html{2}
 <iframe
-  data-src="https://nikitakirsanov.com"> <!--👈-->
+  data-src="https://nikitakirsanov.com">
 </iframe>
 ```
 
