@@ -13,7 +13,7 @@ collections:
     folder: 'src/_content/blog'
     identifier_field: 'slug'
     create: true
-    slug: '{{slug}}'
+    slug: '{{slug}}_{{lang}}'
     fields:
       - label: 'Slug'
         name: 'slug'
