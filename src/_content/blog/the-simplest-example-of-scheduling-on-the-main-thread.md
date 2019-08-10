@@ -1,16 +1,17 @@
 ---
+slug: the-simplest-example-of-scheduling-on-the-main-thread
 title: The simplest example of scheduling on the main thread
 date: 2019-02-19T22:42:04.602Z
 thumbnail: /images/uploads/blog-tech-stack.jpg
+tags:
+  - web-api
+  - algorithms
+  - reactjs
 preface: >-
   I have recently read several articles related to relatively new react
   reconciliation algorithm (aka react fiber). And I wondered how to implement
   something really simple to explain idea of scheduling and splitting work into
   chunks. So here is my thoughts.
-tags:
-  - web-api
-  - algorithms
-  - reactjs
 ---
 ## The problem
 
