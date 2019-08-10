@@ -6,7 +6,7 @@ import VisuallyHidden from '@reach/visually-hidden'
 import { BlogPostSnippet } from '../components/blog'
 import { SEO } from '../components'
 
-let BlogPage = ({ pageContext: { slugById }, data: { posts, tag } }) => (
+let BlogPage = ({ data: { posts, tag } }) => (
   <>
     <SEO title="Blog" />
 
@@ -22,7 +22,6 @@ let BlogPage = ({ pageContext: { slugById }, data: { posts, tag } }) => (
       ) : (
         posts.edges
           .map(({ node: { id, frontmatter, ...post } }) => ({
-            slug: slugById[id],
             ...frontmatter,
             ...post,
           }))
@@ -44,9 +43,8 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
-          id
-
           frontmatter {
+            slug
             title
             date
             tags

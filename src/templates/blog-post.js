@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
-import { differenceInWeeks, format } from 'date-fns/fp'
+import { format } from 'date-fns/fp'
 import { Box, Flex } from '@rebass/grid'
 import { Like } from 'react-facebook'
 import { DiscussionEmbed } from 'disqus-react'
@@ -10,14 +10,11 @@ import { SEO } from '../components'
 
 let formatDate = d => format('MMMM dd, yyyy', new Date(d))
 
-let buildSchemaOrg = ({ title, createdAt, updatedAt, tags }) => ({
-  author,
-}) => [
+let buildSchemaOrg = ({ title, date, tags }) => ({ author }) => [
   {
     '@context': 'http://schema.org',
     '@type': 'BlogPosting',
-    dateModified: updatedAt,
-    datePublished: createdAt,
+    datePublished: date,
     headline: title,
     keywords: tags.join(', '),
     author,
@@ -27,7 +24,10 @@ let buildSchemaOrg = ({ title, createdAt, updatedAt, tags }) => ({
 let BlogPost = ({
   pageContext: { slug },
   data: {
-    post: { title, createdAt, updatedAt, tags, content },
+    post: {
+      frontmatter: { title, date, tags },
+      html,
+    },
     similarPosts,
     site,
   },
@@ -39,22 +39,16 @@ let BlogPost = ({
       <SEO
         title={title}
         isBlogPost
-        schemaOrgItems={buildSchemaOrg({ title, createdAt, updatedAt, tags })}
+        schemaOrgItems={buildSchemaOrg({ title, date, tags })}
       />
 
       <h1>{title}</h1>
 
-      <small>{formatDate(createdAt)}</small>
-
-      {differenceInWeeks(new Date(createdAt), new Date(updatedAt)) > 1 && (
-        <small> (Last update at {formatDate(updatedAt)})</small>
-      )}
+      <small>{formatDate(date)}</small>
 
       <BlogTags tags={tags} />
 
-      <BlogPostContent
-        post={{ title, postUrl, html: content.childContentfulRichText.html }}
-      />
+      <BlogPostContent post={{ title, postUrl, html }} />
 
       <Box my={20}>
         <Like href={postUrl} colorScheme="dark" showFaces share />
@@ -73,22 +67,26 @@ let BlogPost = ({
             list-style: none;
           `}
         >
-          {similarPosts.edges.map(({ node: p }) => (
-            <Flex
-              as="li"
-              key={p.slug}
-              flex={1}
-              flexDirection="column"
-              mx={[0, 2]}
-            >
-              <Link to={`/blog/${p.slug}/`}>{p.title}</Link>
+          {similarPosts.edges
+            .map(({ node: { frontmatter, ...p } }) => ({
+              ...frontmatter,
+              ...p,
+            }))
+            .map(p => (
+              <Flex
+                as="li"
+                key={p.slug}
+                flex={1}
+                flexDirection="column"
+                mx={[0, 2]}
+              >
+                <Link to={`/blog/${p.slug}/`}>{p.title}</Link>
 
-              <Box as="small" mt={2}>
-                {formatDate(p.createdAt)} •{' '}
-                {p.content.childContentfulRichText.timeToRead} min read
-              </Box>
-            </Flex>
-          ))}
+                <Box as="small" mt={2}>
+                  {formatDate(p.date)} • {p.timeToRead} min read
+                </Box>
+              </Flex>
+            ))}
         </Flex>
       )}
 
@@ -107,31 +105,26 @@ let BlogPost = ({
 export default BlogPost
 
 export const query = graphql`
-  query($slug: String!, $similarPosts: [String!]!) {
-    post: contentfulBlog(slug: { eq: $slug }) {
-      title
-      createdAt
-      updatedAt
-      tags
-      content {
-        childContentfulRichText {
-          html
-        }
+  query($id: String!, $similarPosts: [String!]!) {
+    post: markdownRemark(id: { eq: $id }) {
+      frontmatter {
+        title
+        date
+        tags
       }
+      html
     }
 
-    similarPosts: allContentfulBlog(filter: { slug: { in: $similarPosts } }) {
+    similarPosts: allMarkdownRemark(filter: { id: { in: $similarPosts } }) {
       edges {
         node {
-          slug
-          title
-          createdAt
-          updatedAt
-          content {
-            childContentfulRichText {
-              timeToRead
-            }
+          frontmatter {
+            slug
+            title
+            date
+            tags
           }
+          timeToRead
         }
       }
     }

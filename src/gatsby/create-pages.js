@@ -1,6 +1,5 @@
 const path = require('path')
 const intersection = require('lodash.intersection')
-const slugify = require('slugify')
 
 let groupPostsByTag = posts =>
   posts.reduce(
@@ -23,7 +22,7 @@ let getSimilarPost = ({ slug, tags }, posts) =>
     .filter(p => p.slug !== slug && p.similarity !== 0)
     .sort((a, b) => b.similarity - a.similarity || b.date.localeCompare(a.date))
     .slice(0, 3)
-    .map(({ slug }) => slug)
+    .map(({ id }) => id)
 
 module.exports = ({ graphql, actions: { createPage } }) =>
   graphql(`
@@ -35,6 +34,7 @@ module.exports = ({ graphql, actions: { createPage } }) =>
           node {
             id
             frontmatter {
+              slug
               date
               title
               tags
@@ -51,7 +51,6 @@ module.exports = ({ graphql, actions: { createPage } }) =>
           ...post
         },
       }) => ({
-        slug: slugify(title.toLowerCase()),
         tags,
         ...post,
         ...f,
@@ -64,7 +63,7 @@ module.exports = ({ graphql, actions: { createPage } }) =>
         path: `/blog/${post.slug}/`,
         component: path.resolve('./src/templates/blog-post.js'),
         context: {
-          slug: post.slug,
+          id: post.id,
           similarPosts: getSimilarPost(post, posts),
         },
       })
@@ -82,10 +81,6 @@ module.exports = ({ graphql, actions: { createPage } }) =>
         context: {
           tag,
           ids: posts.map(({ id }) => id),
-          slugById: posts.reduce(
-            (map, { id, slug }) => ({ ...map, [id]: slug }),
-            {}
-          ),
         },
       })
     )

@@ -5,7 +5,6 @@ require('dotenv').config({
 })
 
 const rssPlugin = require('./src/gatsby/rss-plugin')
-const contentfulRichtextPlugin = require('./src/gatsby/contentful-richtext-plugin')
 
 module.exports = {
   siteMetadata: {
@@ -41,6 +40,13 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `uploads`,
+        path: `${__dirname}/static/images/uploads`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
         name: `images`,
         path: `${__dirname}/src/_content`,
       },
@@ -54,7 +60,37 @@ module.exports = {
     {
       resolve: 'gatsby-transformer-remark',
       options: {
-        plugins: ['gatsby-remark-emoji'],
+        plugins: [
+          'gatsby-remark-emoji',
+          'gatsby-remark-relative-images',
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              withWebp: true,
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {},
+          },
+          {
+            resolve: `gatsby-remark-embedded-codesandbox`,
+            options: {
+              directory: `${__dirname}/src/_content/codesandbox`,
+              getIframe: url =>
+                `<iframe
+                    data-src="${url}"
+                    class="embedded-codesandbox"
+                    style="border: none"
+                    width="600"
+                    height="300"
+                    sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin">
+                 </iframe>`,
+            },
+          },
+          `gatsby-remark-responsive-iframe`,
+        ],
       },
     },
     {
@@ -64,7 +100,7 @@ module.exports = {
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
-    contentfulRichtextPlugin,
+    '@contentful/gatsby-transformer-contentful-richtext',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {
