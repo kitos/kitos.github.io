@@ -1,5 +1,6 @@
 ---
 slug: better-late-than-never
+lang: ru
 title: Better late than never
 date: 2019-01-10T22:20:34.479Z
 thumbnail: /images/uploads/blog-tech-stack.jpg
