@@ -17,20 +17,26 @@ Obvious solution is to load iframes lazily - when they appear in the viewport. S
 
 First of all rename src attribute of iframe to something else (e.g. data-src), so it won't load anything during initial render.
 
+```html
+<iframe
+  data-src="https://nikitakirsanov.com"> <!--👈-->
+</iframe>
+```
+
 And insert src when iframe intersects with viewport:
 
 ```js
 // react hooks fits perfect for extracting
 // such type (not only) of reusable logic
-let useLazyIframe = () =&gt;
+let useLazyIframe = () =>
   // we need to register our observer after our component mounted
-  useEffect(() =&gt; {
+  useEffect(() => {
     let observer = new IntersectionObserver(
-      entries =&gt; {
+      entries => {
         entries
           // filter only visible iframes
-          .filter(e =&gt; e.isIntersecting)
-          .forEach(({ target: $el }) =&gt; {
+          .filter(e => e.isIntersecting)
+          .forEach(({ target: $el }) => {
             // iframe will start loading now
             $el.setAttribute('src', $el.getAttribute('data-src'))
             // no need to observe it anymore
@@ -45,10 +51,10 @@ let useLazyIframe = () =&gt;
 
     document
       .querySelectorAll('iframe[data-src]')
-      .forEach($el =&gt; observer.observe($el))
+      .forEach($el => observer.observe($el))
 
     // do not forget to clean up on component unmount
-    return () =&gt; observer.disconnect()
+    return () => observer.disconnect()
   }, [/* we need to register observer once */])
 ```
 

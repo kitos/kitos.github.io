@@ -36,11 +36,13 @@ So what I mean by "functionality for reporting typos/mistakes": I want to add an
 
 1. The easiest part would be to just append button to tooltip. That is how it'll look:
 
- [published Actions  typo-action    ](/spaces/6dybdba3jdxv/assets/3p2iUwaftzIvxgkQrewaMm)   
+![Typo action](/images/uploads/typo-action.jpg "Typo action")
+  
 2. Now we should implement dialog. There is plenty of ready solutions for dialogs (like [react-modal](https://github.com/reactjs/react-modal), also lots of UI libraries offer them), but I would like to give a try to the one from [reach-ui](https://ui.reach.tech/) developed by [Ryan Florence](https://twitter.com/ryanflorence).
 Its api is pretty straightforward, so I won't show an example with it (you can easily find [it on its site](https://ui.reach.tech/dialog)). But I'd like to mentioned that to animate it I used [react-spring](http://react-spring.surge.sh), as I did for tooltip (and you can also find [an example of using them together](https://ui.reach.tech/dialog#animation-example)). Here is [source code](https://github.com/kitos/kitos.github.io/blob/develop/src/components/dialog.js) of my dialog and result:
 
- [published Actions  typo-dialog    ](/spaces/6dybdba3jdxv/assets/kIffpltUXt1cKf2TOmnRa)   
+![Typo dialog](/images/uploads/typo-dialog.jpg "Typo dialog")
+ 
 3. The last but not least thing we should implement is backend which will receive out submissions and put it somewhere . 
 
 ## 
@@ -82,7 +84,7 @@ const github = axios.create({
   },
 });
 
-exports.createIssue = async (request, response) =&gt; {
+exports.createIssue = async (request, response) => {
   let { title, link, source, suggestion } = request.query
 
   try {
@@ -93,11 +95,11 @@ There is a typo post [${title}](${link}).
 ### Source:
 ${source}
 ### Suggestion:
-${suggestion}	
+${suggestion}
       `,
       assignees: ["kitos"],
       labels: ["blog:typo"]
-  	})
+  })
     
     response.status(200).send({ url: html_url })
   } catch(e) {
@@ -122,7 +124,7 @@ Fortunately we have [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/COR
 _www.nikitakirsanov.com_). And it's to implement it using GCP ([official docs](https://cloud.google.com/functions/docs/writing/http#handling_cors_requests)): you should add special response headers:
 
 ```js
-exports.createIssue = async (request, response) =&gt; {
+exports.createIssue = async (request, response) => {
   ...
   response.set('Access-Control-Allow-Origin', "https://www.nikitakirsanov.com")
   response.set('Access-Control-Allow-Methods', 'GET')
@@ -130,4 +132,4 @@ exports.createIssue = async (request, response) =&gt; {
 }
 ```
 
-That's it! Here is a demo:
+That's it! To see a demo just select _any text in this or any other article_:

@@ -23,11 +23,11 @@ Let's start with core feature - sort function. Yep, we are not going use
 _Array.prototype.sort_, cause it will be impossible to improve it later. The simplest algorithm I know is [bubble sort](https://en.wikipedia.org/wiki/Bubble_sort):
 
 ```js
-let sortPass = array =&gt; {
+let sortPass = array => {
   let needOneMorePass = false
 
-  for (let i = 0; i &lt; array.length - 1; i++) {
-    if (array[i] &gt; array[i + 1]) {
+  for (let i = 0; i < array.length - 1; i++) {
+    if (array[i] > array[i + 1]) {
       let temp = array[i]
       array[i] = array[i + 1]
       array[i + 1] = temp
@@ -39,7 +39,7 @@ let sortPass = array =&gt; {
   return needOneMorePass
 }
 
-let bubbleSortSync = array =&gt; {
+let bubbleSortSync = array => {
   // do not mutate original array
   let clone = array.slice()
 
@@ -53,11 +53,11 @@ I've splitted algorithm into 2 functions to show how it is easy breakable into u
 
 Now let's add some simple ui: button to trigger core functional of our app (sorting). To track ui responsiveness during algorithm execution we will add css animation and text input. Also we will try to display several array elements before and after sorting:
 
-[stop the world - bubble sort](https://codesandbox.io/embed/1y1moxrz43)
+[stop the world - bubble sort](embedded-codesandbox://the-simplest-example-of-scheduling-on-the-main-thread/stop-the-world)
 
 Have you seen that? Button click "stops the world": green block is not rotating anymore, input cannot be edited. And the reason for that is that browser processes everything in a single thread: it wasn't able to update layout and respond to user while we were sorting.
 
-[published Actions  stop-the-world    ](/spaces/6dybdba3jdxv/assets/2Vfe51zxTbnxH3GMV31KAg)
+![Stop the world](/images/uploads/stop-the-world.jpg "Stop the world")
 
 To improve our app we should not block main thread for more than 16ms (for 60 frames per second). Thus, we should be able to suspend the execution of the sort function and resume it after the browser has completed its work.
 
@@ -68,7 +68,7 @@ Luckily our algorithm can be suspended/resumed easily and browser has [nice API]
 ```js
 // we won't be able to return sorted array synchronously anymore
 // so let's use promises
-let bubbleSortAsync = (array) =&gt; new Promise(resolve =&gt; {
+let bubbleSortAsync = (array) => new Promise(resolve => {
   // immutability espeсially importaint in async code
   let clone = array.slice()
 
@@ -90,17 +90,14 @@ let bubbleSortAsync = (array) =&gt; new Promise(resolve =&gt; {
 })
 ```
 
-Experience became so smooth that I decided to rerender array elements on every callback (to show the progress):
+Experience became so smooth that I decided to rerender array elements on every callback (to show the progress).
+And here is a demo:
 
-[published Actions  smooth-sort    ](/spaces/6dybdba3jdxv/assets/5njLECsL7wjjn0ZzfAgPeR)
+[Imagine next app](embedded-codesandbox://the-simplest-example-of-scheduling-on-the-main-thread/scheduling)
 
 Here is how it looks in profiler:
 
-[published Actions  smooth-sort-profile    ](/spaces/6dybdba3jdxv/assets/5IJzUlbQBQWTU2TK1cS8iX)
-
-And here is a demo:
-
-[Imagine next app](https://codesandbox.io/embed/7mnm1z8mpj)
+![Smooth sort profile](/images/uploads/smooth-sort-profile.jpg "Smooth sort profile")
 
 Looks cool, right? Though sorting takes a bit more time to finish, user doesn't feel that it is slow. That is exactly what we were looking for.
 

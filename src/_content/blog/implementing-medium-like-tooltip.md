@@ -27,7 +27,7 @@ Fortunately we live in open source era, so there is plenty of ready solutions. E
 
 Let's try to create simple popup using it:
 
-[popper-example](https://codesandbox.io/embed/2m4r4r96j?autoresize=1&hidenavigation=1&view=preview)
+[popper-example](embedded-codesandbox://implementing-medium-like-tooltip/popper)
 
 By the way, its api should be more neat [with hooks](https://github.com/FezVrasta/react-popper/issues/241).
 
@@ -46,7 +46,7 @@ Any ideas how we can accomplish that? A couple of questions to google and boom -
 Let's look at how we can apply this api:
 
 ```jsx
-let handleMouseUp = () =&gt; {
+let handleMouseUp = () => {
   let selection = window.getSelection()
 
   // we do not need "empty" selection
@@ -61,7 +61,7 @@ let handleMouseUp = () =&gt; {
 
 Here is a demo:
 
-[selection-api](https://codesandbox.io/embed/w7p05znp48?hidenavigation=1&view=preview)
+[selection-api](embedded-codesandbox://implementing-medium-like-tooltip/selection-api)
 
 Well looks cool, but how can we attach that to _react-popper_? It expects to get a ref to DOM node...
 
@@ -125,7 +125,7 @@ It has same signature with one exception: children function (aka [render prop](h
 
 That's it! now we can use our component to position tooltip:
 
-[medium-like-tooptip_popper+selection-api](https://codesandbox.io/embed/koypnm63kr?autoresize=1&hidenavigation=1&view=preview)
+[medium-like-tooptip_popper+selection-api](embedded-codesandbox://implementing-medium-like-tooltip/all-together)
 
 ## Cherry on top
 
