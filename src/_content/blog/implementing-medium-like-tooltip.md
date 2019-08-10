@@ -1,16 +1,17 @@
 ---
+slug: implementing-medium-like-tooltip
 title: Implementing medium like tooltip
 date: 2019-01-20T21:52:08.746Z
 thumbnail: /images/uploads/blog-tech-stack.jpg
+tags:
+  - reactjs
+  - render-props
+  - web-api
 preface: >-
   Do you know that if you select post text on medium a tooltip with several
   options (tweet, highlight...) will appear? Have you used it? I would like to
   tell you how to create similar one and about DOM API I've learned during
   implementation.
-tags:
-  - reactjs
-  - render-props
-  - web-api
 ---
 It might (and should) look like quite a trivial thing to implement. But still there are some pitfalls, so I want to tell how to avoid them, what libraries and patterns can help. And again to strengthen my English 😁
 
