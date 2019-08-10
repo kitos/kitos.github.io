@@ -36,7 +36,6 @@ module.exports = ({ graphql, actions: { createPage } }) =>
             frontmatter {
               slug
               date
-              title
               tags
             }
           }
@@ -47,7 +46,7 @@ module.exports = ({ graphql, actions: { createPage } }) =>
     let posts = data.posts.edges.map(
       ({
         node: {
-          frontmatter: { title, tags = [], ...f },
+          frontmatter: { tags = [], ...f },
           ...post
         },
       }) => ({
