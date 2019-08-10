@@ -1,11 +1,8 @@
 ---
+slug: dynamics-in-a-static-site
 title: Dynamics in a static site
 date: 2019-01-28T22:38:57.492Z
 thumbnail: /images/uploads/blog-tech-stack.jpg
-preface: >-
-  In this article I want to extend functionality of tooltip we've previously
-  developed. And to figure out if it is possible to deal with something dynamic
-  in statically build web app.
 tags:
   - cloud-functions
   - gcp
@@ -14,6 +11,10 @@ tags:
   - reactjs
   - CORS
   - JAMStack
+preface: >-
+  In this article I want to extend functionality of tooltip we've previously
+  developed. And to figure out if it is possible to deal with something dynamic
+  in statically build web app.
 ---
 ## Decompose it!
 
