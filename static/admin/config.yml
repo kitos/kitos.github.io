@@ -15,13 +15,19 @@ collections:
     create: true
     slug: '{{slug}}'
     fields:
-      - {
-          label: 'Slug',
-          name: 'slug',
-          widget: 'string',
-          required: true,
-          pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Lol'],
-        }
+      - label: 'Slug'
+        name: 'slug'
+        widget: 'string'
+        required: true
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Lol']
+
+      - label: 'Language'
+        name: 'lang'
+        widget: 'select'
+        options:
+          - { label: 'ru 🇷🇺', value: 'ru' }
+          - { label: 'en 🏴󠁧󠁢󠁥󠁮󠁧󠁿', value: 'en' }
+        default: 'ru'
       - { label: 'Title', name: 'title', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
       - { label: 'Featured Image', name: 'thumbnail', widget: 'image' }
