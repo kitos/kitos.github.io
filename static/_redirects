@@ -1,2 +1,1 @@
-# Redirect default Netlify subdomain to primary domain
-http://kitos.netlify.com/* http://nikitakirsanov.com/:splat 301!
+
