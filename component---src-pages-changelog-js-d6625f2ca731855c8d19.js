@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{395:function(n,e,t){"use strict";t.r(e),t.d(e,"query",function(){return u});var r=t(0),a=t.n(r),u="3349290616";e.default=function(n){var e=n.data.changelog;return a.a.createElement("div",{dangerouslySetInnerHTML:{__html:e.html}})}}}]);
+//# sourceMappingURL=component---src-pages-changelog-js-d6625f2ca731855c8d19.js.map
