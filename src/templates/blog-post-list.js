@@ -6,7 +6,7 @@ import VisuallyHidden from '@reach/visually-hidden'
 import { BlogPostSnippet } from '../components/blog'
 import { SEO } from '../components'
 
-let BlogPage = ({ data: { posts, tag } }) => (
+let BlogPage = ({ pageContext: { tag }, data: { posts } }) => (
   <>
     <SEO title="Blog" />
 
