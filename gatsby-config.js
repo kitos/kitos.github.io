@@ -23,6 +23,7 @@ module.exports = {
     'gatsby-plugin-sitemap',
     'gatsby-plugin-styled-components',
     'gatsby-plugin-netlify-cms',
+    'gatsby-plugin-twitter',
     rssPlugin,
     {
       resolve: 'gatsby-plugin-layout',
