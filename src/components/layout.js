@@ -50,6 +50,10 @@ let GlobalStyle = createGlobalStyle`
     width: 100%;
     flex-shrink: 0;
   }
+  
+  .twitter-tweet {
+    margin: 10px auto;
+  }
 `
 
 const Layout = ({ pageTitle, schemaOrgItems, children }) => (
