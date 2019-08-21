@@ -1,5 +1,4 @@
 [[redirects]]
   # Redirect default Netlify subdomain to primary domain
-
-  from = "http://kitos.netlify.com/*"
-  to = "http://nikitakirsanov.com/:splat"
+  from = "https://kitos.netlify.com/*"
+  to = "https://nikitakirsanov.com/:splat"
