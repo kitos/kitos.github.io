@@ -4,7 +4,6 @@ import styled, {
   ThemeProvider,
 } from 'styled-components/macro'
 import { Box } from '@rebass/grid'
-import { FacebookProvider } from 'react-facebook'
 
 import Header from './header'
 import Footer from './footer'
@@ -58,25 +57,23 @@ let GlobalStyle = createGlobalStyle`
 
 const Layout = ({ pageTitle, schemaOrgItems, children }) => (
   <ThemeProvider theme={theme}>
-    <FacebookProvider appId="832164347114591">
-      <ErrorBoundary>
-        <FeedbackProvider>
-          <GlobalStyle />
+    <ErrorBoundary>
+      <FeedbackProvider>
+        <GlobalStyle />
 
-          <HeaderWrapper>
-            <Header />
-          </HeaderWrapper>
+        <HeaderWrapper>
+          <Header />
+        </HeaderWrapper>
 
-          <PageWrapper as="main" px={[20, 20, 0]}>
-            <ErrorBoundary>{children}</ErrorBoundary>
-          </PageWrapper>
+        <PageWrapper as="main" px={[20, 20, 0]}>
+          <ErrorBoundary>{children}</ErrorBoundary>
+        </PageWrapper>
 
-          <FooterWrapper>
-            <Footer />
-          </FooterWrapper>
-        </FeedbackProvider>
-      </ErrorBoundary>
-    </FacebookProvider>
+        <FooterWrapper>
+          <Footer />
+        </FooterWrapper>
+      </FeedbackProvider>
+    </ErrorBoundary>
   </ThemeProvider>
 )
 

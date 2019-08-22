@@ -2,7 +2,6 @@ import React from 'react'
 import { graphql, Link } from 'gatsby'
 import { format } from 'date-fns/fp'
 import { Box, Flex } from '@rebass/grid'
-import { Like } from 'react-facebook'
 import { DiscussionEmbed } from 'disqus-react'
 
 import { BlogPostContent, BlogTags } from '../components/blog'
@@ -49,10 +48,6 @@ let BlogPost = ({
       <BlogTags tags={tags} />
 
       <BlogPostContent post={{ title, postUrl, html }} />
-
-      <Box my={20}>
-        <Like href={postUrl} colorScheme="dark" showFaces share />
-      </Box>
 
       <h2>Read next</h2>
 
