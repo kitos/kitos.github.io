@@ -47,6 +47,7 @@ export const pageQuery = graphql`
             slug
             title
             date
+            lang
             tags
             preface
           }

@@ -41,7 +41,7 @@ let DateWithTimeline = styled.small`
 let formatDate = d => format('MMMM dd, yyyy', new Date(d))
 
 let BlogPostSnippet = ({
-  post: { slug, title, date, preface, timeToRead, tags },
+  post: { slug, title, lang, date, preface, timeToRead, tags },
   selectedTag,
 }) => (
   <Flex as="section" alignItems="stretch">
@@ -53,6 +53,14 @@ let BlogPostSnippet = ({
       </h2>
 
       <small>
+        <span
+          role="img"
+          title={
+            lang === 'en' ? 'Available in English' : 'Available in Russian'
+          }
+        >
+          {lang === 'en' ? '🇬🇧' : '🇷🇺'}
+        </span>
         {timeToRead} min read{' '}
         <span css={media.tablet`display: none;`}>• {formatDate(date)}</span>
       </small>
