@@ -73,7 +73,7 @@ module.exports = {
           },
           {
             resolve: `gatsby-remark-prismjs`,
-            options: {},
+            options: { inlineCodeMarker: `±` },
           },
           {
             resolve: `gatsby-remark-embedded-codesandbox`,
