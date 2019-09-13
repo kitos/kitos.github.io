@@ -2,6 +2,7 @@
   # Redirect default Netlify subdomain to primary domain
   from = "https://kitos.netlify.com/*"
   to = "https://nikitakirsanov.com/:splat"
+  force = true
 
 [[redirects]]
   from = "/game-of-life/"
