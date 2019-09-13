@@ -7,6 +7,7 @@ import Tag from '../tag'
 let BlogTags = ({ tags, selectedTag }) => (
   <Flex
     as="ul"
+    flexWrap="wrap"
     m={0}
     css={`
       list-style: none;
