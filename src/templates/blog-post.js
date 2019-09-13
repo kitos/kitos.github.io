@@ -21,10 +21,9 @@ let buildSchemaOrg = ({ title, date, tags }) => ({ author }) => [
 ]
 
 let BlogPost = ({
-  pageContext: { slug },
   data: {
     post: {
-      frontmatter: { title, date, tags },
+      frontmatter: { slug, title, date, tags },
       html,
     },
     similarPosts,
@@ -103,6 +102,7 @@ export const query = graphql`
   query($id: String!, $similarPosts: [String!]!) {
     post: markdownRemark(id: { eq: $id }) {
       frontmatter {
+        slug
         title
         date
         tags
