@@ -4,6 +4,7 @@ import { format } from 'date-fns/fp'
 import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 import { DiscussionEmbed } from 'disqus-react'
+import GHSlugger from 'github-slugger'
 
 import { BlogPostContent, BlogTags } from '../components/blog'
 import { SEO } from '../components'
@@ -35,6 +36,8 @@ let buildSchemaOrg = ({ title, date, tags }) => ({ author }) => [
   },
 ]
 
+let slugger = new GHSlugger()
+
 let BlogPost = ({
   data: {
     post: {
@@ -46,6 +49,8 @@ let BlogPost = ({
     site,
   },
 }) => {
+  slugger.reset()
+
   let postUrl = `${site.meta.siteUrl}/blog/${slug}/`
 
   return (
@@ -64,7 +69,10 @@ let BlogPost = ({
 
       <div style={{ position: 'relative' }}>
         <TocWrapper>
-          <StyledToc headings={headings} />
+          <StyledToc
+            headings={headings}
+            slugify={s => slugger.slug(s, false)}
+          />
         </TocWrapper>
 
         <BlogPostContent post={{ title, postUrl, html }} />

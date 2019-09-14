@@ -15,15 +15,10 @@ let toTree = headings =>
   )
   |> Belt_List.reverse;
 
-let toAnchor = str =>
-  "#"
-  ++ Js_string.toLowerCase(str)
-  |> Js_string.replaceByRe([%re "/ /g"], "-");
-
 let linkStyle = ReactDOMRe.Style.make(~color="gray", ());
 
 [@react.component]
-let default = (~headings, ~className) => {
+let default = (~headings, ~className, ~slugify) => {
   <nav className>
     <ul
       style={ReactDOMRe.Style.make(
@@ -40,7 +35,9 @@ let default = (~headings, ~className) => {
        ->Belt_List.toArray
        ->map((((value, _), children)) =>
            <li key=value>
-             <a href={toAnchor(value)} style=linkStyle> {string(value)} </a>
+             <a href={"#" ++ slugify(value)} style=linkStyle>
+               {string(value)}
+             </a>
              {switch (children) {
               | [] => string("")
               | subHeadings =>
@@ -53,7 +50,7 @@ let default = (~headings, ~className) => {
                   {Belt_List.toArray(subHeadings)
                    ->map((((v, _), _)) =>
                        <li key=v>
-                         <a href={toAnchor(v)} style=linkStyle>
+                         <a href={"#" ++ slugify(v)} style=linkStyle>
                            {string(v)}
                          </a>
                        </li>

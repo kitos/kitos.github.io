@@ -66,6 +66,14 @@ module.exports = {
           'gatsby-remark-emoji',
           'gatsby-remark-relative-images',
           {
+            resolve: 'gatsby-remark-autolink-headers',
+            options: {
+              offsetY: 0,
+              maintainCase: false,
+              removeAccents: true,
+            },
+          },
+          {
             resolve: `gatsby-remark-images`,
             options: {
               withWebp: true,

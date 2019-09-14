@@ -53,15 +53,15 @@ let FailDialog = ({ isOpen, onDismiss }) => (
 )
 
 let FeedbackDialog = ({ type, isOpen, payload, onDismiss }) => {
-  if (!isOpen) {
-    return null
-  }
-
   let [feedbackType, setFeedbackType] = useState(type)
   let [typoSource, setTypoSource] = useState(payload.typo)
   let [content, setContent] = useState(payload.typo)
   let initialDialogFocusRef = useRef(null)
   let [{ dialogType, issueUrl }, toggleDialog] = useState({ dialogType: null })
+
+  if (!isOpen) {
+    return null
+  }
 
   let handleSubmit = async () => {
     try {
