@@ -1,11 +1,26 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
 import { format } from 'date-fns/fp'
+import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 import { DiscussionEmbed } from 'disqus-react'
 
 import { BlogPostContent, BlogTags } from '../components/blog'
 import { SEO } from '../components'
+import TableOfContent from '../components/blog/TableOfContent.bs'
+
+let TocWrapper = styled.div`
+  position: absolute;
+  height: 100%;
+  min-width: 200px;
+  top: 30px;
+  left: calc(100% + 70px);
+`
+
+let StyledToc = styled(TableOfContent)`
+  position: sticky;
+  top: 50px;
+`
 
 let formatDate = d => format('MMMM dd, yyyy', new Date(d))
 
@@ -24,6 +39,7 @@ let BlogPost = ({
   data: {
     post: {
       frontmatter: { slug, title, date, tags },
+      headings,
       html,
     },
     similarPosts,
@@ -46,7 +62,13 @@ let BlogPost = ({
 
       <BlogTags tags={tags} />
 
-      <BlogPostContent post={{ title, postUrl, html }} />
+      <div style={{ position: 'relative' }}>
+        <TocWrapper>
+          <StyledToc headings={headings} />
+        </TocWrapper>
+
+        <BlogPostContent post={{ title, postUrl, html }} />
+      </div>
 
       <h2>Read next</h2>
 
@@ -106,6 +128,11 @@ export const query = graphql`
         title
         date
         tags
+      }
+
+      headings {
+        value
+        depth
       }
       html
     }
