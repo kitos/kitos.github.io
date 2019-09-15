@@ -1,33 +1,11 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
 import { format } from 'date-fns/fp'
-import styled from 'styled-components'
 import { Box, Flex } from '@rebass/grid'
 import { DiscussionEmbed } from 'disqus-react'
-import GHSlugger from 'github-slugger'
 
 import { BlogPostContent, BlogTags } from '../components/blog'
 import { SEO } from '../components'
-import { media } from '../utils'
-import TableOfContent from '../components/blog/TableOfContent.bs'
-
-let TocWrapper = styled.div`
-  display: none;
-  ${media.wide`
-    display: block;
-  `};
-
-  position: absolute;
-  height: 100%;
-  min-width: 200px;
-  top: 30px;
-  left: calc(100% + 50px);
-`
-
-let StyledToc = styled(TableOfContent)`
-  position: sticky;
-  top: 50px;
-`
 
 let formatDate = d => format('MMMM dd, yyyy', new Date(d))
 
@@ -42,8 +20,6 @@ let buildSchemaOrg = ({ title, date, tags }) => ({ author }) => [
   },
 ]
 
-let slugger = new GHSlugger()
-
 let BlogPost = ({
   data: {
     post: {
@@ -55,8 +31,6 @@ let BlogPost = ({
     site,
   },
 }) => {
-  slugger.reset()
-
   let postUrl = `${site.meta.siteUrl}/blog/${slug}/`
 
   return (
@@ -73,16 +47,7 @@ let BlogPost = ({
 
       <BlogTags tags={tags} />
 
-      <div style={{ position: 'relative' }}>
-        <TocWrapper>
-          <StyledToc
-            headings={headings}
-            slugify={s => slugger.slug(s, false)}
-          />
-        </TocWrapper>
-
-        <BlogPostContent post={{ title, postUrl, html }} />
-      </div>
+      <BlogPostContent post={{ title, postUrl, headings, html }} />
 
       <h2>Read next</h2>
 
