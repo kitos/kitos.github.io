@@ -56,7 +56,11 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .cache public",
+    "prebuild": "npm run re:build",
     "build": "gatsby build",
+    "re:build": "bsb -make-world",
+    "re:start": "bsb -make-world -w",
+    "re:clean": "bsb -clean-world",
     "clean-build": "npm run clean && gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
