@@ -8,14 +8,20 @@ import GHSlugger from 'github-slugger'
 
 import { BlogPostContent, BlogTags } from '../components/blog'
 import { SEO } from '../components'
+import { media } from '../utils'
 import TableOfContent from '../components/blog/TableOfContent.bs'
 
 let TocWrapper = styled.div`
+  display: none;
+  ${media.wide`
+    display: block;
+  `};
+
   position: absolute;
   height: 100%;
   min-width: 200px;
   top: 30px;
-  left: calc(100% + 70px);
+  left: calc(100% + 50px);
 `
 
 let StyledToc = styled(TableOfContent)`

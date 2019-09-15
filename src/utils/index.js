@@ -7,6 +7,7 @@ let sizes = {
   phone: '40em',
   tablet: '52em',
   desktop: '64em',
+  wide: '80em',
 }
 
 export let breakpoints = Object.values(sizes)
