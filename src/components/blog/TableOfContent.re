@@ -10,7 +10,13 @@ let toTree = headings =>
 
       snd(last) == snd(current)
         ? [(current, []), lastNode, ...rest]
-        : [(fst(lastNode), [(current, []), ...snd(lastNode)]), ...rest];
+        : [
+          (
+            fst(lastNode),
+            Belt_List.concat(snd(lastNode), [(current, [])]),
+          ),
+          ...rest,
+        ];
     }
   )
   |> Belt_List.reverse;
