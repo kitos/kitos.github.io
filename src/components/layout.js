@@ -59,7 +59,7 @@ let GlobalStyle = createGlobalStyle`
   }
 `
 
-const Layout = ({ pageTitle, schemaOrgItems, children }) => (
+const Layout = ({ children }) => (
   <ThemeProvider theme={theme}>
     <ErrorBoundary>
       <FeedbackProvider>

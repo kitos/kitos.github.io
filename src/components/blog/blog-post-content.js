@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import 'styled-components/macro'
 import { Flex } from '@rebass/grid'
 import { Manager } from 'react-popper'
@@ -8,11 +8,13 @@ import { SelectionReference, Tooltip } from '../tooltip'
 import { TwitterIcon } from '../icons'
 import { UnstyledButton } from '../button'
 import { useOuterClickHandler } from '../outer-click-hook'
-import { FeedbackConsumer } from '../feedback'
+import { feedbackContext } from '../feedback'
 import { useLazyIframe } from '../lazy-iframe-hook'
 
-let BlogPostContent = ({ post: { title, postUrl, html } }) => {
-  let tooltipClassname = 'tooltip'
+let tooltipClassname = 'tooltip'
+
+export let BlogPostContent = ({ post: { title, postUrl, html } }) => {
+  const shareFeedback = useContext(feedbackContext)
   let [selectedText, setSelectedText] = useState(null)
 
   useOuterClickHandler(() => setSelectedText(null), `.${tooltipClassname}`)
@@ -52,28 +54,21 @@ let BlogPostContent = ({ post: { title, postUrl, html } }) => {
             <TwitterIcon width={30} mode="blueOnWhite" />
           </a>
 
-          <FeedbackConsumer>
-            {shareFeedback => (
-              <UnstyledButton
-                title="Report typo/mistake"
-                aria-label="Report typo/mistake"
-                onClick={() =>
-                  shareFeedback({
-                    type: 'typo',
-                    post: { title, link: postUrl },
-                    typo: selectedText,
-                  })
-                }
-              >
-                ✏️
-              </UnstyledButton>
-            )}
-          </FeedbackConsumer>
+          <UnstyledButton
+            title="Report typo/mistake"
+            aria-label="Report typo/mistake"
+            onClick={() =>
+              shareFeedback({
+                type: 'typo',
+                post: { title, link: postUrl },
+                typo: selectedText,
+              })
+            }
+          >
+            ✏️
+          </UnstyledButton>
         </Flex>
       </Tooltip>
     </Manager>
   )
 }
-
-export default BlogPostContent
-export { BlogPostContent }

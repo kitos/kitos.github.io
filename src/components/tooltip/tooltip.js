@@ -47,7 +47,7 @@ let Arrow = styled.div`
   }
 `
 
-let Tooltip = ({ isOpen, className, children, referenceElement }) => (
+export let Tooltip = ({ isOpen, className, children, referenceElement }) => (
   <Popper referenceElement={referenceElement}>
     {({ ref, style, placement, arrowProps }) => {
       let translateSign = placement === 'bottom' ? '-' : ''
@@ -93,6 +93,3 @@ let Tooltip = ({ isOpen, className, children, referenceElement }) => (
     }}
   </Popper>
 )
-
-export default Tooltip
-export { Tooltip }

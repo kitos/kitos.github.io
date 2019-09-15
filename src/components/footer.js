@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components/macro'
-import { graphql, Link, StaticQuery } from 'gatsby'
+import { graphql, Link, useStaticQuery } from 'gatsby'
+import { feedbackContext } from './feedback'
 
 let F = styled.footer`
   max-width: ${({ theme }) => theme.pageWidth};
@@ -15,6 +16,9 @@ let F = styled.footer`
 
 let BottomLink = styled.a`
   font-size: 14px;
+  color: #4078c0;
+  background: transparent;
+  cursor: pointer;
   padding: 0 5px;
 
   border-right: solid 1px ${({ theme }) => theme.colors.lightgray};
@@ -23,57 +27,66 @@ let BottomLink = styled.a`
   }
 `
 
-let Footer = () => (
-  <StaticQuery
-    query={graphql`
-      query SiteFooterQuery {
-        site {
-          siteMetadata {
-            siteUrl
-            version
-          }
+let Footer = () => {
+  let openFeedbackDialog = useContext(feedbackContext)
+  let {
+    site: { siteMetadata: meta },
+  } = useStaticQuery(graphql`
+    query SiteFooterQuery {
+      site {
+        siteMetadata {
+          siteUrl
+          version
         }
       }
-    `}
-    render={({ site: { siteMetadata: meta } }) => (
-      <F>
-        <div>
-          © Nikita Kirsanov - <Link to="/changelog/">v{meta.version}</Link> (
-          {new Date().getFullYear()}). Build with{' '}
-          <a
-            href="https://www.gatsbyjs.org/"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            gatsbyjs
-          </a>{' '}
-          ❤️
-        </div>
+    }
+  `)
 
-        <div>
-          <BottomLink
-            href="https://github.com/kitos/kitos.github.io"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            source
-          </BottomLink>
+  return (
+    <F>
+      <div>
+        © Nikita Kirsanov - <Link to="/changelog/">v{meta.version}</Link> (
+        {new Date().getFullYear()}). Build with{' '}
+        <a
+          href="https://www.gatsbyjs.org/"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          gatsbyjs
+        </a>{' '}
+        ❤️
+      </div>
 
-          <BottomLink as={Link} to="/changelog/">
-            changelog
-          </BottomLink>
+      <div>
+        <BottomLink
+          href="https://github.com/kitos/kitos.github.io"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          source
+        </BottomLink>
 
-          <BottomLink
-            href={`${meta.siteUrl}/rss.xml`}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            rss
-          </BottomLink>
-        </div>
-      </F>
-    )}
-  />
-)
+        <BottomLink as={Link} to="/changelog/">
+          changelog
+        </BottomLink>
+
+        <BottomLink
+          href={`${meta.siteUrl}/rss.xml`}
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          rss
+        </BottomLink>
+
+        <BottomLink
+          as="button"
+          onClick={() => openFeedbackDialog({ type: 'feedback' })}
+        >
+          feedback
+        </BottomLink>
+      </div>
+    </F>
+  )
+}
 
 export default Footer
