@@ -7,17 +7,21 @@ class ErrorBoundary extends React.Component {
   state = {}
 
   componentDidCatch({ message, stack }, { componentStack }) {
-    this.setState({ message, stack, componentStack }, () =>
-      fetch(
-        `${process.env.GATSBY_CLOUD_FUNCTION_CREATE_GH_ISSUE}?${toQueryString({
-          type: 'bug',
-          message,
-          stack,
-        })}`
-      )
-        .then(resp => resp.json())
-        .then(({ url }) => this.setState({ issueUrl: url }))
-    )
+    this.setState({ message, stack, componentStack }, () => {
+      if (process.env.NODE_ENV === 'production') {
+        fetch(
+          `${process.env.GATSBY_CLOUD_FUNCTION_CREATE_GH_ISSUE}?${toQueryString(
+            {
+              type: 'bug',
+              message,
+              stack,
+            }
+          )}`
+        )
+          .then(resp => resp.json())
+          .then(({ url }) => this.setState({ issueUrl: url }))
+      }
+    })
   }
 
   render() {
