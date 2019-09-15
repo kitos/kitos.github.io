@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import styled, { css } from 'styled-components/macro'
 import { Popper } from 'react-popper'
 import { Transition } from 'react-spring'
@@ -47,49 +48,51 @@ let Arrow = styled.div`
   }
 `
 
-export let Tooltip = ({ isOpen, className, children, referenceElement }) => (
-  <Popper referenceElement={referenceElement}>
-    {({ ref, style, placement, arrowProps }) => {
-      let translateSign = placement === 'bottom' ? '-' : ''
+export let Tooltip = ({ isOpen, className, children, referenceElement }) =>
+  ReactDOM.createPortal(
+    <Popper referenceElement={referenceElement}>
+      {({ ref, style, placement, arrowProps }) => {
+        let translateSign = placement === 'bottom' ? '-' : ''
 
-      return (
-        <Transition
-          unique
-          reset
-          items={isOpen}
-          from={{
-            transform: `translateY(${translateSign}30px) scale(0.9)`,
-            opacity: 0,
-          }}
-          enter={{ transform: `translateY(0) scale(1)`, opacity: 1 }}
-          leave={{
-            transform: `translateY(${translateSign}30px) scale(0.9)`,
-            opacity: 0,
-          }}
-        >
-          {transitionIsOpen =>
-            transitionIsOpen &&
-            (transitionStyle => (
-              <div
-                ref={ref}
-                style={style}
-                data-placement={placement}
-                className={className}
-              >
-                <Popover style={transitionStyle}>{children}</Popover>
+        return (
+          <Transition
+            unique
+            reset
+            items={isOpen}
+            from={{
+              transform: `translateY(${translateSign}30px) scale(0.9)`,
+              opacity: 0,
+            }}
+            enter={{ transform: `translateY(0) scale(1)`, opacity: 1 }}
+            leave={{
+              transform: `translateY(${translateSign}30px) scale(0.9)`,
+              opacity: 0,
+            }}
+          >
+            {transitionIsOpen =>
+              transitionIsOpen &&
+              (transitionStyle => (
+                <div
+                  ref={ref}
+                  style={style}
+                  data-placement={placement}
+                  className={className}
+                >
+                  <Popover style={transitionStyle}>{children}</Popover>
 
-                <Arrow
-                  {...{ ...arrowProps, placement }}
-                  style={{
-                    ...arrowProps.style,
-                    opacity: transitionStyle.opacity,
-                  }}
-                />
-              </div>
-            ))
-          }
-        </Transition>
-      )
-    }}
-  </Popper>
-)
+                  <Arrow
+                    {...{ ...arrowProps, placement }}
+                    style={{
+                      ...arrowProps.style,
+                      opacity: transitionStyle.opacity,
+                    }}
+                  />
+                </div>
+              ))
+            }
+          </Transition>
+        )
+      }}
+    </Popper>,
+    document.body
+  )

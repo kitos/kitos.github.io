@@ -14,7 +14,7 @@ import { useLazyIframe } from '../lazy-iframe-hook'
 let tooltipClassname = 'tooltip'
 
 export let BlogPostContent = ({ post: { title, postUrl, html } }) => {
-  const shareFeedback = useContext(feedbackContext)
+  let shareFeedback = useContext(feedbackContext)
   let [selectedText, setSelectedText] = useState(null)
 
   useOuterClickHandler(() => setSelectedText(null), `.${tooltipClassname}`)
