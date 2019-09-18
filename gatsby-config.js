@@ -19,11 +19,16 @@ module.exports = {
     },
   },
   plugins: [
+    'gatsby-plugin-reason',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-styled-components',
     'gatsby-plugin-netlify-cms',
     'gatsby-plugin-twitter',
+    {
+      resolve: 'gatsby-plugin-netlify-cache',
+      options: { extraDirsToCache: ['./public/images'] },
+    },
     rssPlugin,
     {
       resolve: 'gatsby-plugin-layout',
@@ -64,6 +69,14 @@ module.exports = {
         plugins: [
           'gatsby-remark-emoji',
           'gatsby-remark-relative-images',
+          {
+            resolve: 'gatsby-remark-autolink-headers',
+            options: {
+              offsetY: 0,
+              maintainCase: false,
+              removeAccents: true,
+            },
+          },
           {
             resolve: `gatsby-remark-images`,
             options: {

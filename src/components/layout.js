@@ -31,6 +31,10 @@ let FooterWrapper = styled.div``
 
 // https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
 let GlobalStyle = createGlobalStyle`
+  html {
+    scroll-behavior: smooth;
+  }
+
   #___gatsby > * {
     min-height: 100vh;
     display: flex;
@@ -55,7 +59,7 @@ let GlobalStyle = createGlobalStyle`
   }
 `
 
-const Layout = ({ pageTitle, schemaOrgItems, children }) => (
+const Layout = ({ children }) => (
   <ThemeProvider theme={theme}>
     <ErrorBoundary>
       <FeedbackProvider>

@@ -24,6 +24,7 @@ let BlogPost = ({
   data: {
     post: {
       frontmatter: { slug, title, date, tags },
+      headings,
       html,
     },
     similarPosts,
@@ -46,7 +47,7 @@ let BlogPost = ({
 
       <BlogTags tags={tags} />
 
-      <BlogPostContent post={{ title, postUrl, html }} />
+      <BlogPostContent post={{ title, postUrl, headings, html }} />
 
       <h2>Read next</h2>
 
@@ -106,6 +107,11 @@ export const query = graphql`
         title
         date
         tags
+      }
+
+      headings {
+        value
+        depth
       }
       html
     }

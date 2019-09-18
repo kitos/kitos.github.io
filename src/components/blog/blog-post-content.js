@@ -1,19 +1,48 @@
-import React, { useState } from 'react'
-import 'styled-components/macro'
+import React, { useContext, useEffect, useState } from 'react'
+import styled from 'styled-components/macro'
 import { Flex } from '@rebass/grid'
 import { Manager } from 'react-popper'
-import './prismjs-dan-abramov-theme.css'
+import GHSlugger from 'github-slugger'
 
 import { SelectionReference, Tooltip } from '../tooltip'
 import { TwitterIcon } from '../icons'
 import { UnstyledButton } from '../button'
 import { useOuterClickHandler } from '../outer-click-hook'
-import { FeedbackConsumer } from '../feedback'
+import { feedbackContext } from '../feedback'
 import { useLazyIframe } from '../lazy-iframe-hook'
+import { media } from '../../utils'
+import TableOfContent from './TableOfContent.bs'
 
-let BlogPostContent = ({ post: { title, postUrl, html } }) => {
-  let tooltipClassname = 'tooltip'
+import './prismjs-dan-abramov-theme.css'
+import { useCurrentHeading } from '../current-heading.hook'
+
+let TocWrapper = styled.div`
+  display: none;
+  ${media.wide`
+    display: block;
+  `};
+
+  position: absolute;
+  height: 100%;
+  min-width: 200px;
+  top: 30px;
+  left: calc(100% + 50px);
+`
+
+let StyledToc = styled(TableOfContent)`
+  position: sticky;
+  top: 50px;
+`
+
+let tooltipClassname = 'tooltip'
+let slugger = new GHSlugger()
+
+export let BlogPostContent = ({ post: { title, postUrl, headings, html } }) => {
+  let shareFeedback = useContext(feedbackContext)
   let [selectedText, setSelectedText] = useState(null)
+  let currentHeading = useCurrentHeading('h2,h3')
+
+  slugger.reset()
 
   useOuterClickHandler(() => setSelectedText(null), `.${tooltipClassname}`)
   useLazyIframe()
@@ -28,7 +57,17 @@ let BlogPostContent = ({ post: { title, postUrl, html } }) => {
         }}
       >
         {getProps => (
-          <div {...getProps()} dangerouslySetInnerHTML={{ __html: html }} />
+          <div style={{ position: 'relative' }}>
+            <TocWrapper>
+              <StyledToc
+                headings={headings}
+                active={currentHeading}
+                slugify={s => slugger.slug(s, false)}
+              />
+            </TocWrapper>
+
+            <div {...getProps()} dangerouslySetInnerHTML={{ __html: html }} />
+          </div>
         )}
       </SelectionReference>
 
@@ -52,28 +91,21 @@ let BlogPostContent = ({ post: { title, postUrl, html } }) => {
             <TwitterIcon width={30} mode="blueOnWhite" />
           </a>
 
-          <FeedbackConsumer>
-            {shareFeedback => (
-              <UnstyledButton
-                title="Report typo/mistake"
-                aria-label="Report typo/mistake"
-                onClick={() =>
-                  shareFeedback({
-                    type: 'typo',
-                    post: { title, link: postUrl },
-                    typo: selectedText,
-                  })
-                }
-              >
-                ✏️
-              </UnstyledButton>
-            )}
-          </FeedbackConsumer>
+          <UnstyledButton
+            title="Report typo/mistake"
+            aria-label="Report typo/mistake"
+            onClick={() =>
+              shareFeedback({
+                type: 'typo',
+                post: { title, link: postUrl },
+                typo: selectedText,
+              })
+            }
+          >
+            ✏️
+          </UnstyledButton>
         </Flex>
       </Tooltip>
     </Manager>
   )
 }
-
-export default BlogPostContent
-export { BlogPostContent }

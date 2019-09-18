@@ -52,11 +52,7 @@ let FailDialog = ({ isOpen, onDismiss }) => (
   </ConfirmationDialog>
 )
 
-let FeedbackDialog = ({ type, isOpen, payload, onDismiss }) => {
-  if (!isOpen) {
-    return null
-  }
-
+let FeedbackDialog = ({ type, payload, onDismiss }) => {
   let [feedbackType, setFeedbackType] = useState(type)
   let [typoSource, setTypoSource] = useState(payload.typo)
   let [content, setContent] = useState(payload.typo)

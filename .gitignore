@@ -67,3 +67,10 @@ yarn-error.log
 .pnp.js
 # Yarn Integrity file
 .yarn-integrity
+
+# reasonml
+.merlin
+.bsb.lock
+/lib/bs/
+/build/
+/src/**/*.bs.js
