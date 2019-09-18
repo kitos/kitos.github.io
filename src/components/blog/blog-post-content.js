@@ -42,24 +42,38 @@ export let BlogPostContent = ({ post: { title, postUrl, headings, html } }) => {
   let [activeHeading, setActiveHeading] = useState(null)
 
   useEffect(() => {
+    let inView = []
+
     let observer = new IntersectionObserver(
       elements => {
-        let inView = elements.filter(
-          ({ isIntersecting, intersectionRatio }) =>
-            isIntersecting && intersectionRatio >= 0.9
+        let [enteredView, leftView] = elements.reduce(
+          ([entered, left], { isIntersecting, intersectionRatio, target }) => {
+            if (isIntersecting && intersectionRatio >= 0.9) {
+              entered.push(target)
+            } else {
+              left.push(target)
+            }
+
+            return [entered, left]
+          },
+          [[], []]
         )
 
-        if (inView[0]) {
-          setActiveHeading(inView[0].target.id)
+        inView = [
+          ...inView.filter(({ id, offsetTop }) =>
+            leftView.every(left => left.id !== id)
+          ),
+          ...enteredView,
+        ].sort(({ offsetTop: a }, { offsetTop: b }) => a - b)
+
+        if (inView.length > 0) {
+          setActiveHeading(inView[0].id)
         }
       },
       { threshold: 1.0 }
     )
 
-    ;[
-      ...document.querySelectorAll('h2'),
-      ...document.querySelectorAll('h3'),
-    ].forEach(el => observer.observe(el))
+    document.querySelectorAll('h2,h3').forEach(el => observer.observe(el))
 
     return () => observer.disconnect()
   }, [])
