@@ -19,13 +19,16 @@ module.exports = {
     },
   },
   plugins: [
-    'gatsby-plugin-netlify-cache',
     'gatsby-plugin-reason',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-styled-components',
     'gatsby-plugin-netlify-cms',
     'gatsby-plugin-twitter',
+    {
+      resolve: 'gatsby-plugin-netlify-cache',
+      options: { extraDirsToCache: ['./public/images'] },
+    },
     rssPlugin,
     {
       resolve: 'gatsby-plugin-layout',
