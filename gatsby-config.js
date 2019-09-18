@@ -19,6 +19,7 @@ module.exports = {
     },
   },
   plugins: [
+    'gatsby-plugin-netlify-cache',
     'gatsby-plugin-reason',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sitemap',
