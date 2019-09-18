@@ -14,6 +14,7 @@ import { media } from '../../utils'
 import TableOfContent from './TableOfContent.bs'
 
 import './prismjs-dan-abramov-theme.css'
+import { useCurrentHeading } from '../current-heading.hook'
 
 let TocWrapper = styled.div`
   display: none;
@@ -39,44 +40,7 @@ let slugger = new GHSlugger()
 export let BlogPostContent = ({ post: { title, postUrl, headings, html } }) => {
   let shareFeedback = useContext(feedbackContext)
   let [selectedText, setSelectedText] = useState(null)
-  let [activeHeading, setActiveHeading] = useState(null)
-
-  useEffect(() => {
-    let inView = []
-
-    let observer = new IntersectionObserver(
-      elements => {
-        let [enteredView, leftView] = elements.reduce(
-          ([entered, left], { isIntersecting, intersectionRatio, target }) => {
-            if (isIntersecting && intersectionRatio >= 0.9) {
-              entered.push(target)
-            } else {
-              left.push(target)
-            }
-
-            return [entered, left]
-          },
-          [[], []]
-        )
-
-        inView = [
-          ...inView.filter(({ id, offsetTop }) =>
-            leftView.every(left => left.id !== id)
-          ),
-          ...enteredView,
-        ].sort(({ offsetTop: a }, { offsetTop: b }) => a - b)
-
-        if (inView.length > 0) {
-          setActiveHeading(inView[0].id)
-        }
-      },
-      { threshold: 1.0 }
-    )
-
-    document.querySelectorAll('h2,h3').forEach(el => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [])
+  let currentHeading = useCurrentHeading('h2,h3')
 
   slugger.reset()
 
@@ -97,7 +61,7 @@ export let BlogPostContent = ({ post: { title, postUrl, headings, html } }) => {
             <TocWrapper>
               <StyledToc
                 headings={headings}
-                active={activeHeading}
+                active={currentHeading}
                 slugify={s => slugger.slug(s, false)}
               />
             </TocWrapper>
