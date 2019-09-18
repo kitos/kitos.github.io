@@ -13,18 +13,16 @@ export const useCurrentHeading = (selector = 'h1,h2,h3,h4,h5,h6') => {
             if (isIntersecting && intersectionRatio >= 0.9) {
               entered.push(target)
             } else {
-              left.push(target)
+              left.add(target.id)
             }
 
             return [entered, left]
           },
-          [[], []]
+          [[], new Set()]
         )
 
         inView = [
-          ...inView.filter(({ id, offsetTop }) =>
-            leftView.every(left => left.id !== id)
-          ),
+          ...inView.filter(({ id }) => !leftView.has(id)),
           ...enteredView,
         ].sort(({ offsetTop: a }, { offsetTop: b }) => a - b)
 
