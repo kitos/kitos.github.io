@@ -11,3 +11,9 @@
   from = "/game-of-life/"
   to = "https://kitos.github.io/game-of-life/"
   status = 200
+
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/en/blog/:splat"
+  status = 200

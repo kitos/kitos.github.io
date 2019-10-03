@@ -27,7 +27,7 @@ module.exports = {
     'gatsby-plugin-twitter',
     {
       resolve: 'gatsby-plugin-netlify-cache',
-      options: { extraDirsToCache: ['./public/images'] },
+      options: { extraDirsToCache: ['public/static'] },
     },
     rssPlugin,
     {
