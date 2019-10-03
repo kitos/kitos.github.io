@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components/macro'
 import { Flex } from '@rebass/grid'
 import { Manager } from 'react-popper'

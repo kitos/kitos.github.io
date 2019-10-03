@@ -6,6 +6,7 @@ import { format } from 'date-fns/fp'
 
 import BlogTags from './blog-tags'
 import { media } from '../../utils'
+import { buildPostLink, langToEmoji } from './utils'
 
 let DateWithTimeline = styled.small`
   position: relative;
@@ -41,7 +42,7 @@ let DateWithTimeline = styled.small`
 let formatDate = d => format('MMMM dd, yyyy', new Date(d))
 
 let BlogPostSnippet = ({
-  post: { slug, title, lang, date, preface, timeToRead, tags },
+  post: { slug, title, lang, date, preface, timeToRead, tags, translations },
   selectedTag,
 }) => (
   <Flex as="section" alignItems="stretch">
@@ -49,19 +50,29 @@ let BlogPostSnippet = ({
 
     <Box pl={[0, 20]}>
       <h2>
-        <Link to={`/blog/${slug}/`}>{title}</Link>
+        <Link to={buildPostLink({ slug, lang })}>{title}</Link>
       </h2>
 
       <small>
-        <span
-          role="img"
-          title={
-            lang === 'en' ? 'Available in English' : 'Available in Russian'
-          }
-        >
-          {lang === 'en' ? '🇬🇧' : '🇷🇺'}
-        </span>
-        {timeToRead} min read{' '}
+        <Flex alignItems="center">
+          {translations.map(lang => (
+            <Link
+              to={buildPostLink({ slug, lang })}
+              style={{ textDecoration: 'none', fontSize: 16 }}
+            >
+              <span
+                key={lang}
+                role="img"
+                title={lang === 'en' ? 'Read in English' : 'Read in Russian'}
+              >
+                {langToEmoji(lang)}
+              </span>
+            </Link>
+          ))}
+
+          <Box ml={2}>{timeToRead} min read </Box>
+        </Flex>
+
         <span css={media.tablet`display: none;`}>• {formatDate(date)}</span>
       </small>
 

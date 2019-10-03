@@ -6,6 +6,7 @@ import { DiscussionEmbed } from 'disqus-react'
 
 import { BlogPostContent, BlogTags } from '../components/blog'
 import { SEO } from '../components'
+import { buildPostLink, langToEmoji } from '../components/blog/utils'
 
 let formatDate = d => format('MMMM dd, yyyy', new Date(d))
 
@@ -23,15 +24,17 @@ let buildSchemaOrg = ({ title, date, tags }) => ({ author }) => [
 let BlogPost = ({
   data: {
     post: {
-      frontmatter: { slug, title, date, tags },
+      frontmatter: { slug, lang, title, date, tags },
       headings,
       html,
     },
+    translations,
     similarPosts,
     site,
   },
 }) => {
-  let postUrl = `${site.meta.siteUrl}/blog/${slug}/`
+  let postLink = buildPostLink({ slug, lang })
+  let absolutePostLink = `${site.meta.siteUrl}${postLink}`
 
   return (
     <>
@@ -43,53 +46,78 @@ let BlogPost = ({
 
       <h1>{title}</h1>
 
-      <small>{formatDate(date)}</small>
+      <Flex justifyContent="space-between">
+        <small>{formatDate(date)}</small>
+
+        {translations.edges.length > 0 && (
+          <Flex>
+            <Box mr={1}>Also available in:</Box>
+
+            <Flex as="ul" m={0} style={{ listStyle: 'none' }}>
+              {translations.edges.map(({ node: { frontmatter: { lang } } }) => (
+                <li key={lang}>
+                  <Link
+                    to={buildPostLink({ slug, lang })}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    {langToEmoji(lang)}
+                  </Link>
+                </li>
+              ))}
+            </Flex>
+          </Flex>
+        )}
+      </Flex>
 
       <BlogTags tags={tags} />
 
-      <BlogPostContent post={{ title, postUrl, headings, html }} />
-
-      <h2>Read next</h2>
+      <BlogPostContent
+        post={{ title, postUrl: absolutePostLink, headings, html }}
+      />
 
       {similarPosts.edges.length > 0 && (
-        <Flex
-          as="ul"
-          my={[2, 4]}
-          mx={[0, -2]}
-          flexDirection={['column', 'row']}
-          justifyContent="space-between"
-          css={`
-            list-style: none;
-          `}
-        >
-          {similarPosts.edges
-            .map(({ node: { frontmatter, ...p } }) => ({
-              ...frontmatter,
-              ...p,
-            }))
-            .map(p => (
-              <Flex
-                as="li"
-                key={p.slug}
-                flex={1}
-                flexDirection="column"
-                mx={[0, 2]}
-              >
-                <Link to={`/blog/${p.slug}/`}>{p.title}</Link>
+        <>
+          <h2>Read next</h2>
 
-                <Box as="small" mt={2}>
-                  {formatDate(p.date)} • {p.timeToRead} min read
-                </Box>
-              </Flex>
-            ))}
-        </Flex>
+          <Flex
+            as="ul"
+            my={[2, 4]}
+            mx={[0, -2]}
+            flexDirection={['column', 'row']}
+            justifyContent="space-between"
+            css={`
+              list-style: none;
+            `}
+          >
+            {similarPosts.edges
+              .map(({ node: { frontmatter, ...p } }) => ({
+                ...frontmatter,
+                ...p,
+              }))
+              .map(({ slug, lang, title, date, timeToRead }) => (
+                <Flex
+                  as="li"
+                  key={slug}
+                  flex={1}
+                  flexDirection="column"
+                  mx={[0, 2]}
+                >
+                  <Link to={buildPostLink({ slug, lang })}>{title}</Link>
+
+                  <Box as="small" mt={2}>
+                    {formatDate(date)} • {timeToRead} min read
+                  </Box>
+                </Flex>
+              ))}
+          </Flex>
+        </>
       )}
 
       <DiscussionEmbed
         shortname={process.env.GATSBY_DISQUS_SHORTNAME}
         config={{
-          url: postUrl,
-          identifier: slug,
+          url: absolutePostLink,
+          identifier: postLink,
           title,
         }}
       />
@@ -100,10 +128,11 @@ let BlogPost = ({
 export default BlogPost
 
 export const query = graphql`
-  query($id: String!, $similarPosts: [String!]!) {
+  query($id: String!, $slug: String, $similarPosts: [String!]!) {
     post: markdownRemark(id: { eq: $id }) {
       frontmatter {
         slug
+        lang
         title
         date
         tags
@@ -116,11 +145,25 @@ export const query = graphql`
       html
     }
 
+    translations: allMarkdownRemark(
+      filter: { id: { ne: $id }, frontmatter: { slug: { eq: $slug } } }
+    ) {
+      edges {
+        node {
+          frontmatter {
+            lang
+            title
+          }
+        }
+      }
+    }
+
     similarPosts: allMarkdownRemark(filter: { id: { in: $similarPosts } }) {
       edges {
         node {
           frontmatter {
             slug
+            lang
             title
             date
             tags
