@@ -3,7 +3,7 @@ slug: the-simplest-example-of-scheduling-on-the-main-thread
 lang: en
 title: The simplest example of scheduling on the main thread
 date: 2019-02-19T22:42:04.602Z
-thumbnail: /images/uploads/jeshoots-com-9qqtuym4ss4-unsplash.jpg
+thumbnail: /images/uploads/schedule.jpg
 tags:
   - web-api
   - algorithms
