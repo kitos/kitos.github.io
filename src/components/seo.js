@@ -2,7 +2,14 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
-let SEO = ({ title, isBlogPost, schemaOrgItems = () => [] }) => (
+let SEO = ({
+  title,
+  description,
+  thumbnail,
+  keywords,
+  isBlogPost,
+  schemaOrgItems = () => [],
+}) => (
   <StaticQuery
     query={graphql`
       query SiteSeoQuery {
@@ -29,29 +36,32 @@ let SEO = ({ title, isBlogPost, schemaOrgItems = () => [] }) => (
         url,
         name: title,
       }
+      description = description || seo.description
+      keywords = keywords || seo.keywords
+      thumbnail = thumbnail || seo.img
 
       return (
         <Helmet>
           <html lang="en" />
 
           <title>{(title ? `${title} | ` : '') + seo.title}</title>
-          <meta name="description" content={seo.description} />
-          <meta name="image" content={seo.img} />
-          <meta name="keywords" content={seo.keywords.join(', ')} />
+          <meta name="description" content={description} />
+          <meta name="image" content={thumbnail} />
+          <meta name="keywords" content={keywords.join(', ')} />
 
           {/* OpenGraph tags */}
           <meta property="og:url" content={url} />
           {isBlogPost ? <meta property="og:type" content="article" /> : null}
           <meta property="og:title" content={title} />
-          <meta property="og:description" content={seo.description} />
-          <meta property="og:image" content={seo.img} />
+          <meta property="og:description" content={description} />
+          <meta property="og:image" content={thumbnail} />
 
           {/* Twitter Card tags */}
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:creator" content={seo.social.twitter} />
           <meta name="twitter:title" content={title} />
-          <meta name="twitter:description" content={seo.description} />
-          <meta name="twitter:image" content={seo.img} />
+          <meta name="twitter:description" content={description} />
+          <meta name="twitter:image" content={thumbnail} />
 
           {/* Schema.org tags */}
           <script type="application/ld+json">

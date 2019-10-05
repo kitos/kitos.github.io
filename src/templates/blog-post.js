@@ -10,13 +10,17 @@ import { buildPostLink, langToEmoji } from '../components/blog/utils'
 
 let formatDate = d => format('MMMM dd, yyyy', new Date(d))
 
-let buildSchemaOrg = ({ title, date, tags }) => ({ author }) => [
+let buildSchemaOrg = ({ title, date, tags, thumbnail, timeToRead }) => ({
+  author,
+}) => [
   {
     '@context': 'http://schema.org',
     '@type': 'BlogPosting',
     datePublished: date,
     headline: title,
     keywords: tags.join(', '),
+    thumbnailUrl: thumbnail,
+    timeRequired: `00:${timeToRead < 10 ? `0${timeToRead}` : timeToRead}`,
     author,
   },
 ]
@@ -24,7 +28,8 @@ let buildSchemaOrg = ({ title, date, tags }) => ({ author }) => [
 let BlogPost = ({
   data: {
     post: {
-      frontmatter: { slug, lang, title, date, tags },
+      frontmatter: { slug, lang, title, date, thumbnail, preface, tags },
+      timeToRead,
       headings,
       html,
     },
@@ -40,8 +45,18 @@ let BlogPost = ({
     <>
       <SEO
         title={title}
+        description={preface}
+        thumbnail={thumbnail}
+        keywords={tags}
         isBlogPost
-        schemaOrgItems={buildSchemaOrg({ title, date, tags })}
+        schemaOrgItems={buildSchemaOrg({
+          title,
+          date,
+          tags,
+          desctiption: preface,
+          thumbnail,
+          timeToRead,
+        })}
       />
 
       <h1>{title}</h1>
@@ -135,8 +150,11 @@ export const query = graphql`
         lang
         title
         date
+        preface
+        thumbnail
         tags
       }
+      timeToRead
 
       headings {
         value
