@@ -40,15 +40,24 @@ let BlogPost = ({
 }) => {
   let postLink = buildPostLink({ slug, lang })
   let absolutePostLink = `${site.meta.siteUrl}${postLink}`
+  let localizations = translations.edges.map(
+    ({
+      node: {
+        frontmatter: { lang },
+      },
+    }) => ({ lang, href: buildPostLink({ slug, lang }) })
+  )
 
   return (
     <>
       <SEO
+        lang={lang}
         title={title}
         description={preface}
         thumbnail={thumbnail}
         keywords={tags}
         isBlogPost
+        localizations={localizations}
         schemaOrgItems={buildSchemaOrg({
           title,
           date,
@@ -64,12 +73,12 @@ let BlogPost = ({
       <Flex justifyContent="space-between">
         <small>{formatDate(date)}</small>
 
-        {translations.edges.length > 0 && (
+        {localizations.length > 0 && (
           <Flex>
             <Box mr={1}>Also available in:</Box>
 
             <Flex as="ul" m={0} style={{ listStyle: 'none' }}>
-              {translations.edges.map(({ node: { frontmatter: { lang } } }) => (
+              {localizations.map(({ lang }) => (
                 <li key={lang}>
                   <Link
                     to={buildPostLink({ slug, lang })}
@@ -170,7 +179,6 @@ export const query = graphql`
         node {
           frontmatter {
             lang
-            title
           }
         }
       }

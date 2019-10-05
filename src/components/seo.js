@@ -3,12 +3,14 @@ import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
 let SEO = ({
+  lang = 'en',
   title,
   description,
   thumbnail,
   keywords,
   isBlogPost,
   schemaOrgItems = () => [],
+  localizations = [],
 }) => (
   <StaticQuery
     query={graphql`
@@ -38,11 +40,11 @@ let SEO = ({
       }
       description = description || seo.description
       keywords = keywords || seo.keywords
-      thumbnail = thumbnail || seo.img
+      thumbnail = thumbnail ? `${url}/${thumbnail}` : seo.img
 
       return (
         <Helmet>
-          <html lang="en" />
+          <html lang={lang} />
 
           <title>{(title ? `${title} | ` : '') + seo.title}</title>
           <meta name="description" content={description} />
@@ -62,6 +64,10 @@ let SEO = ({
           <meta name="twitter:title" content={title} />
           <meta name="twitter:description" content={description} />
           <meta name="twitter:image" content={thumbnail} />
+
+          {localizations.map(({ lang, href }) => (
+            <link rel="alternate" hrefLang={lang} href={`${url}/${href}`} />
+          ))}
 
           {/* Schema.org tags */}
           <script type="application/ld+json">
