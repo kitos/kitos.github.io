@@ -57,7 +57,7 @@ export const NavBar = () => (
 
 Do you see a problem here?
 
-* [react-media](https://github.com/ReactTraining/react-media) is used is used to make serve different markup for desktop and mobile
+* [react-media](https://github.com/ReactTraining/react-media) is used to serve different markup for desktop and mobile
 * we are migrating our app to _gatsby_, which means all our pages are statically built (SSR is happening during build time). And on this stage, we obviously do not have any information about _width_ of the screen. By default `react-media` matches all media queries, so in our case we build mobile layout.
 
 This results in next workflow:
