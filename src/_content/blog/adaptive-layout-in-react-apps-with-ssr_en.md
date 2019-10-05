@@ -131,4 +131,4 @@ export const NavBar = () => (
 
 ### P.S.
 
-"А почему же мы не столкнулись с этой проблемой в старом приложении?" - заметит внимательный читатель. Действительно, ведь оно тоже использует SSR и не использует знание о браузере (_User Agent_). Если честно, я не стал тревожить легаси проект, чтобы познать его тайну 💀. Но полагаю, что дело в какой-нидь лишней перерисовке которая инициируется вышележащими компонентами.
+"Why didn't you experience the same issue in your old app?" - a careful reader might wonder 🤨. Indeed we use SSR there as well and do not use knowledge about browser (_User Agent_). To be honest, I didn't dig into legacy project in order to learn its secrets. But I guess it's about some extra render initiated by parent components 😬.
