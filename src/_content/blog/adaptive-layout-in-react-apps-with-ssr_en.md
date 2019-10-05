@@ -11,9 +11,8 @@ tags:
   - adaptive-layout
   - css-media-queries
 preface: >-
-  Небольшая история о том, с какими проблемами мы столкнулись при использовании
-  адаптивной раскладки в статическом приложении. И какие практики стоит
-  использовать для их избежания.
+  Small story about issues we faced while using adaptive design in statically
+  generated app. And about approaches to avoid them.
 ---
 ## Mystique
 
