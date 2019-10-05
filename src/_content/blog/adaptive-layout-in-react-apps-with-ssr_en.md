@@ -17,7 +17,7 @@ preface: >-
 ---
 ## Mystique
 
-While working on migration of part our [main web-site](https://tourlane.de) to [gatsby](http://gatsbyjs.org), we faced really weird problem: one of a links in navigation menu wasn't styled on initial load.
+While working on migration of part our [main web-site](https://tourlane.de) to [gatsby](http://gatsbyjs.org), we faced really weird problem: one of a links in navigation menu wasn't styled on initial load. It was reproducible only on the desktop.
 
 ![Navigation menu with unstyled link](/images/uploads/broken-link.jpg "Unstyled link")
 
@@ -53,19 +53,21 @@ export const NavBar = () => (
 )
 ```
 
-## Вердикт
+## Verdict
 
-Видите здесь проблему?
+Do you see a problem here?
 
-* В компоненте используется [react-media](https://github.com/ReactTraining/react-media) за счёт которого для мобильных и десктопных экранов отдаётся разная разметка
-* Мы переходим на статическую генерацию страниц (используем _gatsby_), т.е. SSR у нас происходит во время сборки сайта. И на этом этапе мы, конечно, не знаем на каком устройстве будет отображаться страница, а `react-media` при SSR по умолчанию считает все медиа запросы истинными (в нашем случае отдаст мобильную разметку).
-* Ну и получается, что пользователь с большим экраном:
-  1. открывает страницу и получает с сервера html c мобильной вёрсткой (непродолжительное время видит её)
-  2. видит десктопный лейаут с нестилизованной ссылкой, т.к. во время _гидрации_ react генерирует кашу из 2-х разных лейаутов
+* [react-media](https://github.com/ReactTraining/react-media) is used is used to make serve different markup for desktop and mobile
+* we are migrating our app to _gatsby_, which means all our pages are statically built (SSR is happening during build time). And on this stage, we obviously do not have any information about _width_ of the screen. By default `react-media` matches all media queries, so in our case we build mobile layout.
 
-## Как быть?
+This results in next workflow:
 
-Чтобы избежать таких проблем нужно:
+1. desktop browser requests page and receive mobile html (user sees it on first contentful paint)
+2. react messes up DOM during _hydration_ (absolutely legally, since we produced 2 different trees on the _"server"_ and client)
+
+## How to fix this?
+
+To avoid such problems we can:
 
 * Отдавать предпочтение обычным css медиа выражениям.\
   \
