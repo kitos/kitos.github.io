@@ -69,9 +69,10 @@ This results in next workflow:
 
 To avoid such problems we can:
 
-* Отдавать предпочтение обычным css медиа выражениям.\
+* prefer regular css media queries to [matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)\
   \
-  Даже если с помощью CSS не получается привести одну и ту же разметку к необходимому виду на разных устройствах, можно разделить и DOM под разные разрешения/устройства и одновременно выдать все варианты, а с помощью медиа выражений отображать нужные:
+  Even if you cannot style same piece of html to fit your adaptive design, you can _"duplicate"_ it (html) and display one _"copy"_ per breakpoint.
+
   ```jsx
     let DesktopOnly = styled.div`
       @media (max-width: 599px) {
@@ -93,31 +94,31 @@ To avoid such problems we can:
       </>
   )
   ```
-    В этом случае вы сможете не только избежать проблем с гидрацией, но и пользователь получит лучший опыт при работе с вашим сайтом: разметка не будет прыгать при загрузке. Т.к. браузер ещё до исполнения JavaScript отрисует сайт согласно CSS и HTML, а гидрация лишь вдохнёт в него жизнь.
-* В случае когда прибегнуть к вышеупомянутому подходу нельзя - прибегнуть к использованию `react-media` и аналогичных решений. Например когда:
-  * может пострадать SEO (не сталкивался с подобной проблемой, но подозреваю что дублирование контента, увеличение размера страницы... может к этому привести. напишите в комментариях, если знаете кейсы)
-  * может пострадать производительность (например для десктопа вы отображаете какой-то сложный элемент)
-    **ВНИМАНИЕ!** Обязательно измеряйте производительность перед тем как делать подобные оптимизации. Факт того, что react'у придётся отрисовать на 50 html-блоков, не должен вас пугать.
-  * может пострадать что-то ещё 🤷‍♂️
+  In this case not only you will avoid problems with _hydration_, but also end-user will get better experience: there will be no layout flickering during page load, since browser will render the page according to your html/css, and hydration will give it life.
 
-А как же проблема с гидрацией при использовании второго подхода?
+* only in case the approach above doesn't work for you, use `react-media` (or similar solutions). E.g.:
+  * SEO might suffer (I haven't faced such problems, but I assume that duplication of content, its growth... can influence it 💁‍♂️. Write a comment if you are aware of such cases)
+  * performance might suffer, in case you render some complex element only for the desktop.
 
-Как я заметил в начале, эта проблема не могла остаться незамеченной и решение у неё есть - отрисовка в 2 прохода:
+    **ATTENTION PLEASE!** Do not optimize prematurely! Always measure performance before you introduce any improvements. The fact that _react_ will have to render 50 more html elements shouldn't bother you.
+  * something else might suffer 🤷‍♂️
 
-* выберете раскладку которую хотите использовать по умолчанию:
-  * если вы используете не статический сайт, то можете выбрать его на основе _User Agent_
-  * для статических сайтов можете отталкиваться от статистики использования вашего сайта
-* рендерите это состояние во время серверной отрисовки и гидрации
-* запускаете дополнительную перерисовку на клиенте, если актуальное состояние отличается от того, что предполагали
+But what about problems with hydration we experienced using second approach?
 
-Официальная документация [предлагает](https://ru.reactjs.org/docs/react-dom.html#hydrate) использовать для этого флаг в стейте, и `react-media` [такое умеет](https://github.com/ReactTraining/react-media#server-side-rendering-ssr), нужно лишь указать свойство `defaultMatches`:
+Well, as I mentioned at the beginning, such issue shouldn't have been left out, so it has a solution - two-pass rendering:
 
-```jsx{3-8}
+* choose a default layout you'd like to use by default:
+  * if you are using runtime SSR, you can do it based on _User Agent_
+  * for static sites based on usage statistics (in most cases it should be mobile, since devices are less performant, and it doesn't make sense to make them render tree twice)
+  * render three using this default during SSR and client hydration
+  * run an extra render in case actual layout didn't match default one
+
+Official documentation [suggests](https://ru.reactjs.org/docs/react-dom.html#hydrate) to use state variable to implement this and `react-media` also [supports this](https://github.com/ReactTraining/react-media#server-side-rendering-ssr) via `defaultMatches` prop:
+
+```jsx{3-6}
 export const NavBar = () => (
   <Media
     queries={{ mobile: { maxWidth: 599 } }}
-    // мы знаем что большинство наших пользователей
-    // используют мобильные устройства
     defaultMatches={{ mobile: true }}>
     {matches =>
       matches.mobile
@@ -128,6 +129,6 @@ export const NavBar = () => (
 )
 ```
 
-### З.Ы.
+### P.S.
 
 "А почему же мы не столкнулись с этой проблемой в старом приложении?" - заметит внимательный читатель. Действительно, ведь оно тоже использует SSR и не использует знание о браузере (_User Agent_). Если честно, я не стал тревожить легаси проект, чтобы познать его тайну 💀. Но полагаю, что дело в какой-нидь лишней перерисовке которая инициируется вышележащими компонентами.
