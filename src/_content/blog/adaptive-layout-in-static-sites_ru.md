@@ -2,7 +2,7 @@
 slug: adaptive-layout-in-react-apps-with-ssr
 lang: ru
 title: Рецепты адаптивной раскладки в react приложениях с SSR
-date: 2019-09-28T20:01:08.265Z
+date: 2019-10-04T20:01:08.265Z
 thumbnail: /images/uploads/tourlane-ssr.jpg
 tags:
   - reactjs
