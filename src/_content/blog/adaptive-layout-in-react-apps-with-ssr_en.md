@@ -15,30 +15,30 @@ preface: >-
   адаптивной раскладки в статическом приложении. И какие практики стоит
   использовать для их избежания.
 ---
-## Мистика
+## Mystique
 
-Недавно, при миграции части страниц [нашего главного сайта](https://tourlane.de) на [gatsby](http://gatsbyjs.org) мы столкнулись со странной проблемой: одна из ссылок в главной навигации была нестилизована при первоначальной загрузке страницы. Что-то вроде:
+While working on migration of part our [main web-site](https://tourlane.de) to [gatsby](http://gatsbyjs.org), we faced really weird problem: one of a links in navigation menu wasn't styled on initial load.
 
-![Навигационное меню с нестилизованной ссылкой](/images/uploads/broken-link.jpg "Нестилизованная ссылка")
+![Navigation menu with unstyled link](/images/uploads/broken-link.jpg "Unstyled link")
 
-После первого же перехода на любую другую страницу стили появлялись 🤯.
+Once you opened some other page (using client-side routing), styles get in place 🤯.
 
-Ситуацию ещё более усугублял тот факт, что компонент, ответственный за отображение навигации, использовался и в старом приложении, использующем _nextjs_, но работал он там прекрасно 👻.
+The fact that component, responsible for this menu, worked absolutely fine in the old app (which is using _nextjs_), made everything even more weird 👻.
 
-## Расследование
+## Investigation
 
-Недолго думая я полез в DOM и обнаружил, что у этой ссылки css-классы относились к мобильной разметке, хотя смотрел я всё это на десктопе 🤪.
+Without a second thought I opened DOM inspector and discovered that this link had css-classes related to mobile menu, while I was obviously on the desktop 🤪.
 
-В голове крутилась мысль: react косячит при [гидрации](https://ru.reactjs.org/docs/react-dom.html#hydrate). Верить в неё конечно не хотелось: такую серьёзную проблему бы уже давно нашли, да и старом приложении ВСЁ РАБОТАЕТ.
+_"React messes up DOM during_ [_hydration_](https://ru.reactjs.org/docs/react-dom.html#hydrate)_"_ - I thought to myself. It was hard to believe: such crucial issue should have been discovered long time ago, and everything is fine IN THE OLD APP.
 
-Вспоминаю требование к гидрации:
+I revised hydration contract:
 
-> React ожидает, что отрендеренное содержимое идентично на сервере, и на клиенте.
+> React expects that the rendered content is identical between the server and the client.
 
-Бегу смотреть исходный код компонента 🕵️‍♂️:
+I dig into source code of the component 🕵️‍♂️:
 
 ```jsx
-// упрощённый NavBar.js
+// simplified NavBar.js
 import React from 'react'
 import Media from 'react-media'
 
@@ -53,7 +53,7 @@ export const NavBar = () => (
 )
 ```
 
- ## Вердикт
+## Вердикт
 
 Видите здесь проблему?
 
