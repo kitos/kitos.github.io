@@ -40,7 +40,7 @@ let SEO = ({
       }
       description = description || seo.description
       keywords = keywords || seo.keywords
-      thumbnail = thumbnail ? `${url}/${thumbnail}` : seo.img
+      thumbnail = thumbnail ? `${url}${thumbnail}` : seo.img
 
       return (
         <Helmet>
@@ -66,7 +66,7 @@ let SEO = ({
           <meta name="twitter:image" content={thumbnail} />
 
           {localizations.map(({ lang, href }) => (
-            <link rel="alternate" hrefLang={lang} href={`${url}/${href}`} />
+            <link rel="alternate" hrefLang={lang} href={`${url}${href}`} />
           ))}
 
           {/* Schema.org tags */}
