@@ -2,7 +2,7 @@
 slug: first-hands-on-experience-with-reasonml
 lang: ru
 title: Первое знакомство с ReasonML
-date: 2019-08-11T07:36:18.935Z
+date: 2019-09-12T07:36:18.935Z
 thumbnail: /images/uploads/blog-tech-stack.jpg
 tags:
   - reasonml
