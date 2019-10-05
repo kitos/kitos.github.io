@@ -3,7 +3,7 @@ slug: implementing-medium-like-tooltip
 lang: en
 title: Implementing medium like tooltip
 date: 2019-01-20T21:52:08.746Z
-thumbnail: /images/uploads/blog-tech-stack.jpg
+thumbnail: /images/uploads/reflection-unsplash.jpg
 tags:
   - reactjs
   - render-props
