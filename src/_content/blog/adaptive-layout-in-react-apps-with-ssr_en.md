@@ -98,8 +98,8 @@ To avoid such problems we can:
 
 * only in case the approach above doesn't work for you, use `react-media` (or similar solutions). E.g.:
   * SEO might suffer (I haven't faced such problems, but I assume that duplication of content, its growth... can influence it 💁‍♂️. Write a comment if you are aware of such cases)
-  * performance might suffer, in case you render some complex element only for the desktop.
-
+  * performance might suffer, in case you render some complex element only for the desktop.\
+    \
     **ATTENTION PLEASE!** Do not optimize prematurely! Always measure performance before you introduce any improvements. The fact that _react_ will have to render 50 more html elements shouldn't bother you.
   * something else might suffer 🤷‍♂️
 
@@ -110,8 +110,8 @@ Well, as I mentioned at the beginning, such issue shouldn't have been left out, 
 * choose a default layout you'd like to use by default:
   * if you are using runtime SSR, you can do it based on _User Agent_
   * for static sites based on usage statistics (in most cases it should be mobile, since devices are less performant, and it doesn't make sense to make them render tree twice)
-  * render three using this default during SSR and client hydration
-  * run an extra render in case actual layout didn't match default one
+* render three using this default during SSR and client hydration
+* run an extra render in case actual layout didn't match default one
 
 Official documentation [suggests](https://ru.reactjs.org/docs/react-dom.html#hydrate) to use state variable to implement this and `react-media` also [supports this](https://github.com/ReactTraining/react-media#server-side-rendering-ssr) via `defaultMatches` prop:
 
@@ -131,4 +131,4 @@ export const NavBar = () => (
 
 ### P.S.
 
-"Why didn't you experience the same issue in your old app?" - a careful reader might wonder 🤨. Indeed we use SSR there as well and do not use knowledge about browser (_User Agent_). To be honest, I didn't dig into legacy project in order to learn its secrets. But I guess it's about some extra render initiated by parent components 😬.
+"Why didn't you experience the same issue in your old app?" - a careful reader might wonder 🤨. Indeed, we use SSR there as well and do not use knowledge about browser (_User Agent_). To be honest, I didn't dig into legacy project in order to learn its secrets. But I guess it's about some extra render initiated by parent components 😬.
