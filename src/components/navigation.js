@@ -38,8 +38,8 @@ let NavLink = ({ to, className, ...props }) => (
   />
 )
 
-let Navigation = () => (
-  <nav>
+let Navigation = ({ className }) => (
+  <nav className={className}>
     <Flex as="ul" m={0} css={{ listStyle: 'none' }}>
       <MenuItem>
         <MenuLink as={NavLink} to="/">

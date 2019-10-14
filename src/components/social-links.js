@@ -20,7 +20,7 @@ let SocialItem = styled.li`
   }
 `
 let SocialLinks = () => (
-  <Flex as="ul" m="0" ml="auto" style={{ listStyle: 'none' }}>
+  <Flex as="ul" m="0" style={{ listStyle: 'none' }}>
     <SocialItem>
       <a
         href="https://github.com/kitos"
