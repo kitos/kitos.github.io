@@ -21,45 +21,21 @@ let SocialItem = styled.li`
 `
 let SocialLinks = () => (
   <Flex as="ul" m="0" style={{ listStyle: 'none' }}>
-    <SocialItem>
-      <a
-        href="https://github.com/kitos"
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        <VisuallyHidden>GitHub</VisuallyHidden>
-        <GitHubIcon />
-      </a>
-    </SocialItem>
-
-    <SocialItem>
-      <a href="https://www.facebook.com/kitos.kirsanov">
-        <VisuallyHidden>Facebook</VisuallyHidden>
-        <FacebookIcon />
-      </a>
-    </SocialItem>
-
-    <SocialItem>
-      <a
-        href="https://twitter.com/kitos_kirsanov"
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        <VisuallyHidden>Twitter</VisuallyHidden>
-        <TwitterIcon />
-      </a>
-    </SocialItem>
-
-    <SocialItem>
-      <a
-        href="https://www.linkedin.com/in/%D0%BD%D0%B8%D0%BA%D0%B8%D1%82%D0%B0-%D0%BA%D0%B8%D1%80%D1%81%D0%B0%D0%BD%D0%BE%D0%B2-08b307b9/"
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        <VisuallyHidden>Linkedin</VisuallyHidden>
-        <LinkedinIcon />
-      </a>
-    </SocialItem>
+    {[
+      { href: 'https://github.com/kitos', text: 'GitHub', icon: GitHubIcon },
+      {
+        href: 'https://twitter.com/kitos_kirsanov',
+        text: 'Twitter',
+        icon: TwitterIcon,
+      },
+    ].map(({ href, text, icon: I }) => (
+      <SocialItem key={href}>
+        <a href={href} target="_blank" rel="noreferrer noopener">
+          <VisuallyHidden>{text}</VisuallyHidden>
+          <I />
+        </a>
+      </SocialItem>
+    ))}
   </Flex>
 )
 
