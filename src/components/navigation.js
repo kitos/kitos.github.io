@@ -47,11 +47,6 @@ let Navigation = ({ className }) => (
         </MenuLink>
       </MenuItem>
       <MenuItem>
-        <MenuLink as={NavLink} to="/portfolio/">
-          Portfolio
-        </MenuLink>
-      </MenuItem>
-      <MenuItem>
         <MenuLink as={NavLink} to="/public-activity/">
           Speaker
         </MenuLink>

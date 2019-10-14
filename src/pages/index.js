@@ -3,7 +3,6 @@ import { graphql } from 'gatsby'
 import { Box, Flex } from '@rebass/grid'
 
 import { SEO, Shield } from '../components'
-import SkillsContainer from '../components/about/skills-container'
 
 const IndexPage = ({ data: { about } }) => (
   <>
@@ -20,10 +19,6 @@ const IndexPage = ({ data: { about } }) => (
         )
       })}
     </Flex>
-
-    <h2>Skills</h2>
-
-    <SkillsContainer />
 
     <div
       dangerouslySetInnerHTML={{
