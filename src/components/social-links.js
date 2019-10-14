@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import { Flex } from '@rebass/grid'
 import VisuallyHidden from '@reach/visually-hidden'
 
-import { FacebookIcon, GitHubIcon, LinkedinIcon, TwitterIcon } from './icons'
+import { GitHubIcon, TwitterIcon, RSSIcon } from './icons'
 
 let SocialItem = styled.li`
   margin: 0 0 0 8px;
@@ -25,12 +25,13 @@ let SocialItem = styled.li`
 let SocialLinks = () => (
   <Flex as="ul" m="0" style={{ listStyle: 'none' }}>
     {[
-      { href: 'https://github.com/kitos', text: 'GitHub', icon: GitHubIcon },
       {
         href: 'https://twitter.com/kitos_kirsanov',
         text: 'Twitter',
         icon: TwitterIcon,
       },
+      { href: 'https://github.com/kitos', text: 'GitHub', icon: GitHubIcon },
+      { href: '/blog/rss.xml', text: 'RSS Feads', icon: RSSIcon },
     ].map(({ href, text, icon: I }) => (
       <SocialItem key={href}>
         <a href={href} title={text} target="_blank" rel="noreferrer noopener">

@@ -71,14 +71,6 @@ let Footer = () => {
         </BottomLink>
 
         <BottomLink
-          href={`${meta.siteUrl}/rss.xml`}
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          rss
-        </BottomLink>
-
-        <BottomLink
           as="button"
           onClick={() => openFeedbackDialog({ type: 'feedback' })}
         >
