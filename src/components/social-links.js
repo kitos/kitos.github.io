@@ -6,7 +6,7 @@ import VisuallyHidden from '@reach/visually-hidden'
 import { FacebookIcon, GitHubIcon, LinkedinIcon, TwitterIcon } from './icons'
 
 let SocialItem = styled.li`
-  margin: 0 0 0 5px;
+  margin: 0 0 0 8px;
   transition: 0.15s;
   line-height: 0;
 
@@ -14,9 +14,12 @@ let SocialItem = styled.li`
     display: block;
   }
 
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: rgba(20, 26, 40, 0.25) 0 2px 5px;
+  & svg path {
+    fill: #555;
+
+    &:hover {
+      fill: #333;
+    }
   }
 `
 let SocialLinks = () => (
@@ -30,7 +33,7 @@ let SocialLinks = () => (
       },
     ].map(({ href, text, icon: I }) => (
       <SocialItem key={href}>
-        <a href={href} target="_blank" rel="noreferrer noopener">
+        <a href={href} title={text} target="_blank" rel="noreferrer noopener">
           <VisuallyHidden>{text}</VisuallyHidden>
           <I />
         </a>
