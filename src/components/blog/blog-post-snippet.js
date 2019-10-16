@@ -57,6 +57,7 @@ let BlogPostSnippet = ({
         <Flex alignItems="center">
           {translations.map(lang => (
             <Link
+              key={lang}
               to={buildPostLink({ slug, lang })}
               style={{ textDecoration: 'none', fontSize: 16 }}
             >

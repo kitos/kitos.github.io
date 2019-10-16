@@ -1,5 +1,6 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
+import Img from 'gatsby-image'
 import { format } from 'date-fns/fp'
 import { Box, Flex } from '@rebass/grid'
 import { DiscussionEmbed } from 'disqus-react'
@@ -40,6 +41,7 @@ let BlogPost = ({
 }) => {
   let postLink = buildPostLink({ slug, lang })
   let absolutePostLink = `${site.meta.siteUrl}${postLink}`
+  let thumbnailSrc = thumbnail.childImageSharp.fluid.src
   let localizations = translations.edges.map(
     ({
       node: {
@@ -54,7 +56,7 @@ let BlogPost = ({
         lang={lang}
         title={title}
         description={preface}
-        thumbnail={thumbnail}
+        thumbnail={thumbnailSrc}
         keywords={tags}
         isBlogPost
         localizations={localizations}
@@ -63,7 +65,7 @@ let BlogPost = ({
           date,
           tags,
           desctiption: preface,
-          thumbnail,
+          thumbnail: thumbnailSrc,
           timeToRead,
         })}
       />
@@ -94,6 +96,8 @@ let BlogPost = ({
       </Flex>
 
       <BlogTags tags={tags} />
+
+      <Img {...thumbnail.childImageSharp} />
 
       <BlogPostContent
         post={{ title, postUrl: absolutePostLink, headings, html }}
@@ -160,7 +164,13 @@ export const query = graphql`
         title
         date
         preface
-        thumbnail
+        thumbnail {
+          childImageSharp {
+            fluid(maxWidth: 800, maxHeight: 450) {
+              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+            }
+          }
+        }
         tags
       }
       timeToRead

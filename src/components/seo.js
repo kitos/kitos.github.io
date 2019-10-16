@@ -66,7 +66,12 @@ let SEO = ({
           <meta name="twitter:image" content={thumbnail} />
 
           {localizations.map(({ lang, href }) => (
-            <link rel="alternate" hrefLang={lang} href={`${url}${href}`} />
+            <link
+              key={lang}
+              rel="alternate"
+              hrefLang={lang}
+              href={`${url}${href}`}
+            />
           ))}
 
           {/* Schema.org tags */}
