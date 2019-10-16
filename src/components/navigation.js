@@ -29,11 +29,14 @@ let NavLink = ({ to, className, ...props }) => (
   <Link
     to={to}
     className={className}
-    getProps={({ isCurrent, isPartiallyCurrent }) =>
-      isCurrent || (to !== '/' && isPartiallyCurrent)
-        ? { className: `${className} active` }
-        : null
-    }
+    getProps={({ isCurrent, isPartiallyCurrent, href, location }) => {
+      let isReallyCurrent =
+        isCurrent ||
+        (to !== '/' && isPartiallyCurrent) ||
+        (href.includes('blog') && location.pathname.includes('blog'))
+
+      return isReallyCurrent ? { className: `${className} active` } : null
+    }}
     {...props}
   />
 )
