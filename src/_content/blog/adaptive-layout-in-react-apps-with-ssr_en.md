@@ -3,7 +3,8 @@ slug: adaptive-layout-in-react-apps-with-ssr
 lang: en
 title: React SSR pitfalls in building adaptive layouts
 date: 2019-10-06T09:40:47.668Z
-thumbnail: /images/uploads/tourlane-ssr.jpg
+thumbnail:
+  img: /images/uploads/tourlane-ssr.jpg
 tags:
   - reactjs
   - SSR

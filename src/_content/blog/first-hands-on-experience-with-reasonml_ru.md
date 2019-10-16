@@ -3,7 +3,10 @@ slug: first-hands-on-experience-with-reasonml
 lang: ru
 title: Первое знакомство с ReasonML
 date: 2019-09-12T07:36:18.935Z
-thumbnail: /images/uploads/surf-robert-bye-unsplash.jpg
+thumbnail:
+  author: Robert Bye
+  img: /images/uploads/surf-robert-bye-unsplash.jpg
+  src: 'https://unsplash.com/@robertbye'
 tags:
   - reasonml
   - functional_programming

@@ -3,7 +3,10 @@ slug: dynamics-in-a-static-site
 lang: en
 title: Dynamics in a static site
 date: 2019-01-28T22:38:57.492Z
-thumbnail: /images/uploads/zoom-chuttersnap-unsplash.jpg
+thumbnail:
+  author: chuttersnap
+  img: /images/uploads/zoom-chuttersnap-unsplash.jpg
+  src: 'https://unsplash.com/@chuttersnap'
 tags:
   - cloud-functions
   - gcp

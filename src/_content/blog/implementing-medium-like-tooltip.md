@@ -3,7 +3,10 @@ slug: implementing-medium-like-tooltip
 lang: en
 title: Implementing medium like tooltip
 date: 2019-01-20T21:52:08.746Z
-thumbnail: /images/uploads/reflection-unsplash.jpg
+thumbnail:
+  author: Markus Spiske
+  img: /images/uploads/reflection-unsplash.jpg
+  src: 'https://unsplash.com/@markusspiske'
 tags:
   - reactjs
   - render-props
