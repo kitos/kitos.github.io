@@ -47,19 +47,4 @@ let enrichPublicActivityVideos = async ({
   })
 }
 
-let addSlugToPortfolioProjects = ({ actions: { createNodeField }, getNodes }) =>
-  getNodes()
-    .filter(n => n.internal.type === 'ContentfulPortfolio')
-    .forEach(node =>
-      createNodeField({
-        node,
-        name: 'slug',
-        value: slugify(node.name),
-      })
-    )
-
-module.exports = (...args) =>
-  Promise.all([
-    enrichPublicActivityVideos(...args),
-    addSlugToPortfolioProjects(...args),
-  ])
+module.exports = (...args) => Promise.all([enrichPublicActivityVideos(...args)])

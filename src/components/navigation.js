@@ -29,26 +29,24 @@ let NavLink = ({ to, className, ...props }) => (
   <Link
     to={to}
     className={className}
-    getProps={({ isCurrent, isPartiallyCurrent }) =>
-      isCurrent || (to !== '/' && isPartiallyCurrent)
-        ? { className: `${className} active` }
-        : null
-    }
+    getProps={({ isCurrent, isPartiallyCurrent, href, location }) => {
+      let isReallyCurrent =
+        isCurrent ||
+        (to !== '/' && isPartiallyCurrent) ||
+        (href.includes('blog') && location.pathname.includes('blog'))
+
+      return isReallyCurrent ? { className: `${className} active` } : null
+    }}
     {...props}
   />
 )
 
-let Navigation = () => (
-  <nav>
+export let Navigation = ({ className }) => (
+  <nav className={className}>
     <Flex as="ul" m={0} css={{ listStyle: 'none' }}>
       <MenuItem>
         <MenuLink as={NavLink} to="/">
           About
-        </MenuLink>
-      </MenuItem>
-      <MenuItem>
-        <MenuLink as={NavLink} to="/portfolio/">
-          Portfolio
         </MenuLink>
       </MenuItem>
       <MenuItem>
@@ -64,5 +62,3 @@ let Navigation = () => (
     </Flex>
   </nav>
 )
-
-export default Navigation

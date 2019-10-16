@@ -2,8 +2,8 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Box, Flex } from '@rebass/grid'
 
-import { SEO, Shield } from '../components'
-import SkillsContainer from '../components/about/skills-container'
+import { SEO, Shield, SocialLinks } from '../components'
+import { Display } from '../components/display'
 
 const IndexPage = ({ data: { about } }) => (
   <>
@@ -21,9 +21,9 @@ const IndexPage = ({ data: { about } }) => (
       })}
     </Flex>
 
-    <h2>Skills</h2>
-
-    <SkillsContainer />
+    <Display display={['block', 'none']}>
+      <SocialLinks />
+    </Display>
 
     <div
       dangerouslySetInnerHTML={{

@@ -1,5 +1,3 @@
-const sanitizeHtml = require('sanitize-html')
-
 let rssPlugin = {
   resolve: `gatsby-plugin-feed`,
   options: {
@@ -7,8 +5,6 @@ let rssPlugin = {
         {
           site {
             siteMetadata {
-              title
-              description
               siteUrl
             }
           }
@@ -17,41 +13,39 @@ let rssPlugin = {
     feeds: [
       {
         serialize: ({ query: { site, posts } }) => {
-          return posts.edges.map(({ node }) => ({
-            title: node.title,
-            description: sanitizeHtml(
-              node.preface.childContentfulRichText.html,
-              {
-                allowedTags: false,
+          return posts.nodes.map(
+            ({ frontmatter: { slug, lang, title, date, tags }, excerpt }) => {
+              let path = `/${lang}/blog/${slug}/`
+
+              return {
+                title,
+                description: excerpt,
+                date,
+                author: 'Nikita Kirsanov',
+                url: `${site.siteMetadata.siteUrl}${path}`,
+                guid: path,
+                categories: tags,
               }
-            ),
-            date: node.createdAt,
-            author: 'Nikita Kirsanov',
-            url: `${site.siteMetadata.siteUrl}/blog/${node.slug}/`,
-            guid: `${site.siteMetadata.siteUrl}/blog/${node.slug}/`,
-            categories: node.tags,
-          }))
+            }
+          )
         },
         query: `
             {
-              posts: allContentfulBlog(sort: { fields: [createdAt], order: DESC }) {
-                edges {
-                  node {
+              posts: allMarkdownRemark(filter: {fileAbsolutePath: {regex: "_content/blog/"}}, sort: {fields: frontmatter___date, order: DESC}) {
+                nodes {
+                  frontmatter {
                     slug
+                    lang
                     title
-                    createdAt
-                    preface {
-                      childContentfulRichText {
-                        html
-                      }
-                    }
+                    date
                     tags
                   }
+                  excerpt(pruneLength: 500)
                 }
               }
             }
           `,
-        output: '/rss.xml',
+        output: 'blog/rss.xml',
         title: 'Personal blog of software engineer - Nikita Kirsanov',
       },
     ],
