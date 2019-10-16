@@ -41,7 +41,7 @@ let BlogPost = ({
 }) => {
   let postLink = buildPostLink({ slug, lang })
   let absolutePostLink = `${site.meta.siteUrl}${postLink}`
-  let thumbnailSrc = thumbnail.childImageSharp.fluid.src
+  let thumbnailSrc = thumbnail.img.childImageSharp.fluid.src
   let localizations = translations.edges.map(
     ({
       node: {
@@ -97,7 +97,15 @@ let BlogPost = ({
 
       <BlogTags tags={tags} />
 
-      <Img {...thumbnail.childImageSharp} />
+      <Img {...thumbnail.img.childImageSharp} />
+      {thumbnail.author && (
+        <p style={{ textAlign: 'center' }}>
+          Photo by{' '}
+          <a href={thumbnail.src} target="_blank" rel="noopener">
+            {thumbnail.author}
+          </a>
+        </p>
+      )}
 
       <BlogPostContent
         post={{ title, postUrl: absolutePostLink, headings, html }}
@@ -165,9 +173,13 @@ export const query = graphql`
         date
         preface
         thumbnail {
-          childImageSharp {
-            fluid(maxWidth: 800, maxHeight: 450) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
+          author
+          src
+          img {
+            childImageSharp {
+              fluid(maxWidth: 800, maxHeight: 450) {
+                ...GatsbyImageSharpFluid_withWebp_tracedSVG
+              }
             }
           }
         }

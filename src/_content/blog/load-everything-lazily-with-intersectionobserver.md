@@ -3,7 +3,10 @@ slug: load-everything-lazily-with-intersectionobserver
 lang: en
 title: Load everything lazily with IntersectionObserver
 date: 2019-01-23T21:52:08.746Z
-thumbnail: /images/uploads/lazy.jpg
+thumbnail:
+  author: Erik-Jan Leusink
+  img: /images/uploads/lazy.jpg
+  src: 'https://unsplash.com/@ejleusink'
 tags:
   - reactjs
   - react-hooks
