@@ -12,6 +12,7 @@
     "@reach/visually-hidden": "^0.1.4",
     "@rebass/grid": "^6.1.0",
     "@sindresorhus/slugify": "^0.8.0",
+    "@styled-system/core": "^5.1.2",
     "axios": "^0.18.1",
     "date-fns": "^2.4.1",
     "disqus-react": "^1.0.7",

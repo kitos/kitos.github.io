@@ -41,7 +41,7 @@ let NavLink = ({ to, className, ...props }) => (
   />
 )
 
-let Navigation = ({ className }) => (
+export let Navigation = ({ className }) => (
   <nav className={className}>
     <Flex as="ul" m={0} css={{ listStyle: 'none' }}>
       <MenuItem>
@@ -62,5 +62,3 @@ let Navigation = ({ className }) => (
     </Flex>
   </nav>
 )
-
-export default Navigation

@@ -5,8 +5,10 @@ import styled from 'styled-components/macro'
 import { Flex } from '@rebass/grid'
 import VisuallyHidden from '@reach/visually-hidden'
 
-import Navigation from './navigation'
-import SocialLinks from './social-links'
+import { Navigation } from './navigation'
+import { SocialLinks } from './social-links'
+import { Display } from './display'
+import { media } from '../utils'
 
 let H = styled.header`
   background: ${({ theme }) => theme.colors.pale};
@@ -17,7 +19,11 @@ let StyledNavigation = styled(Navigation)`
   align-self: flex-end;
   position: relative;
   bottom: -11px;
-  margin-left: 20px;
+
+  margin-left: 10px;
+  ${media.tablet`
+    margin-left: 20px;
+  `};
 `
 
 let Header = () => {
@@ -34,7 +40,12 @@ let Header = () => {
   `)
 
   return (
-    <Flex as={H} p="10px 20px" justifyContent="space-between" alignItems="center">
+    <Flex
+      as={H}
+      p="10px 20px"
+      justifyContent="space-between"
+      alignItems="center"
+    >
       <Link to="/" title="Nikita Kirsanov">
         <h1 style={{ margin: 0, padding: 0, fontSize: 0, border: 'none' }}>
           <Img style={{ borderRadius: '50%' }} {...avatar.childImageSharp} />
@@ -45,7 +56,9 @@ let Header = () => {
 
       <StyledNavigation />
 
-      <SocialLinks />
+      <Display display={['none', 'block']}>
+        <SocialLinks />
+      </Display>
     </Flex>
   )
 }
