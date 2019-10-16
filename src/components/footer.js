@@ -4,14 +4,11 @@ import { graphql, Link, useStaticQuery } from 'gatsby'
 import { feedbackContext } from './feedback'
 
 let F = styled.footer`
-  max-width: ${({ theme }) => theme.pageWidth};
   margin: 20px auto 0 auto;
   padding: 20px;
   text-align: center;
   background: ${({ theme }) => theme.colors.pale};
-  border: 1px solid ${({ theme }) => theme.colors.lightgray};
-  border-bottom: none;
-  border-radius: ${({ theme: { borderRadius: br } }) => `${br} ${br} 0 0`};
+  border-top: 1px solid ${({ theme }) => theme.colors.lightgray};
 `
 
 let BottomLink = styled.a`

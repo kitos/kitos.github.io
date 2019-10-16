@@ -34,7 +34,7 @@ let Header = () => {
   `)
 
   return (
-    <Flex as={H} p={10} justifyContent="space-between" alignItems="center">
+    <Flex as={H} p="10px 20px" justifyContent="space-between" alignItems="center">
       <Link to="/" title="Nikita Kirsanov">
         <h1 style={{ margin: 0, padding: 0, fontSize: 0, border: 'none' }}>
           <Img style={{ borderRadius: '50%' }} {...avatar.childImageSharp} />
