@@ -20,7 +20,6 @@ preface: >-
   This one will be the first one. In it I'm gonna play with react-spring to
   create simple digital clock animation.
 ---
-
 Well, looks like now, during self isolation caused by COVID-19 🦠, I'll have some time to code and maybe even to write a couple of articles about it (code). This one is the first one, in it I'm gonna play with `react-spring` to create simple digital clock animation like this:
 
 ![Animated digital clock](/images/uploads/digital-clock.gif "Animated digital clock")
@@ -166,8 +165,10 @@ let Waterfall = ({ children }) => {
   })
 
   return (
+    // highlight-next-line
     /* we will render animated blocks relative to this container */
     <div style={{ position: 'relative' }}>
+      // highlight-next-line
       {/* we need one hidden extra block in normal flow to preserve space */}
       <div style={{ visibility: 'hidden' }}>{children}</div>
 
@@ -181,7 +182,7 @@ let Waterfall = ({ children }) => {
 }
 ```
 
-Now we can animate our emoji number using this component 🎉:
+Now we can animate our emoji number using this component  🎉:
 
 ```jsx
 // highlight-next-line
