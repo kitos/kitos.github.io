@@ -20,6 +20,7 @@ preface: >-
   This one will be the first one. In it I'm gonna play with react-spring to
   create simple digital clock animation.
 ---
+
 Well, looks like now, during self isolation caused by COVID-19 🦠, I'll have some time to code and maybe even to write a couple of articles about it (code). This one is the first one, in it I'm gonna play with `react-spring` to create simple digital clock animation like this:
 
 ![Animated digital clock](/images/uploads/digital-clock.gif "Animated digital clock")
@@ -80,11 +81,9 @@ let Time = ({ value }) => (
   <div style={{ display: 'flex' }}>
     // highlight-next-line
     <EmojiNumber value={padTime(value.getHours())} />
-    :
-    // highlight-next-line
+    : // highlight-next-line
     <EmojiNumber value={padTime(value.getMinutes())} />
-    :
-    // highlight-next-line
+    : // highlight-next-line
     <EmojiNumber value={padTime(value.getSeconds())} />
   </div>
 )
@@ -109,23 +108,25 @@ let CurrentTime = () => {
 Since we are trying to make some take-away out of this article, let's extract custom hook out of `jsx±<CurrentTime/>`:
 
 ```jsx
- // highlight-start
+// highlight-start
 let useIntervalValue = (factory, interval) => {
   let [value, set] = useState(factory)
 
-  useEffect(() => {
-    let tid = setInterval(() => set(factory), interval)
+  useEffect(
+    () => {
+      let tid = setInterval(() => set(factory), interval)
 
-    return () => clearInterval(tid)
-  },
-  // ⚠️ we intententionally ignored 'factory' in dependencies array (for the sake of simplicity)
-  // so it won't be updated with rerenders (simular to useState initializer)
-  // while we could add deps argument to this hook to be able to update 'factory'
-  [interval])
+      return () => clearInterval(tid)
+    },
+    // ⚠️ we intententionally ignored 'factory' in dependencies array (for the sake of simplicity)
+    // so it won't be updated with rerenders (simular to useState initializer)
+    // while we could add deps argument to this hook to be able to update 'factory'
+    [interval]
+  )
 
   return value
 }
- // highlight-end
+// highlight-end
 
 let CurrentTime = () => {
   // highlight-next-line
@@ -199,4 +200,4 @@ let AnimatedEmojiNumber = ({ value }) => (
 
 And full result you can find here:
 
-codesandbox expample
+[animated-digital-clock](embedded-codesandbox://enjoy-the-little-things/result)
