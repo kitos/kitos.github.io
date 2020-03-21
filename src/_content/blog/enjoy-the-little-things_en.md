@@ -131,8 +131,12 @@ let CurrentTime = () => {
 }
 ```
 
-Power of composition! So far we've built so simple *"app"*, yet it consists of 5 blocks (components/functions). Composition is definitely one of the strongest part of *react* especially after *hooks* were released. Let's look at the result though:
+Power of composition! So far we've built so simple *"app"*, yet it consists of 5 blocks (components/functions). Composition is definitely one of the strongest part of *react* especially after *hooks* were released.
 
+Let's look at the result:
 
+![Digital clock with emoji](/images/uploads/no-animation-digital-clock.gif "Digital clock with emoji")
 
 ## Time to animate
+
+Event though our clock already looks pretty decent, we was going to add a fancy animation to it. So let's do it!
