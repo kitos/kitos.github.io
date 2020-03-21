@@ -8,7 +8,7 @@ thumbnail:
   img: /images/uploads/enjoy.jpg
   src: 'https://unsplash.com/photos/FxGoXaib51Q'
 tags:
-  - react
+  - reactjs
   - preact
   - react-spring
   - emoji
@@ -30,7 +30,7 @@ How did I come up with this idea? I was just bored, started to check my pet proj
 
 Implementation of this small component doesn't sound like a rocket science, but I will do my best to touch some interesting topics here, and after all I enjoined the process. And it is actually funny to realise that after more than 6 years of coding, participating in pretty complex projects and trying different technologies I still can take pleasure in things event smaller than this clock. I hope everyone can find a field where they can do it as well.
 
-## First building block
+## First building blocks
 
 Lets start with something really simple lets build a component which can render a numeral using emojis - 4️⃣2️⃣:
 
@@ -69,7 +69,7 @@ let Time = ({ value }) => (
 
 Easy, but the implementation has a bug 🐛, did you notice it?
 
-For time \`03:05:09\` it will render 3️⃣: 5️⃣: 9️⃣ while I would expect 0️⃣3️⃣: 0️⃣5️⃣: 0️⃣9️⃣ . Let's fix it with `padTime` *function*:
+For time `03:05:09` it will render 3️⃣: 5️⃣: 9️⃣, while I would expect 0️⃣3️⃣: 0️⃣5️⃣: 0️⃣9️⃣ . Let's fix it with `padTime` *function*:
 
 ```jsx
 // highlight-next-line
@@ -88,3 +88,47 @@ let Time = ({ value }) => (
   </div>
 )
 ```
+
+Time to make it dynamic:
+
+```jsx
+let CurrentTime = () => {
+  let [now, setNow] = useState(new Date())
+
+  useEffect(() => {
+    let tid = setInterval(() => setNow(new Date()), 1000)
+
+    return () => clearInterval(tid)
+  }, [setNow])
+
+  return <Time value={now} />
+}
+```
+
+Since we are trying to make some take-away out of this article, let's extract custom hook out of `jsx±CurrentTime`:
+
+```jsx
+let useIntervalValue = (factory, interval) => {
+  let [value, set] = useState(factory)
+
+  useEffect(() => {
+    let tid = setInterval(() => set(factory), interval)
+
+    return () => clearInterval(tid)
+  },
+  // ⚠️ we intententionally ignored 'factory' in dependencies array (for the sake of simplicity)
+  // so it won't be updated with rerenders (simular to useState initializer)
+  // while we could add deps array to this hook to be able to update 'factory'
+  [interval])
+
+  return value
+}
+
+let CurrentTime = () => {
+  let now = useIntervalValue(() => new Date(), 1000)
+
+  return <Time value={now} />
+}
+```
+
+Well, it seems like we are pretty close to our target -
