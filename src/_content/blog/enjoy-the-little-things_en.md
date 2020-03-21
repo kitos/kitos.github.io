@@ -5,7 +5,7 @@ title: Enjoy the little things
 date: 2020-03-20T17:30:51.536Z
 thumbnail:
   author: Mats Speicher
-  img: /images/uploads/mats-speicher-FxGoXaib51Q-unsplash.jpg
+  img: /images/uploads/enjoy.jpg
   src: 'https://unsplash.com/photos/FxGoXaib51Q'
 tags:
   - react
