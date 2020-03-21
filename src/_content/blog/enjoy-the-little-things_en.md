@@ -32,7 +32,7 @@ Implementation of this small component doesn't sound like a rocket science, but 
 
 ## First building blocks
 
-Lets start with something really simple lets build a component which can render a numeral using emojis - 4️⃣2️⃣:
+Let's start with something really simple lets build a component which can render a numeral using emojis like this: 4️⃣2️⃣:
 
 ```jsx
 let emojiDigits = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
@@ -54,6 +54,7 @@ Nothing special except maybe they *key*: most of the time we [use some *id* as *
 Having this small component we can already render current time:
 
 ```jsx
+// expect value to be an instance of Date
 let Time = ({ value }) => (
   <div style={{ display: 'flex' }}>
     <EmojiNumber value={value.getHours()} />
@@ -108,6 +109,7 @@ let CurrentTime = () => {
 Since we are trying to make some take-away out of this article, let's extract custom hook out of `jsx±<CurrentTime/>`:
 
 ```jsx
+ // highlight-start
 let useIntervalValue = (factory, interval) => {
   let [value, set] = useState(factory)
 
@@ -123,8 +125,10 @@ let useIntervalValue = (factory, interval) => {
 
   return value
 }
+ // highlight-end
 
 let CurrentTime = () => {
+  // highlight-next-line
   let now = useIntervalValue(() => new Date(), 1000)
 
   return <Time value={now} />
@@ -140,3 +144,59 @@ Let's look at the result:
 ## Time to animate
 
 Event though our clock already looks pretty decent, we was going to add a fancy animation to it. So let's do it!
+
+The best library for animation in react I know is [react-spring](https://github.com/react-spring/react-spring), and I already have [an example with it](/blog/implementing-medium-like-tooltip/). And I am gonna use it again.
+
+Here we are going to animate update of every emoji separately using [useTransition](https://www.react-spring.io/docs/hooks/use-transition) hook. Time for a new component?
+
+```jsx
+// children can be any react element
+let Waterfall = ({ children }) => {
+  let transitions = useTransition(children, null, {
+    from: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      transform: 'translate3d(0,-100%,0)',
+      opacity: 0
+    },
+    enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
+    leave: { transform: 'translate3d(0,60%,0)', opacity: 0 }
+  })
+
+  return (
+    /* we will render animated blocks relative to this container */
+    <div style={{ position: 'relative' }}>
+      {/* we need one hidden extra block in normal flow to preserve space */}
+      <div style={{ visibility: 'hidden' }}>{children}</div>
+
+      {transitions.map(({ key, item, props }) => (
+        <animated.div key={key} style={props}>
+          {item}
+        </animated.div>
+      ))}
+    </div>
+  )
+}
+```
+
+Now we can animate our emoji number using this component 🎉:
+
+```jsx
+// highlight-next-line
+let AnimatedEmojiNumber = ({ value }) => (
+  <div style={{ display: 'flex' }}>
+    {value
+      .toString()
+      .split('')
+      .map((n, i) => (
+        // highlight-next-line
+        <Waterfall key={i} children={emojiDigits[n]} />
+      ))}
+  </div>
+)
+```
+
+And full result you can find here:
+
+codesandbox expample
