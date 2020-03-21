@@ -67,20 +67,24 @@ let Time = ({ value }) => (
 )
 ```
 
-Easy, but the implementation 
+Easy, but the implementation has a bug 🐛, did you notice it?
+
+For time \`03:05:09\` it will render 3️⃣: 5️⃣: 9️⃣ while I would expect 0️⃣3️⃣: 0️⃣5️⃣: 0️⃣9️⃣ . Let's fix it with `padTime` *function*:
 
 ```jsx
+// highlight-next-line
 let padTime = (t, l = 2) => t.toString().padStart(l, '0')
 
 let Time = ({ value }) => (
   <div style={{ display: 'flex' }}>
+    // highlight-next-line
     <EmojiNumber value={padTime(value.getHours())} />
     :
+    // highlight-next-line
     <EmojiNumber value={padTime(value.getMinutes())} />
     :
+    // highlight-next-line
     <EmojiNumber value={padTime(value.getSeconds())} />
-    :
-    <EmojiNumber value={padTime(value.getMilliseconds(), 3)} />
   </div>
 )
 ```
