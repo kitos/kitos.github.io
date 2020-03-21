@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { useState, useEffect, memo } from 'react'
+import React, { useState, useEffect, memo } from 'react'
+import { render } from 'react-dom'
 import { animated, useTransition } from 'react-spring'
 
 let Waterfall = ({ children }) => {
@@ -79,4 +79,4 @@ let CurrentTime = () => {
   )
 }
 
-export default CurrentTime
+render(<CurrentTime />, document.getElementById("root"));
