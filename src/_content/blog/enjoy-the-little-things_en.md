@@ -24,11 +24,63 @@ Well, looks like now, during self isolation caused by COVID-19 🦠, I'll have s
 
 ![Animated digital clock](/images/uploads/digital-clock.gif "Animated digital clock")
 
-## Idea
-
-How did I come up with this idea? Probably I was just bored, started to check my pet projects, settled on [my game of life](https://kitos.github.io/game-of-life/), considered its UI to be uneventful and decided that it might be good idea to add some emojis, cause everybody like them 😋!
-
 ## Small things matter
 
+How did I come up with this idea? I was just bored, started to check my pet projects, settled on [my game of life](https://kitos.github.io/game-of-life/), considered its UI to be uneventful and decided that it might be good idea to add some emojis, cause everybody like them 😋!
+
 Implementation of this small component doesn't sound like a rocket science, but I will do my best to touch some interesting topics here, and after all I enjoined the process. And it is actually funny to realise that after more than 6 years of coding, participating in pretty complex projects and trying different technologies I still can take pleasure in things event smaller than this clock. I hope everyone can find a field where they can do it as well.
- 
+
+## First building block
+
+Lets start with something really simple lets build a component which can render a numeral using emojis - 4️⃣2️⃣:
+
+```jsx
+let emojiDigits = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];
+
+let EmojiNumber = ({ value }) => (
+  <div>
+    {value
+      .toString()
+      .split("")
+      .map((n, i) => (
+        <span key={i}>{emojiDigits[n]}</span>
+      ))}
+  </div>
+);
+```
+
+Nothing special except maybe they *key*: most of the time we [use some *id* as *key*](https://reactjs.org/docs/lists-and-keys.html#keys) and [trying to avoid using index](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318) cause it kinda kills the idea - react won't be able to optimize DOM update, e.g. by moving element instead of deletition and constructing new one in another place. But in our example order/index is the only thing that matters - the order of digits in numbers is important, isn't it?
+
+Having this small component we can already render current time:
+
+```jsx
+let Time = ({ value }) => (
+  <div style={{ display: 'flex' }}>
+    <EmojiNumber value={value.getHours()} />
+    :
+    <EmojiNumber value={value.getMinutes()} />
+    :
+    <EmojiNumber value={value.getSeconds()} />
+    :
+    <EmojiNumber value={value.getMilliseconds()} />
+  </div>
+)
+```
+
+Easy, but the implementation 
+
+```jsx
+let padTime = (t, l = 2) => t.toString().padStart(l, '0')
+
+let Time = ({ value }) => (
+  <div style={{ display: 'flex' }}>
+    <EmojiNumber value={padTime(value.getHours())} />
+    :
+    <EmojiNumber value={padTime(value.getMinutes())} />
+    :
+    <EmojiNumber value={padTime(value.getSeconds())} />
+    :
+    <EmojiNumber value={padTime(value.getMilliseconds(), 3)} />
+  </div>
+)
+```
