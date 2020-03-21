@@ -35,13 +35,13 @@ Implementation of this small component doesn't sound like a rocket science, but 
 Lets start with something really simple lets build a component which can render a numeral using emojis - 4️⃣2️⃣:
 
 ```jsx
-let emojiDigits = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];
+let emojiDigits = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
 
 let EmojiNumber = ({ value }) => (
   <div>
     {value
       .toString()
-      .split("")
+      .split('')
       .map((n, i) => (
         <span key={i}>{emojiDigits[n]}</span>
       ))}
@@ -105,7 +105,7 @@ let CurrentTime = () => {
 }
 ```
 
-Since we are trying to make some take-away out of this article, let's extract custom hook out of `jsx±CurrentTime`:
+Since we are trying to make some take-away out of this article, let's extract custom hook out of `jsx±<CurrentTime/>`:
 
 ```jsx
 let useIntervalValue = (factory, interval) => {
@@ -118,7 +118,7 @@ let useIntervalValue = (factory, interval) => {
   },
   // ⚠️ we intententionally ignored 'factory' in dependencies array (for the sake of simplicity)
   // so it won't be updated with rerenders (simular to useState initializer)
-  // while we could add deps array to this hook to be able to update 'factory'
+  // while we could add deps argument to this hook to be able to update 'factory'
   [interval])
 
   return value
@@ -131,4 +131,8 @@ let CurrentTime = () => {
 }
 ```
 
-Well, it seems like we are pretty close to our target -
+Power of composition! So far we've built so simple *"app"*, yet it consists of 5 blocks (components/functions). Composition is definitely one of the strongest part of *react* especially after *hooks* were released. Let's look at the result though:
+
+
+
+## Time to animate
