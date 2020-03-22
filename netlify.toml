@@ -1,5 +1,6 @@
 [build]
-  command = "npm run build"
+  command = "npm run build && cd functions/create-gh-issue && npm ci"
+  functions = "functions"
 
 [[redirects]]
   # Redirect default Netlify subdomain to primary domain

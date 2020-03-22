@@ -27,12 +27,12 @@ let buildSchemaOrg = videos => () => [
 ]
 
 let PublicActivityPage = ({
-  data: { resp: { edges: videos = [] } = {} } = {},
+  data: { resp: { nodes: videos = [] } = {} } = {},
 }) => {
   videos = videos.map(v => ({
-    ...v.node,
-    ...v.node.fields.snippet,
-    slug: v.node.fields.slug,
+    ...v,
+    ...v.fields.snippet,
+    slug: v.fields.slug,
   }))
 
   return (
@@ -60,40 +60,38 @@ let PublicActivityPage = ({
 
 export let query = graphql`
   query PublicActivityQuery {
-    resp: allContentfulPublicActivity {
-      edges {
-        node {
-          title
-          url
-          tags
+    resp: allTalksYaml {
+      nodes {
+        title
+        url
+        tags
 
-          fields {
-            slug
+        fields {
+          slug
+          snippet {
+            id
+            contentDetails {
+              duration
+            }
             snippet {
-              id
-              contentDetails {
-                duration
-              }
-              snippet {
-                publishedAt
-                title
-                tags
-                thumbnails {
-                  medium {
-                    url
-                    width
-                    height
-                  }
-                  high {
-                    url
-                    width
-                    height
-                  }
-                  maxres {
-                    url
-                    width
-                    height
-                  }
+              publishedAt
+              title
+              tags
+              thumbnails {
+                medium {
+                  url
+                  width
+                  height
+                }
+                high {
+                  url
+                  width
+                  height
+                }
+                maxres {
+                  url
+                  width
+                  height
                 }
               }
             }

@@ -5,14 +5,7 @@ import { Footer } from '../popover'
 import { ConfirmationDialog, Dialog } from '../dialog'
 import Input from '../input'
 import Button from '../button'
-import { toQueryString } from '../../utils'
-
-let submitFeedback = payload =>
-  fetch(
-    `${process.env.GATSBY_CLOUD_FUNCTION_CREATE_GH_ISSUE}?${toQueryString(
-      payload
-    )}`
-  ).then(resp => resp.json())
+import { createGHIssue } from '../create-gh-issue'
 
 let SuccessDialog = ({ issueUrl, isOpen, onDismiss }) => (
   <ConfirmationDialog
@@ -61,7 +54,7 @@ let FeedbackDialog = ({ type, payload, onDismiss }) => {
 
   let handleSubmit = async () => {
     try {
-      let { url } = await submitFeedback({
+      let { url } = await createGHIssue({
         // common fields
         type: feedbackType,
         content,

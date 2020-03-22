@@ -12,7 +12,7 @@ const github = axios.create({
 
 const ISSUES_ROOT = '/repos/kitos/kitos.github.io/issues'
 
-let createTypoIssue = ({ query: { title, link, source, content } }) =>
+let createTypoIssue = ({ title, link, source, content }) =>
   github.post(ISSUES_ROOT, {
     title: `Typo in blog post "${title}"`,
     body: `
@@ -29,7 +29,7 @@ ${content}`,
     labels: ['blog:typo'],
   })
 
-let createFeedbackIssue = ({ query: { content } }) =>
+let createFeedbackIssue = ({ content }) =>
   github.post(ISSUES_ROOT, {
     title: 'Feedback',
     body: content,
@@ -44,10 +44,10 @@ const hash = obj =>
     .digest('hex')
     .substr(0, 6)
 
-let createBug = async ({
+let createBug = async (
   headers,
-  query: { message = 'Reported by user', content, stack },
-}) => {
+  { message = 'Reported by user', content, stack }
+) => {
   let userAgent = headers['user-agent']
   let referer = headers['referer']
   let issueHash = hash({ message, referer, stack, content })
@@ -85,27 +85,27 @@ let createBug = async ({
 ${referer}
 
 ${
-      content
-        ? `
+  content
+    ? `
 ### Description:
 
 ${content}
 
 `
-        : ''
-    }
+    : ''
+}
 
 ${
-      stack
-        ? `
+  stack
+    ? `
 ### Stack:
 
 \`\`\`
 ${stack.split('@').join('\n@')}
 \`\`\`
 `
-        : ''
-    }
+    : ''
+}
 
 ### User agent:
 
@@ -117,23 +117,17 @@ ${userAgent}
   })
 }
 
-exports.createIssue = async (request, response) => {
-  response.set('Access-Control-Allow-Origin', 'https://www.nikitakirsanov.com')
-  response.set('Access-Control-Allow-Methods', 'GET')
+module.exports.handler = async event => {
+  let body = JSON.parse(event.body)
+  let { type } = body
 
-  try {
-    let { type } = request.query
-    let {
-      data: { html_url },
-    } = await (type === 'typo'
-      ? createTypoIssue(request)
-      : type === 'feedback'
-      ? createFeedbackIssue(request)
-      : createBug(request))
+  let {
+    data: { html_url },
+  } = await (type === 'typo'
+    ? createTypoIssue(body)
+    : type === 'feedback'
+    ? createFeedbackIssue(body)
+    : createBug(event.headers, body))
 
-    response.status(200).send({ url: html_url })
-  } catch (e) {
-    console.error(e.message)
-    response.status(500).send(e.message)
-  }
+  return { statusCode: 200, body: JSON.stringify({ url: html_url }) }
 }

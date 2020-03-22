@@ -17,16 +17,17 @@ preface: >-
   tell you how to create similar one and about DOM API I've learned during
   implementation.
 ---
+
 It might (and should) look like quite a trivial thing to implement. But still there are some pitfalls, so I want to tell how to avoid them, what libraries and patterns can help. And again to strengthen my English 😁
 
 ## Positioning is not easy
 
 Here is a list of problems commonly faced when dealing with popups:
 
-- how to position element relative to some other one 
-- how to position element over everything else aka _z-index: 999;_ 
-- take into account viewport borders 
-- handle scrolling 
+- how to position element relative to some other one
+- how to position element over everything else aka _z-index: 999;_
+- take into account viewport borders
+- handle scrolling
 
 Fortunately we live in open source era, so there is plenty of ready solutions. E.g. [react-popper](https://github.com/FezVrasta/react-popper) - library that takes care about all positioning issues. I've already used it in my previous projects and was satisfied. So I'll use it here as well.
 
@@ -38,9 +39,9 @@ By the way, its api should be more neat [with hooks](https://github.com/FezVrast
 
 As you can see, _react-popper_ solved all problems I've mentioned above:
 
-- calculated position of popup relative to input 
-- positioned it using _translate3d _(you can also use position fixed or even [portals](https://reactjs.org/docs/portals.html) in case you are using overflow...) 
-- took into account viewport and handles scrolling 
+- calculated position of popup relative to input
+- positioned it using _translate3d _(you can also use position fixed or even [portals](https://reactjs.org/docs/portals.html) in case you are using overflow...)
+- took into account viewport and handles scrolling
 
 ## Let's make it bit more complex
 
@@ -123,10 +124,10 @@ let SelectionReference = ({ onSelect, children }) => (
 
 Let's review the solution step by step:
 
-1. We've created special  _SelectionReference_ component by wrapping original one.
-It has same signature with one exception: children function (aka [render prop](https://cdb.reacttraining.com/use-a-render-prop-50de598f11ce)) will receive function instead of object - it is known as [get props pattern](https://blog.kentcdodds.com/how-to-give-rendering-control-to-users-with-prop-getters-549eaef76acf). The main benefit of it here is that our component taking care of merging its own props (_onMouseUp_ handler) with props we might want to provide when outside. 
-2. We've fed our "fake" DOM node to original _Reference _component_._ 
-3. We've created handy _onSelect_ event, which we'll use later. 
+1. We've created special _SelectionReference_ component by wrapping original one.
+   It has same signature with one exception: children function (aka [render prop](https://cdb.reacttraining.com/use-a-render-prop-50de598f11ce)) will receive function instead of object - it is known as [get props pattern](https://blog.kentcdodds.com/how-to-give-rendering-control-to-users-with-prop-getters-549eaef76acf). The main benefit of it here is that our component taking care of merging its own props (_onMouseUp_ handler) with props we might want to provide when outside.
+2. We've fed our "fake" DOM node to original _Reference \_component_.\_
+3. We've created handy _onSelect_ event, which we'll use later.
 
 That's it! now we can use our component to position tooltip:
 
@@ -158,7 +159,9 @@ let Tooltip = ({ isOpen, children }) => (
           (transitionStyle => (
             // and here is styles provided by react-spring to animate appearance
             <div ref={ref} style={style}>
-              <SomeStyledTooltip style={transitionStyle}>{children}</SomeStyledTooltip>
+              <SomeStyledTooltip style={transitionStyle}>
+                {children}
+              </SomeStyledTooltip>
             </div>
           ))
         }

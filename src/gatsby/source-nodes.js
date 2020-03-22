@@ -1,20 +1,11 @@
 const axios = require('axios')
 const slugify = require('@sindresorhus/slugify')
 
-let youtube = axios.create({
-  baseURL: 'https://www.googleapis.com/youtube/v3/',
-  params: {
-    key: process.env.YOUTUBE_KEY,
-  },
-})
-
 let enrichPublicActivityVideos = async ({
   actions: { createNodeField },
   getNodes,
 }) => {
-  let videos = getNodes().filter(
-    n => n.internal.type === 'ContentfulPublicActivity' && n.type === 'video'
-  )
+  let videos = getNodes().filter(n => n.internal.type === 'TalksYaml')
 
   let videoMap = videos.reduce((map, video) => {
     let [_, id] = video.url.match(/v=(.*)/)
@@ -26,8 +17,12 @@ let enrichPublicActivityVideos = async ({
 
   let {
     data: { items: youtubeSnippets },
-  } = await youtube.get('videos', {
-    params: { part: 'snippet,contentDetails', id: videoIds.join(',') },
+  } = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
+    params: {
+      key: process.env.YOUTUBE_KEY,
+      part: 'snippet,contentDetails',
+      id: videoIds.join(','),
+    },
   })
 
   videoMap.forEach((video, id) => {

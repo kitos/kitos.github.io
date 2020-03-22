@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { Flex } from '@rebass/grid'
-import { Transition } from 'react-spring'
+import { useTransition } from 'react-spring'
 import { DialogContent, DialogOverlay } from '@reach/dialog'
 import VisuallyHidden from '@reach/visually-hidden'
 
@@ -24,17 +24,18 @@ let StyledOverlay = styled(DialogOverlay)`
   justify-content: center;
 `
 
-let Dialog = ({ isOpen, onDismiss, initialFocusRef, title, children }) => (
-  <Transition
-    items={isOpen}
-    from={{ transform: 'translateY(-30px) scale(0.9)', opacity: 0 }}
-    enter={{ transform: 'translateY(0) scale(1)', opacity: 1 }}
-    leave={{ transform: 'translateY(-30px) scale(0.9)', opacity: 0 }}
-  >
-    {transitionIsOpen =>
-      transitionIsOpen &&
-      (({ opacity, ...transitionStyles }) => (
+let Dialog = ({ isOpen, onDismiss, initialFocusRef, title, children }) => {
+  let transitions = useTransition(isOpen, null, {
+    from: { transform: 'translateY(-30px) scale(0.9)', opacity: 0 },
+    enter: { transform: 'translateY(0) scale(1)', opacity: 1 },
+    leave: { transform: 'translateY(-30px) scale(0.9)', opacity: 0 },
+  })
+
+  return transitions.map(
+    ({ key, item, props: { opacity, ...transitionStyles } }) =>
+      item && (
         <StyledOverlay
+          key={key}
           style={{ opacity }}
           isOpen={isOpen}
           onDismiss={onDismiss}
@@ -60,10 +61,9 @@ let Dialog = ({ isOpen, onDismiss, initialFocusRef, title, children }) => (
             {children}
           </Popover>
         </StyledOverlay>
-      ))
-    }
-  </Transition>
-)
+      )
+  )
+}
 
 let ConfirmationDialog = ({
   title,

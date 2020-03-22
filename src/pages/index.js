@@ -5,12 +5,19 @@ import { Box, Flex } from '@rebass/grid'
 import { SEO, Shield, SocialLinks } from '../components'
 import { Display } from '../components/display'
 
-const IndexPage = ({ data: { about } }) => (
+const IndexPage = ({
+  data: {
+    about: {
+      html,
+      frontmatter: { shields },
+    },
+  },
+}) => (
   <>
     <SEO title="About" />
 
     <Flex my="30px" flexWrap="wrap">
-      {about.shields.map(s => {
+      {shields.map(s => {
         let [label, value] = s.split('|')
 
         return (
@@ -27,9 +34,7 @@ const IndexPage = ({ data: { about } }) => (
 
     <div
       dangerouslySetInnerHTML={{
-        __html:
-          about.childContentfulAboutContentRichTextNode.childContentfulRichText
-            .html,
+        __html: html,
       }}
     />
   </>
@@ -37,14 +42,11 @@ const IndexPage = ({ data: { about } }) => (
 
 export let query = graphql`
   query IndexQuery {
-    about: contentfulAbout {
-      shields
-
-      childContentfulAboutContentRichTextNode {
-        childContentfulRichText {
-          html
-        }
+    about: markdownRemark(frontmatter: { pageType: { eq: "about" } }) {
+      frontmatter {
+        shields
       }
+      html
     }
   }
 `

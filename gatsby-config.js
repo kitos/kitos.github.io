@@ -20,6 +20,7 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-reason',
+    'gatsby-plugin-preact',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-styled-components',
@@ -61,6 +62,12 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/CHANGELOG.md`,
+      },
+    },
+    {
+      resolve: 'gatsby-transformer-yaml',
+      options: {
+        path: `${__dirname}/src/_content`,
       },
     },
     {
@@ -108,14 +115,6 @@ module.exports = {
         ],
       },
     },
-    {
-      resolve: `gatsby-source-contentful`,
-      options: {
-        spaceId: `6dybdba3jdxv`,
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-      },
-    },
-    '@contentful/gatsby-transformer-contentful-richtext',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {

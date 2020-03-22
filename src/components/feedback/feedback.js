@@ -1,6 +1,8 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, lazy, Suspense } from 'react'
 
-import FeedbackDialog from './dialogs'
+let FeedbackDialog = lazy(
+  /* webpackChunkName: "dialogs" */ () => import('./dialogs')
+)
 
 let feedbackContext = createContext(null)
 let { Provider, Consumer } = feedbackContext
@@ -19,12 +21,14 @@ let FeedbackProvider = ({ children }) => {
       {children}
 
       {isDialogOpen && (
-        <FeedbackDialog
-          type={type}
-          isOpen={isDialogOpen}
-          payload={feedback}
-          onDismiss={() => toggleDialog(false)}
-        />
+        <Suspense fallback={null}>
+          <FeedbackDialog
+            type={type}
+            isOpen={isDialogOpen}
+            payload={feedback}
+            onDismiss={() => toggleDialog(false)}
+          />
+        </Suspense>
       )}
     </Provider>
   )
