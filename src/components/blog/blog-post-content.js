@@ -1,14 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
-import { Flex } from '@rebass/grid'
-import { Manager } from 'react-popper'
 import GHSlugger from 'github-slugger'
-
-import { SelectionReference, Tooltip } from '../tooltip'
-import { TwitterIcon } from '../icons'
-import { UnstyledButton } from '../button'
-import { useOuterClickHandler } from '../outer-click-hook'
-import { feedbackContext } from '../feedback'
 import { useLazyIframe } from '../lazy-iframe-hook'
 import { media } from '../../utils'
 import TableOfContent from './TableOfContent.bs'
@@ -34,78 +26,25 @@ let StyledToc = styled(TableOfContent)`
   top: 50px;
 `
 
-let tooltipClassname = 'tooltip'
 let slugger = new GHSlugger()
 
-export let BlogPostContent = ({ post: { title, postUrl, headings, html } }) => {
-  let shareFeedback = useContext(feedbackContext)
-  let [selectedText, setSelectedText] = useState(null)
+export let BlogPostContent = ({ post: { headings, html } }) => {
   let currentHeading = useCurrentHeading('h2,h3')
 
   slugger.reset()
-
-  useOuterClickHandler(() => setSelectedText(null), `.${tooltipClassname}`)
   useLazyIframe()
 
   return (
-    <Manager>
-      <SelectionReference
-        onSelect={selection => {
-          if (selection && !selection.isCollapsed) {
-            setSelectedText(selection.toString())
-          }
-        }}
-      >
-        {getProps => (
-          <div style={{ position: 'relative' }}>
-            <TocWrapper>
-              <StyledToc
-                headings={headings}
-                active={currentHeading}
-                slugify={s => slugger.slug(s, false)}
-              />
-            </TocWrapper>
+    <div style={{ position: 'relative' }}>
+      <TocWrapper>
+        <StyledToc
+          headings={headings}
+          active={currentHeading}
+          slugify={s => slugger.slug(s, false)}
+        />
+      </TocWrapper>
 
-            <div {...getProps()} dangerouslySetInnerHTML={{ __html: html }} />
-          </div>
-        )}
-      </SelectionReference>
-
-      <Tooltip isOpen={!!selectedText} className={tooltipClassname}>
-        <Flex>
-          <a
-            href={`https://twitter.com/intent/tweet?text=“${selectedText}” — @kitos_kirsanov&url=${postUrl}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            title="tweet"
-            aria-label="tweet"
-            css={`
-              display: block;
-              line-height: 0;
-              padding-right: 5px;
-              margin-right: 10px;
-              border-right: 1px solid lightgray;
-            `}
-            style={{ lineHeight: 0, display: 'block' }}
-          >
-            <TwitterIcon width={30} />
-          </a>
-
-          <UnstyledButton
-            title="Report typo/mistake"
-            aria-label="Report typo/mistake"
-            onClick={() =>
-              shareFeedback({
-                type: 'typo',
-                post: { title, link: postUrl },
-                typo: selectedText,
-              })
-            }
-          >
-            ✏️
-          </UnstyledButton>
-        </Flex>
-      </Tooltip>
-    </Manager>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+    </div>
   )
 }
