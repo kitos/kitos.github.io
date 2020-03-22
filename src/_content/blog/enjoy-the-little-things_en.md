@@ -156,6 +156,10 @@ The best library for animation in react I know is [react-spring](https://github.
 
 Here we are going to animate update of every emoji independently using [useTransition](https://www.react-spring.io/docs/hooks/use-transition) hook. Time for a new component?
 
+The only tricky part here is to position animated blocks, I had to add extra hidden block in normal flow to preserve space. Without it our relative wrapper will collapse - all its other children are absolutely positioned. As an alternative we could also set fixed *height*/*width* to our container or render one children once to calculate their size.
+
+Do you know some other solution? Share it comments.
+
 ```jsx
 // children can be any react element
 let Waterfall = ({ children }) => {
@@ -211,5 +215,14 @@ And full result you can find here:
 [animated-digital-clock](embedded-codesandbox://enjoy-the-little-things/result)
 
 ## The End
+
+Let's sum up what just happened:
+
+* we've build cool animated digital clock
+* we've played with composition in *react*
+
+  * created custom hook
+* played with `react-spring`
+* did all above 👆while staying isolated 🦠
 
 It is important to note that in this article I was just messing around and didn't strive to build this animation in a most efficient way. It doesn't make sense to include `react` or `react-spring` to your web-site if you want to create something like this (both libraries are pretty heavy). Unless you already have both... And even if you do, I'm pretty sure there is more performant/easy way to achieve the same goal. Maybe later I'll revisit this article to cover this topic. But for now, I want to thanks for reading this 😙.
