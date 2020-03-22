@@ -8,7 +8,7 @@ let Waterfall = ({ children }) => {
       position: 'absolute',
       top: 0,
       left: 0,
-      transform: 'translate3d(0,-100%,0) scale(0.9)',
+      transform: 'translate3d(0,-80%,0) scale(0.9)',
       opacity: 0,
     },
     enter: { transform: 'translate3d(0,0,0) scale(1)', opacity: 1 },
