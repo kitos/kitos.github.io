@@ -8,11 +8,11 @@ let Waterfall = ({ children }) => {
       position: 'absolute',
       top: 0,
       left: 0,
-      transform: 'translate3d(0,-100%,0)',
+      transform: 'translate3d(0,-100%,0) scale(0.9)',
       opacity: 0,
     },
-    enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
-    leave: { transform: 'translate3d(0,60%,0)', opacity: 0 },
+    enter: { transform: 'translate3d(0,0,0) scale(1)', opacity: 1 },
+    leave: { transform: 'translate3d(0,60%,0) scale(0.7)', opacity: 0 },
   })
 
   return (
@@ -41,6 +41,7 @@ let AnimatedEmojiNumber = memo(({ value }) => (
   </div>
 ))
 
+// some magic alignment
 let Separator = () => <b style={{ margin: '0 5px 0 2px' }}>:</b>
 
 let padTime = (t, l = 2) => t.toString().padStart(l, '0')
@@ -70,6 +71,7 @@ let useIntervalValue = (factory, interval) => {
 }
 
 let CurrentTime = () => {
+  // just use some odd value as an interval so all ms digits change
   let now = useIntervalValue(() => new Date(), 193)
 
   return (
@@ -79,4 +81,4 @@ let CurrentTime = () => {
   )
 }
 
-render(<CurrentTime />, document.getElementById("root"));
+render(<CurrentTime />, document.getElementById('root'))
