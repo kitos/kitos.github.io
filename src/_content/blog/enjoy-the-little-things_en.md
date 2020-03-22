@@ -2,7 +2,7 @@
 slug: enjoy-the-little-things
 lang: en
 title: Enjoy the little things
-date: 2020-03-20T17:30:51.536Z
+date: 2020-03-22T17:30:51.536Z
 thumbnail:
   author: Mats Speicher
   img: /images/uploads/enjoy.jpg
