@@ -19,9 +19,10 @@ preface: >-
   This one will be the first one. In it I'm gonna play with react-spring to
   create simple digital clock animation.
 ---
+
 Well, looks like now, during self isolation caused by COVID-19 🦠, I'll have some time to code and maybe even to write a couple of articles about it (code). This one is the first, in it I'm gonna play with `react-spring` to create simple digital clock animation like this:
 
-![Animated digital clock](/images/uploads/digital-clock.gif "Animated digital clock")
+![Animated digital clock](/images/uploads/digital-clock.gif 'Animated digital clock')
 
 ## Small things matter
 
@@ -34,7 +35,7 @@ Implementation of this small component doesn't sound like a rocket science, but 
 Let's start with something really simple - build a component which can render a numeral using emojis like this: 4️⃣2️⃣:
 
 ```jsx
-let emojiDigits = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
+let emojiDigits = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
 
 let EmojiNumber = ({ value }) => (
   <div>
@@ -45,10 +46,10 @@ let EmojiNumber = ({ value }) => (
         <span key={i}>{emojiDigits[n]}</span>
       ))}
   </div>
-);
+)
 ```
 
-Nothing special except maybe they *key*: most of the time we [use some *id* as *key*](https://reactjs.org/docs/lists-and-keys.html#keys) and [trying to avoid using index](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318). But in our example index is the only thing that matters - the order of digits in numbers is important, isn't it?
+Nothing special except maybe they _key_: most of the time we [use some _id_ as _key_](https://reactjs.org/docs/lists-and-keys.html#keys) and [trying to avoid using index](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318). But in our example index is the only thing that matters - the order of digits in numbers is important, isn't it?
 
 Having this small component we can already render time:
 
@@ -69,7 +70,7 @@ let Time = ({ value }) => (
 
 Easy, but the implementation has a bug 🐛, did you notice it?
 
-For time `03:05:09` it will render 3️⃣: 5️⃣: 9️⃣, while I would expect to see 0️⃣3️⃣: 0️⃣5️⃣: 0️⃣9️⃣ . Let's fix it with `padTime` *function*:
+For time `03:05:09` it will render 3️⃣: 5️⃣: 9️⃣, while I would expect to see 0️⃣3️⃣: 0️⃣5️⃣: 0️⃣9️⃣ . Let's fix it with `padTime` _function_:
 
 ```jsx
 // highlight-next-line
@@ -141,11 +142,11 @@ let CurrentTime = () => {
 }
 ```
 
-Power of composition! So far we've built pretty simple *"app"*, yet it consists of 5 blocks (components/functions). Composition is definitely one of the strongest part of *react* especially with *hooks*.
+Power of composition! So far we've built pretty simple _"app"_, yet it consists of 5 blocks (components/functions). Composition is definitely one of the strongest part of _react_ especially with _hooks_.
 
 Let's look at the result:
 
-![Digital clock with emoji](/images/uploads/no-animation-digital-clock.gif "Digital clock with emoji")
+![Digital clock with emoji](/images/uploads/no-animation-digital-clock.gif 'Digital clock with emoji')
 
 ## Time to animate
 
@@ -155,7 +156,7 @@ The best library for animation in react I know is [react-spring](https://github.
 
 Here we are going to animate update of every emoji independently using [useTransition](https://www.react-spring.io/docs/hooks/use-transition) hook. Time for a new component?
 
-The only tricky part here is to position animated blocks, I had to add extra hidden block in normal flow to preserve space. Without it our relative wrapper will collapse - all its other children are absolutely positioned. As an alternative we could also set fixed *height*/*width* to our container or render one children once to calculate their size.
+The only tricky part here is to position animated blocks, I had to add extra hidden block in normal flow to preserve space. Without it our relative wrapper will collapse - all its other children are absolutely positioned. As an alternative we could also set fixed _height_/_width_ to our container or render one children once to calculate their size.
 
 Do you know some other solutions? Share it comments.
 
@@ -168,10 +169,10 @@ let Waterfall = ({ children }) => {
       top: 0,
       left: 0,
       transform: 'translate3d(0,-100%,0)',
-      opacity: 0
+      opacity: 0,
     },
     enter: { transform: 'translate3d(0,0,0)', opacity: 1 },
-    leave: { transform: 'translate3d(0,60%,0)', opacity: 0 }
+    leave: { transform: 'translate3d(0,60%,0)', opacity: 0 },
   })
 
   return (
@@ -181,7 +182,6 @@ let Waterfall = ({ children }) => {
       // highlight-next-line
       {/* we need one hidden extra block in normal flow to preserve space */}
       <div style={{ visibility: 'hidden' }}>{children}</div>
-
       {transitions.map(({ key, item, props }) => (
         <animated.div key={key} style={props}>
           {item}
@@ -192,7 +192,7 @@ let Waterfall = ({ children }) => {
 }
 ```
 
-Now we can animate our `jsx±<EmojiNumber />` using this component  🎉:
+Now we can animate our `jsx±<EmojiNumber />` using this component 🎉:
 
 ```jsx
 // highlight-next-line
@@ -217,11 +217,12 @@ And full result you can find here:
 
 Let's sum up what just happened:
 
-* we've build cool animated digital clock
-* we've played with composition in *react*
+- we've build cool animated digital clock
+- we've played with composition in _react_
 
-  * created custom hook
-* played with `react-spring`
-* did all above 👆while staying isolated 🦠
+  - created custom hook
+
+- played with `react-spring`
+- did all above 👆while staying isolated 🦠
 
 It is important to note that in this article I was just messing around and didn't strive to build this animation in a most efficient way. It doesn't make sense to include `react` or `react-spring` to your web-site if you want to create something like this (both libraries are pretty heavy). Unless you already have both... And even if you do, I'm pretty sure there is more performant/easy way to achieve the same goal. Maybe later I'll revisit this article to cover this topic. But for now, I want to thanks for reading this 😙.

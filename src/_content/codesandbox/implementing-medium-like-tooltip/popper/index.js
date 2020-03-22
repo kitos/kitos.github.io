@@ -1,14 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import { Manager, Reference, Popper } from "react-popper";
+import { Manager, Reference, Popper } from 'react-popper'
 
 let tooltipStyle = {
-  background: "#fff",
-  border: "1px solid green",
+  background: '#fff',
+  border: '1px solid green',
   padding: 10,
-  margin: 10
-};
+  margin: 10,
+}
 
 let App = () => (
   <div>
@@ -30,7 +30,7 @@ let App = () => (
 
     <p>This text should be overlaped by tooltip.</p>
   </div>
-);
+)
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+const rootElement = document.getElementById('root')
+ReactDOM.render(<App />, rootElement)

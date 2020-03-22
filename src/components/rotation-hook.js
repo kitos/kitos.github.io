@@ -10,32 +10,29 @@ export let useRotation = ({
   let [elRect, ref] = useBoundingClientRect()
   let [[x, y], setPosition] = useState(initialRotation)
 
-  useEffect(
-    () => {
-      let element = ref.current
-      let { left, top, width, height } = elRect
+  useEffect(() => {
+    let element = ref.current
+    let { left, top, width, height } = elRect
 
-      let onMouseMove = e => {
-        let relativeX = ((e.clientX - left) / width - 0.5) * 2
-        let relativeY = ((e.clientY - top) / height - 0.5) * 2
+    let onMouseMove = e => {
+      let relativeX = ((e.clientX - left) / width - 0.5) * 2
+      let relativeY = ((e.clientY - top) / height - 0.5) * 2
 
-        setPosition([relativeX, relativeY])
-      }
+      setPosition([relativeX, relativeY])
+    }
 
-      let onMouseOut = () => {
-        setPosition(initialRotation)
-      }
+    let onMouseOut = () => {
+      setPosition(initialRotation)
+    }
 
-      element.addEventListener('mousemove', onMouseMove)
-      element.addEventListener('mouseout', onMouseOut)
+    element.addEventListener('mousemove', onMouseMove)
+    element.addEventListener('mouseout', onMouseOut)
 
-      return () => {
-        element.removeEventListener('mousemove', onMouseMove)
-        element.removeEventListener('mouseout', onMouseOut)
-      }
-    },
-    [elRect]
-  )
+    return () => {
+      element.removeEventListener('mousemove', onMouseMove)
+      element.removeEventListener('mouseout', onMouseOut)
+    }
+  }, [elRect])
 
   let rotateX = `rotateX(${-y * rotationK}deg)`
   let rotateY = `rotateY(${x * rotationK}deg)`

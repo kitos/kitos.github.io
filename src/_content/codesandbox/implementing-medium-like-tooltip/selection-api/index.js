@@ -41,7 +41,7 @@ let App = () => {
           top,
           left,
           width,
-          height
+          height,
         }}
       />
     </div>

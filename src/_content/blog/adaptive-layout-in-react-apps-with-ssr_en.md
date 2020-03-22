@@ -15,11 +15,12 @@ preface: >-
   Short story about issues we faced while using adaptive design in statically
   generated app. And about approaches to avoid them.
 ---
+
 ## Mystique
 
 While working on migration of part our [main web-site](https://tourlane.de) to [gatsby](http://gatsbyjs.org), we faced really weird problem: one of a links in navigation menu wasn't styled on initial load. It was reproducible only on the desktop.
 
-![Navigation menu with unstyled link](/images/uploads/broken-link.jpg "Unstyled link")
+![Navigation menu with unstyled link](/images/uploads/broken-link.jpg 'Unstyled link')
 
 Once you opened some other page (using client-side routing), styles get in place 🤯.
 
@@ -44,11 +45,7 @@ import Media from 'react-media'
 
 export const NavBar = () => (
   <Media queries={{ maxWidth: 599 }}>
-    {matches =>
-      matches
-        ? <MobileNav />
-        : <DesktopNav />
-    }
+    {matches => (matches ? <MobileNav /> : <DesktopNav />)}
   </Media>
 )
 ```
@@ -57,8 +54,8 @@ export const NavBar = () => (
 
 Do you see a problem here?
 
-* [react-media](https://github.com/ReactTraining/react-media) is used to serve different markup for desktop and mobile
-* we are migrating our app to _gatsby_, which means all our pages are statically built (SSR is happening during build time). And on this stage, we obviously do not have any information about _width_ of the screen. By default `react-media` matches all media queries, so in our case we build mobile layout.
+- [react-media](https://github.com/ReactTraining/react-media) is used to serve different markup for desktop and mobile
+- we are migrating our app to _gatsby_, which means all our pages are statically built (SSR is happening during build time). And on this stage, we obviously do not have any information about _width_ of the screen. By default `react-media` matches all media queries, so in our case we build mobile layout.
 
 This results in next workflow:
 
@@ -69,49 +66,50 @@ This results in next workflow:
 
 To avoid such problems we can:
 
-* prefer regular css media queries to [matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)\
+- prefer regular css media queries to [matchMedia](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)\
   \
   Even if you cannot style same piece of html to fit your adaptive design, you can _"duplicate"_ it (html) and display one _"copy"_ per breakpoint.
 
   ```jsx
-    let DesktopOnly = styled.div`
-      @media (max-width: 599px) {
-        display: none;
-      }
-    `
+  let DesktopOnly = styled.div`
+    @media (max-width: 599px) {
+      display: none;
+    }
+  `
 
-    let MobileOnly = styled.div`...`
+  let MobileOnly = styled.div`...`
 
-    export const NavBar = () => (
-      <>
-        <MobileOnly>
-          <MobileNav />
-        </MobileOnly>
+  export const NavBar = () => (
+    <>
+      <MobileOnly>
+        <MobileNav />
+      </MobileOnly>
 
-        <DesktopOnly>
-          <DesktopNav />
-        </DesktopOnly>
-      </>
+      <DesktopOnly>
+        <DesktopNav />
+      </DesktopOnly>
+    </>
   )
   ```
+
   In this case not only you will avoid problems with _hydration_, but also end-user will get better experience: there will be no layout flickering during page load, since browser will render the page according to your html/css, and hydration will give it life.
 
-* only in case the approach above doesn't work for you, use `react-media` (or similar solutions). E.g.:
-  * SEO might suffer (I haven't faced such problems, but I assume that duplication of content, its growth... can influence it 💁‍♂️. Write a comment if you are aware of such cases)
-  * performance might suffer, in case you render some complex element only for the desktop.\
+- only in case the approach above doesn't work for you, use `react-media` (or similar solutions). E.g.:
+  - SEO might suffer (I haven't faced such problems, but I assume that duplication of content, its growth... can influence it 💁‍♂️. Write a comment if you are aware of such cases)
+  - performance might suffer, in case you render some complex element only for the desktop.\
     \
     **ATTENTION PLEASE!** Do not optimize prematurely! Always measure performance before you introduce any improvements. The fact that _react_ will have to render 50 more html elements shouldn't bother you.
-  * something else might suffer 🤷‍♂️
+  - something else might suffer 🤷‍♂️
 
 But what about problems with hydration we experienced using second approach?
 
 Well, as I mentioned at the beginning, such issue shouldn't have been left out, so it has a solution - two-pass rendering:
 
-* choose a default layout you'd like to use by default:
-  * if you are using runtime SSR, you can do it based on _User Agent_
-  * for static sites based on usage statistics (in most cases it should be mobile, since devices are less performant, and it doesn't make sense to make them render tree twice)
-* render three using this default during SSR and client hydration
-* run an extra render in case actual layout didn't match default one
+- choose a default layout you'd like to use by default:
+  - if you are using runtime SSR, you can do it based on _User Agent_
+  - for static sites based on usage statistics (in most cases it should be mobile, since devices are less performant, and it doesn't make sense to make them render tree twice)
+- render three using this default during SSR and client hydration
+- run an extra render in case actual layout didn't match default one
 
 Official documentation [suggests](https://ru.reactjs.org/docs/react-dom.html#hydrate) to use state variable to implement this and `react-media` also [supports this](https://github.com/ReactTraining/react-media#server-side-rendering-ssr) via `defaultMatches` prop:
 
@@ -119,12 +117,9 @@ Official documentation [suggests](https://ru.reactjs.org/docs/react-dom.html#hyd
 export const NavBar = () => (
   <Media
     queries={{ mobile: { maxWidth: 599 } }}
-    defaultMatches={{ mobile: true }}>
-    {matches =>
-      matches.mobile
-        ? <MobileNav />
-        : <DesktopNav />
-    }
+    defaultMatches={{ mobile: true }}
+  >
+    {matches => (matches.mobile ? <MobileNav /> : <DesktopNav />)}
   </Media>
 )
 ```

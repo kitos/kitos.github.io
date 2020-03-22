@@ -8,7 +8,7 @@ let tooltipStyle = {
   background: '#fff',
   border: '1px solid green',
   padding: 10,
-  margin: 10
+  margin: 10,
 }
 
 let App = () => {
@@ -27,7 +27,7 @@ let App = () => {
           {getProps => (
             <p
               {...getProps({
-                onMouseUp: () => console.log('We still can use this callback!')
+                onMouseUp: () => console.log('We still can use this callback!'),
               })}
             >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
