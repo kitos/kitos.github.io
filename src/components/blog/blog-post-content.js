@@ -88,7 +88,7 @@ export let BlogPostContent = ({ post: { title, postUrl, headings, html } }) => {
             `}
             style={{ lineHeight: 0, display: 'block' }}
           >
-            <TwitterIcon width={30} mode="blueOnWhite" />
+            <TwitterIcon width={30} />
           </a>
 
           <UnstyledButton

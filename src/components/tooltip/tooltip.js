@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import styled, { css } from 'styled-components/macro'
 import { Popper } from 'react-popper'
-import { Transition } from 'react-spring'
+import { Transition } from 'react-spring/renderprops'
 import Popover from '../popover'
 
 let arrowSize = 6
