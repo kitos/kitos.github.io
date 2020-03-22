@@ -1,6 +1,8 @@
 import React, { createContext, useState, lazy, Suspense } from 'react'
 
-let FeedbackDialog = lazy(() => import('./dialogs'))
+let FeedbackDialog = lazy(
+  /* webpackChunkName: "dialogs" */ () => import('./dialogs')
+)
 
 let feedbackContext = createContext(null)
 let { Provider, Consumer } = feedbackContext
