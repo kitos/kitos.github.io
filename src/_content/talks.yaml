@@ -1,0 +1,46 @@
+- title: Composition in reactjs
+  url: 'https://www.youtube.com/watch?v=cMIoOSvX1M0'
+  tags:
+    - reactjs
+    - HOC
+    - render-prop
+    - patterns
+
+- title: 'Blazing Fast WebPurple (WebPurple meetup #29)'
+  url: 'https://www.youtube.com/watch?v=QLXWhxd85Lc'
+  tags:
+    - reactjs
+    - gatsbyjs
+    - jamstack
+
+- title: 'Blazing Fast WebPurple (#ITsubbotnik)'
+  url: 'https://www.youtube.com/watch?v=Im95DcXzTEU'
+  tags:
+    - gatsbyjs
+    - jamstack
+    - reactjs
+
+- title: 'const vs let (WebPurple meetup #26)'
+  url: 'https://www.youtube.com/watch?v=WXojma0u_o4'
+  tags:
+    - javascript
+
+- title: 'Development po Feng Shui (#ITsubbotnik)'
+  url: 'https://www.youtube.com/watch?v=q5EU1R2M574'
+  tags:
+    - CI
+    - CD
+    - docker
+    - best_practices
+    - TDD
+    - BDD
+    - git
+    - branching_strategies
+
+- title: redux-talk@1.0.0 (ITsubbotnik)
+  url: 'https://www.youtube.com/watch?v=o2svfxi1Rdg'
+  tags:
+    - redux
+    - state_managment
+    - functional_programming
+    - flux

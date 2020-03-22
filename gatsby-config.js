@@ -64,6 +64,12 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-transformer-yaml',
+      options: {
+        path: `${__dirname}/src/_content`,
+      },
+    },
+    {
       resolve: 'gatsby-transformer-remark',
       options: {
         plugins: [
@@ -108,14 +114,6 @@ module.exports = {
         ],
       },
     },
-    {
-      resolve: `gatsby-source-contentful`,
-      options: {
-        spaceId: `6dybdba3jdxv`,
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-      },
-    },
-    '@contentful/gatsby-transformer-contentful-richtext',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {
