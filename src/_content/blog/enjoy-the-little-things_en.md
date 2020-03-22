@@ -9,7 +9,6 @@ thumbnail:
   src: 'https://unsplash.com/photos/FxGoXaib51Q'
 tags:
   - reactjs
-  - preact
   - react-spring
   - emoji
   - animation
