@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from '@rebass/grid'
 
-import { toQueryString } from '../utils'
+import { createGHIssue } from './create-gh-issue'
 
 class ErrorBoundary extends React.Component {
   state = {}
@@ -9,17 +9,11 @@ class ErrorBoundary extends React.Component {
   componentDidCatch({ message, stack }, { componentStack }) {
     this.setState({ message, stack, componentStack }, () => {
       if (process.env.NODE_ENV === 'production') {
-        fetch(
-          `${process.env.GATSBY_CLOUD_FUNCTION_CREATE_GH_ISSUE}?${toQueryString(
-            {
-              type: 'bug',
-              message,
-              stack,
-            }
-          )}`
-        )
-          .then(resp => resp.json())
-          .then(({ url }) => this.setState({ issueUrl: url }))
+        createGHIssue({
+          type: 'bug',
+          message,
+          stack,
+        }).then(({ url }) => this.setState({ issueUrl: url }))
       }
     })
   }
