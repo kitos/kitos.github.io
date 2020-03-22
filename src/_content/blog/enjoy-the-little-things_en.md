@@ -157,7 +157,7 @@ Here we are going to animate update of every emoji independently using [useTrans
 
 The only tricky part here is to position animated blocks, I had to add extra hidden block in normal flow to preserve space. Without it our relative wrapper will collapse - all its other children are absolutely positioned. As an alternative we could also set fixed *height*/*width* to our container or render one children once to calculate their size.
 
-Do you know some other solution? Share it comments.
+Do you know some other solutions? Share it comments.
 
 ```jsx
 // children can be any react element
