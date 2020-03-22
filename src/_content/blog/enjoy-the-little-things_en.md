@@ -202,3 +202,7 @@ let AnimatedEmojiNumber = ({ value }) => (
 And full result you can find here:
 
 [animated-digital-clock](embedded-codesandbox://enjoy-the-little-things/result)
+
+## The End
+
+It is important to note that in this article I was just messing around and didn't strive to build this animation in a most efficient way. It doesn't make sense to include `react` or `react-spring` to your web-site if you want to create something like this (both libraries are pretty heavy). Unless you already have both... And even if you do, I'm pretty sure there is more performant/easy way to achieve the same goal. Maybe later I'll revisit this article to cover this topic. But for now, I want to thanks for reading this 😙.
