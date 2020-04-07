@@ -11,10 +11,8 @@ tags:
   - f
 preface: f
 ---
-
-
-```
-import { Transform } from 'jscodeshift/src/core';
+```typescript
+import { Transform } from 'jscodeshift';
 
 const directions = ['', 't', 'r', 'b', 'l', 'x', 'y'];
 const spaceAttributes = [
@@ -22,30 +20,28 @@ const spaceAttributes = [
   ...directions.map(d => `p${d}`),
 ];
 
-const transform: Transform = (fileInfo, { j }) => {
-  return j(fileInfo.source)
+const transform: Transform = (fileInfo, { j }) =>
+  j(fileInfo.source)
     .find(j.JSXAttribute)
-    .filter(
-      path =>
-        typeof path.node.name.name === 'string' &&
-        spaceAttributes.includes(path.node.name.name)
-    )
-    .forEach(path => {
-      const value = path.node.value;
+    .forEach(({ node }) => {
+      const attributeName =
+        typeof node.name.name === 'string' ? node.name.name : `¯\\_(ツ)_/¯`;
+      const { value } = node;
 
       if (
+        spaceAttributes.includes(attributeName) &&
+        // we are interested only array expressions which has more then 1 value
+        // like <Box m={[8, 16, 24]}>
         value?.type === 'JSXExpressionContainer' &&
         value.expression.type === 'ArrayExpression' &&
         value.expression.elements.length > 1
       ) {
-        const [head, ...tail] = value.expression.elements;
+        const [xs, ...otherMedias] = value.expression.elements;
 
-        value.expression.elements = [head, j.identifier('null'), ...tail];
+        value.expression.elements = [xs, j.identifier('null'), ...otherMedias];
       }
     })
     .toSource();
-};
 
 export default transform;
-
 ```
