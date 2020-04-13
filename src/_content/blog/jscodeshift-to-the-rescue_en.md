@@ -1,16 +1,35 @@
 ---
 slug: jscodeshift-to-the-rescue
 lang: en
-title: jscodeshift to the rescue
-date: 2020-03-26T11:10:20.179Z
+title: refactor as no one is watching or jscodeshift to the rescue
+date: 2020-04-14T10:10:20.179Z
 thumbnail:
   img: /images/uploads/lazy.jpg
   author: f
   src: f
 tags:
-  - f
+  - jscodeshift
+  - recast
+  - ast
+  - babel
+  - styled-system
+  - styled-components
+  - responsive
+  - responsive-design
 preface: f
 ---
+It is hard to underestimate an importance  of ast transformation tools in the frontend now:
+
+* we use babel to babel
+
+  * to transform the most recent ECMAScript versions to work with older versions of browsers
+  * to optimize our code
+  * to improve engineering experience
+  * to get new features
+* we use eslint to 
+* we use prettier
+* we use...
+
 ```typescript
 import { Transform } from 'jscodeshift';
 
