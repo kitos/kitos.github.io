@@ -4,9 +4,10 @@ lang: en
 title: Refactor as no one is watching
 date: 2020-04-14T10:10:20.179Z
 thumbnail:
-  img: /images/uploads/lazy.jpg
-  author: f
-  src: f
+  img: /images/uploads/dance-as-no-one-watching.jpg
+  author: Juan Camilo Navia
+  src: >-
+    https://unsplash.com/@juantures12?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
 tags:
   - jscodeshift
   - recast
@@ -76,13 +77,17 @@ let Layout = ({ children }) => (
 
 But lately we got new page where mobile and table designs are quite different. But our scale system doesn't support it 😧: we cannot use responsive attributes we get used to 😨. If we just add one more breakpoint, it'll break all existing components 😰.
 
-I bet you've been in a situation like this. E.g. you might used some library api which was deprecated. Luckily in cases like this, library authors usually prepare codemods which will update your code base for you. So you don't even have to understand what it does under the hood.
+I bet you've been in a situation like this. E.g. you might used some library api which was deprecated. Luckily in cases like this, library authors usually prepare codemods which will update your codebase for you. So you don't even have to understand what it does under the hood.
 
 But in our case there was no one to rely on, nobody to blame... but... me? 🥺
 
+## jscodeshift to the rescue
 
+Even though we could write tablet specific styles *by hand* - using *normal* `styled-component`s syntax. It wasn't the way we wanted to proceed - we really like the api provided by `styled-system`, moreover we didn't want to introduce  ambiguity in writing responsive styles. And obviously we wasn't keen to go through the whole codebase to change all usages of responsive props.
 
-At least we still can write those styles *by hand*.
+Sounds like a perfect task for codemode!
+
+I have never worked with them, but I've heard that [jscodeshift](https://github.com/facebook/jscodeshift) is a cool tool to build them, e.g. react team [use it.](https://github.com/reactjs/react-codemod) 
 
 ```typescript
 import { Transform } from 'jscodeshift';
@@ -118,3 +123,7 @@ const transform: Transform = (fileInfo, { j }) =>
 
 export default transform;
 ```
+
+
+
+<https://www.toptal.com/javascript/write-code-to-rewrite-your-code>
