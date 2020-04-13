@@ -89,6 +89,8 @@ Sounds like a perfect task for codemode!
 
 I have never worked with them, but I've heard that [jscodeshift](https://github.com/facebook/jscodeshift) is a cool tool to build them, e.g. react team [use it.](https://github.com/reactjs/react-codemod) 
 
+All you have to do is create `js` (`typescript` is also supported) file and export *transform* function which will take care of required AST transformations.
+
 ```typescript
 import { Transform } from 'jscodeshift';
 
@@ -123,7 +125,5 @@ const transform: Transform = (fileInfo, { j }) =>
 
 export default transform;
 ```
-
-
 
 <https://www.toptal.com/javascript/write-code-to-rewrite-your-code>
