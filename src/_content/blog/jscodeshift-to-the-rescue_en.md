@@ -2,7 +2,7 @@
 slug: refactor-as-no-one-is-watching
 lang: en
 title: Refactor as no one is watching
-date: 2020-04-14T10:10:20.179Z
+date: 2020-04-19T10:10:20.179Z
 thumbnail:
   img: /images/uploads/dance-as-no-one-watching.jpg
   author: Juan Camilo Navia
@@ -14,7 +14,9 @@ tags:
   - codemodes
   - babel
   - styled-system
-preface: some
+  - reactjs
+preface: Short story about using AST transformation to refactor the code. Like
+  some codemodes you might used.
 ---
 It is hard to underestimate an importance  of [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) transformation tools in the frontend now:
 
@@ -33,7 +35,12 @@ But today I wanna tell a short story about using *AST* transformation to refacto
 At [tourlane](https://www.tourlane.de/) we use [styled-components](https://styled-components.com/) (probably, the most popular *CSS-IN-JS* solutions in react) along with [styled-system](https://styled-system.com/) (awesome utility belt for easily writing responsive styles based on scales from global theme), so we can write something like this:
 
 ```jsx
-
+let User = ({ avatar, name }) => (
+  <Flex flexDirection={['column', 'row']}>
+    <Box as="img" mb={[1, 0]} mr={[0, 1]} src={avatar} />
+    <Box p={1}>{name}</Box>
+  </Flex>
+)
 ```
 
 While some of you might find this style of writing components pretty controversial, this is not the point of this article. But I still can recommend these articles to [](https://jxnblk.com/blog/two-steps-forward/)get more reasoning behind it:
@@ -42,10 +49,18 @@ While some of you might find this style of writing components pretty controversi
 * [Styles and Naming](<* [https://www.christopherbiscardi.com/post/styles-and-naming](https://www.christopherbiscardi.com/post/styles-and-naming/)/>)
 * [Old and new ideas in React UI](https://react-ui.dev/core-concepts/ideas)
 
-So the point of the code block from above is the usage of responsive CSS values: `something` (pretty handy isn't it?). Under the hood it will use media breakpoints provided in [theme](https://styled-system.com/theme-specification) to compile responsive styles like:
+So the point of the code block from above is the usage of responsive CSS values: `jsx±flexDirection={['column', 'row']}`(pretty handy isn't it?). Under the hood it will use media breakpoints provided in [theme](https://styled-system.com/theme-specification) to compile responsive styles like:
 
-```
+```css
+.some-generated-class {
+  flex-direction: column;
+}
 
+@media screen and (min-width: 64em) {
+  .some-generated-class {
+    flex-direction: row;
+  }
+}
 ```
 
 ## The problem
@@ -56,7 +71,7 @@ When we started one of our projects we didn't have any styles specific to tablet
 let breakpoints = [
   // again no need to define lower breakpoint
   // since we use mobile-first
-  // (styles applied without media are concidered to be mobile)
+  // (styles applied without media are considered to be mobile)
   
   '64em', // desktop
   '80em', // wide
@@ -94,11 +109,12 @@ And after about an hour of playing with it I built this:
 ```typescript
 import { Transform } from 'jscodeshift';
 
-// these are responsive properties provided by styled-system
 const directions = ['', 't', 'r', 'b', 'l', 'x', 'y'];
+// these are responsive attrs provided by styled-system
 const spaceAttributes = [
   ...directions.map(d => `m${d}`),
   ...directions.map(d => `p${d}`),
+  'flexDirection', 'justifyContent', // ...
 ];
 
 const transform: Transform = (fileInfo, { j }) =>
@@ -133,6 +149,6 @@ As you can see the transform is not that big and yet very descriptive. Obviously
 
 The cool think is you can run your codemode ➡️rollback using git ➡️improve 🔁1000 times, until you are happy with the result.
 
-That is all I wanted to share today. I hope after reading this article you will consider codemodes to be not just powerful tool, but also a thing that is easy to learn, as I did. If you have any questions or suggestion feel free to use comments section or rich me directly in [twitter](https://twitter.com/kitos_kirsanov). Thanks!
+## Make codemodes part of your toolbelt
 
-<https://www.toptal.com/javascript/write-code-to-rewrite-your-code>
+That is all I wanted to share today. I hope after reading this article you will consider codemodes to be not just powerful tool, but also a thing that is easy to learn, as I did. If you have any questions or suggestion feel free to use comments section or rich me directly in [twitter](https://twitter.com/kitos_kirsanov). Thanks!
