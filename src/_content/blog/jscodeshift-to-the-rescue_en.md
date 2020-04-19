@@ -6,8 +6,7 @@ date: 2020-04-14T10:10:20.179Z
 thumbnail:
   img: /images/uploads/dance-as-no-one-watching.jpg
   author: Juan Camilo Navia
-  src: >-
-    https://unsplash.com/@juantures12?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
+  src: https://unsplash.com/@juantures12?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
 tags:
   - jscodeshift
   - recast
@@ -15,9 +14,6 @@ tags:
   - codemodes
   - babel
   - styled-system
-  - styled-components
-  - responsive
-  - responsive-design
 preface: some
 ---
 It is hard to underestimate an importance  of [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) transformation tools in the frontend now:
@@ -83,17 +79,22 @@ But in our case there was no one to rely on, nobody to blame... but... me? 🥺
 
 ## jscodeshift to the rescue
 
-Even though we could write tablet specific styles *by hand* - using *normal* `styled-component`s syntax. It wasn't the way we wanted to proceed - we really like the api provided by `styled-system`, moreover we didn't want to introduce  ambiguity in writing responsive styles. And obviously we wasn't keen to go through the whole codebase to change all usages of responsive props.
+Even though we could write tablet specific styles *"by hand"* - using *normal* `styled-component`s syntax. It wasn't the way we wanted to proceed - we really like the api provided by `styled-system`, moreover we didn't want to introduce  ambiguity in writing responsive styles. And obviously we wasn't keen to go through the whole codebase to change all usages of responsive props.
 
 Sounds like a perfect task for codemode!
 
-I have never worked with them, but I've heard that [jscodeshift](https://github.com/facebook/jscodeshift) is a cool tool to build them, e.g. react team [use it.](https://github.com/reactjs/react-codemod) 
+I have never worked with them, but I've heard that [jscodeshift](https://github.com/facebook/jscodeshift) is a cool tool to build them, e.g. react team [uses it.](https://github.com/reactjs/react-codemod) All you have to do is create `js/ts` file and export *transform* function which will take care of required AST transformations.
 
-All you have to do is create `js` (`typescript` is also supported) file and export *transform* function which will take care of required AST transformations.
+Another important part is, of course, general understanding of AST: what it is, what it consists of and how we can alter it. I found this [babel handbook](https://github.com/jamiebuilds/babel-handbook) super useful intro. Another must-have tool is [AST explorer](https://astexplorer.net/): with help of it you can write some code to see its AST representation and write transform functions with immediate results!
+
+Also I can hardly imagine writhing AST transformation without `typescript`, so I installed its typings (`@types/jscodeshift`) along with a library itself.
+
+And after about an hour of playing with it I built this:
 
 ```typescript
 import { Transform } from 'jscodeshift';
 
+// these are responsive properties provided by styled-system
 const directions = ['', 't', 'r', 'b', 'l', 'x', 'y'];
 const spaceAttributes = [
   ...directions.map(d => `m${d}`),
@@ -125,5 +126,9 @@ const transform: Transform = (fileInfo, { j }) =>
 
 export default transform;
 ```
+
+As you can see the transform is not that big and yet very descriptive. Obviously it doesn't cover all possible cases, e.g. we could use ternary expressions in jsx attributes or use variables referring to arrays and etc. But it does explain the idea, at least I hope so.
+
+
 
 <https://www.toptal.com/javascript/write-code-to-rewrite-your-code>
