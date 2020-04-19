@@ -72,7 +72,6 @@
   "devDependencies": {
     "babel-plugin-styled-components": "^1.10.7",
     "bs-platform": "^7.2.2",
-    "gatsby-plugin-netlify-cache": "^1.2.0",
     "gatsby-plugin-reason": "^2.1.0",
     "gatsby-plugin-twitter": "^2.2.2",
     "gatsby-remark-autolink-headers": "^2.2.1",

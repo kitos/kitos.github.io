@@ -26,10 +26,6 @@ module.exports = {
     'gatsby-plugin-styled-components',
     'gatsby-plugin-netlify-cms',
     'gatsby-plugin-twitter',
-    {
-      resolve: 'gatsby-plugin-netlify-cache',
-      options: { extraDirsToCache: ['public/static'] },
-    },
     rssPlugin,
     {
       resolve: 'gatsby-plugin-layout',
@@ -100,7 +96,7 @@ module.exports = {
             resolve: `gatsby-remark-embedded-codesandbox`,
             options: {
               directory: `${__dirname}/src/_content/codesandbox`,
-              getIframe: url =>
+              getIframe: (url) =>
                 `<iframe
                     data-src="${url}"
                     class="embedded-codesandbox"
