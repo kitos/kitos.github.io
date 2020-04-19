@@ -119,6 +119,8 @@ const transform: Transform = (fileInfo, { j }) =>
       ) {
         const [xs, ...otherMedias] = value.expression.elements;
 
+        // null in styled-system means - do not introduce new media query
+        // so thanks to mobile first approach we'll have values defined in xs
         value.expression.elements = [xs, j.identifier('null'), ...otherMedias];
       }
     })
@@ -129,6 +131,8 @@ export default transform;
 
 As you can see the transform is not that big and yet very descriptive. Obviously it doesn't cover all possible cases, e.g. we could use ternary expressions in jsx attributes or use variables referring to arrays and etc. But it does explain the idea, at least I hope so.
 
+The cool think is you can run your codemode ➡️rollback using git ➡️improve 🔁1000 times, until you are happy with the result.
 
+That is all I wanted to share today. I hope after reading this article you will consider codemodes to be not just powerful tool, but also a thing that is easy to learn, as I did. If you have any questions or suggestion feel free to use comments section or rich me directly in [twitter](https://twitter.com/kitos_kirsanov). Thanks!
 
 <https://www.toptal.com/javascript/write-code-to-rewrite-your-code>
