@@ -135,8 +135,10 @@ let transform: Transform = (fileInfo, { j }) =>
       ) {
         let [xs, ...otherMedias] = value.expression.elements;
 
-        // null in styled-system means - do not introduce new media query
-        // so thanks to mobile first approach we'll have values defined in xs
+        // null in styled-system means - do not introduce new media query,
+        // so thanks to mobile first approach we'll have values defined in xs.
+        // I could also write [xs, xs, ...otherMedias],
+        // it will just result in bigger css output
         value.expression.elements = [xs, j.identifier('null'), ...otherMedias];
       }
     })
