@@ -32,7 +32,7 @@ But today I wanna tell a short story about using *AST* transformation to refacto
 
 ## Backstory
 
-At [tourlane](https://www.tourlane.de/) we use [styled-components](https://styled-components.com/) (probably, the most popular *CSS-IN-JS* solutions in react) along with [styled-system](https://styled-system.com/) (awesome utility belt for easily writing responsive styles based on scales from global theme), so we can write something like this:
+At [tourlane](https://www.tourlane.de/) we use [styled-components](https://styled-components.com/) (probably, the most popular *CSS-IN-JS* solution in react) along with [styled-system](https://styled-system.com/) (awesome utility belt for writing responsive styles based on scales from global theme), so we can build components like this:
 
 ```jsx
 let User = ({ avatar, name }) => (
@@ -43,13 +43,13 @@ let User = ({ avatar, name }) => (
 )
 ```
 
-While some of you might find this style of writing components pretty controversial, this is not the point of this article. But I still can recommend these articles to [](https://jxnblk.com/blog/two-steps-forward/)get more reasoning behind it:
+While some of you might find this style of writing components pretty controversial, this is not the point of this article. But I still can recommend a couple articles to [](https://jxnblk.com/blog/two-steps-forward/)get more reasoning behind it:
 
 * [Two steps forward, one step back](https://jxnblk.com/blog/two-steps-forward/)
 * [Styles and Naming](<* [https://www.christopherbiscardi.com/post/styles-and-naming](https://www.christopherbiscardi.com/post/styles-and-naming/)/>)
 * [Old and new ideas in React UI](https://react-ui.dev/core-concepts/ideas)
 
-So the point of the code block from above is the usage of responsive CSS values: `jsx±flexDirection={['column', 'row']}`(pretty handy isn't it?). Under the hood it will use media breakpoints provided in [theme](https://styled-system.com/theme-specification) to compile responsive styles like:
+The point of the code block from above is the usage of responsive CSS values: `jsx±flexDirection={['column', 'row']}`(pretty handy isn't it?). Under the hood it will use media breakpoints provided in [theme](https://styled-system.com/theme-specification) to compile responsive styles like:
 
 ```css
 .some-generated-class {
@@ -69,7 +69,7 @@ When we started one of our projects we didn't have any styles specific to tablet
 
 ```jsx
 let breakpoints = [
-  // again no need to define lower breakpoint
+  // no need to define lower breakpoint
   // since we use mobile-first
   // (styles applied without media are considered to be mobile)
   
@@ -102,28 +102,28 @@ I have never worked with them, but I've heard that [jscodeshift](https://github.
 
 Another important part is, of course, general understanding of AST: what it is, what it consists of and how we can alter it. I found this [babel handbook](https://github.com/jamiebuilds/babel-handbook) super useful intro. Another must-have tool is [AST explorer](https://astexplorer.net/): with help of it you can write some code to see its AST representation and write transform functions with immediate results!
 
-Also I can hardly imagine writhing AST transformation without `typescript`, so I installed its typings (`@types/jscodeshift`) along with a library itself.
+Also I can hardly imagine writhing AST transformation without `typescript` (you can get info about nodes and their properties, right during typing intead of switching between editor and bable docs all the time), so I installed its typings (`@types/jscodeshift`) along with a library itself.
 
 And after about an hour of playing with it I built this:
 
 ```typescript
 import { Transform } from 'jscodeshift';
 
-const directions = ['', 't', 'r', 'b', 'l', 'x', 'y'];
+let directions = ['', 't', 'r', 'b', 'l', 'x', 'y'];
 // these are responsive attrs provided by styled-system
-const spaceAttributes = [
+let spaceAttributes = [
   ...directions.map(d => `m${d}`),
   ...directions.map(d => `p${d}`),
   'flexDirection', 'justifyContent', // ...
 ];
 
-const transform: Transform = (fileInfo, { j }) =>
+let transform: Transform = (fileInfo, { j }) =>
   j(fileInfo.source)
     .find(j.JSXAttribute)
     .forEach(({ node }) => {
-      const attributeName =
+      let attributeName =
         typeof node.name.name === 'string' ? node.name.name : `¯\\_(ツ)_/¯`;
-      const { value } = node;
+      let { value } = node;
 
       if (
         spaceAttributes.includes(attributeName) &&
@@ -133,7 +133,7 @@ const transform: Transform = (fileInfo, { j }) =>
         value.expression.type === 'ArrayExpression' &&
         value.expression.elements.length > 1
       ) {
-        const [xs, ...otherMedias] = value.expression.elements;
+        let [xs, ...otherMedias] = value.expression.elements;
 
         // null in styled-system means - do not introduce new media query
         // so thanks to mobile first approach we'll have values defined in xs
@@ -145,9 +145,11 @@ const transform: Transform = (fileInfo, { j }) =>
 export default transform;
 ```
 
+You can also play with live example in [AST explorer](https://astexplorer.net/#/gist/d76e9a0c6e5f0cea12c039bc1b3f0d4c/4a5c9afcfda6967a4d0205ba8093e2b0c363ac4c).
+
 As you can see the transform is not that big and yet very descriptive. Obviously it doesn't cover all possible cases, e.g. we could use ternary expressions in jsx attributes or use variables referring to arrays and etc. But it does explain the idea, at least I hope so.
 
-The cool think is you can run your codemode ➡️rollback using git ➡️improve 🔁1000 times, until you are happy with the result.
+The cool thing is you can run your codemode ➡️rollback using git ➡️improve 🔁1000 times, until you are happy with the result.
 
 ## Make codemodes part of your toolbelt
 
