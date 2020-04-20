@@ -1,7 +1,7 @@
 ---
 slug: refactor-as-no-one-is-watching
 lang: en
-title: Refactor as no one is watching
+title: Refactor like no one is watching
 date: 2020-04-19T10:10:20.179Z
 thumbnail:
   img: /images/uploads/dance-as-no-one-watching.jpg
