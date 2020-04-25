@@ -25,14 +25,14 @@ preface: Небольшая история о разработке codemode'ов
   * чтобы *транспилировать* современные версии *ECMAScript* в те, что совместимы с более старыми версиями браузеров
   * чтобы [оптимизировать наш код](https://github.com/jamiebuilds/babel-react-optimize)
   * чтобы [получить новые возможности](https://emotion.sh/docs/css-prop)
-* we use `eslint` to enforce best practices or avoid mistakes/bugs
-* we use `prettier` to format the code
+* закрепляем общие подходы и избегаем багов с помощью `eslint`
+* форматируем код `prettier`'ом
 
-But today I wanna tell a short story about using *AST* transformation to refactor the code. Like some codemodes you might used.
+Но сегодня мы поговорим о AST трансформациях для рефакторинга кода. Вы возможно уже использовали так называемые *codemodes*.
 
-## Backstory
+##  Предыстория
 
-At [tourlane](https://www.tourlane.de/) we use [styled-components](https://styled-components.com/) (probably, the most popular *CSS-IN-JS* solution in react) along with [styled-system](https://styled-system.com/) (awesome utility belt for writing responsive styles based on scales from global theme), so we can build components like this:
+Мы в [tourlane](https://www.tourlane.de/) используем [styled-components](https://styled-components.com/) (вероятно, одно из самых популярных *CSS-IN-JS* решений в react сообществе) и [styled-system](https://styled-system.com/) (очень крутой набор утилит для написания адаптивных стилей), благодаря которым мы можем писать что-то вроде этого:
 
 ```jsx
 let User = ({ avatar, name }) => (
@@ -43,13 +43,13 @@ let User = ({ avatar, name }) => (
 )
 ```
 
-While some of you might find this style of writing components pretty controversial, this is not the point of this article. But I still can recommend a couple articles to [](https://jxnblk.com/blog/two-steps-forward/)get more reasoning behind it:
+И хотя кому-то синтаксис может показаться неоднозназначным, да и не сильно относится к сути статьи (но важен для предыстории), я всё-таки воспользуюсь моментом и поделюсь списком статей, которые раскрывают идеи за ним скрывающиеся (к сожалению все на английском):
 
 * [Two steps forward, one step back](https://jxnblk.com/blog/two-steps-forward/)
 * [Styles and Naming](<* [https://www.christopherbiscardi.com/post/styles-and-naming](https://www.christopherbiscardi.com/post/styles-and-naming/)/>)
 * [Old and new ideas in React UI](https://react-ui.dev/core-concepts/ideas)
 
-The point of the code block from above is the usage of responsive CSS values: `jsx±flexDirection={['column', 'row']}`(pretty handy isn't it?). Under the hood it will use media breakpoints provided in the theme to compile the responsive styles like:
+Нас конкретно интересуют адаптивные атрибуты, как этот `jsx±flexDirection={['column', 'row']}`. Под капотом он, используя заданные нами контрольные точки (breakpoints), превратит вот в такой css с медиа-выражениями:
 
 ```css
 .some-generated-class {
@@ -63,18 +63,17 @@ The point of the code block from above is the usage of responsive CSS values: `j
 }
 ```
 
-## The problem
+> Для первого значения медиа-выражение не требуется, т.е. используется mobile-first подход - стили в первую очередь пишутся для мобильных устройств.
 
-When we started one of our projects we didn't have any styles specific to tablets, let's say we had something similar to this:
+## Проблема
+
+Когда мы только начинали разрабатывать один из наших проектов, у нас не было специфичных стилей  для планшетов:
 
 ```jsx
 let breakpoints = [
-  // no need to define lower breakpoint
-  // since we use mobile-first
-  // (styles applied without media are considered to be mobile)
-  
-  '64em', // desktop
-  '80em', // wide
+   // всё что меньше - мобильное утройство
+  '64em', // десктоп
+  '80em', // широкие экраны
 ]
 
 let Layout = ({ children }) => (
@@ -86,7 +85,7 @@ let Layout = ({ children }) => (
 )
 ```
 
-But lately we got a new page where the mobile and table designs are quite different. But our scale system doesn't support it 😧: we can not use responsive attributes that we are used to 😨. Adding one more breakpoint will break all existing components 😰.
+Но спустя некоторое время, нам понадобилось разработать страницу, у которой раскладка для смартфонов и планшетов существенно различалась. И как вы уже догадались, наша конфигурация это не поддерживала 😧: мы более не могли использовать адаптивные атрибуты к которым так привыкли 😨. Добавление новой контрольной точки сломало бы все существующие компоненты 😰.
 
 I bet you've been in a situation like this. E.g. you might used some library api which was deprecated. Luckily in cases like this, library authors usually prepare codemods which will update your codebase for you. So you don't even have to understand what it does under the hood.
 
