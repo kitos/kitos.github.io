@@ -67,7 +67,7 @@ let User = ({ avatar, name }) => (
 
 ## Проблема
 
-Когда мы только начинали разрабатывать один из наших проектов, у нас не было специфичных стилей  для планшетов:
+Когда мы только начинали разрабатывать один из наших проектов, у нас не было специфических стилей  для планшетов:
 
 ```jsx
 let breakpoints = [
@@ -97,19 +97,17 @@ let Layout = ({ children }) => (
 
 От твиторских я слышал, что [jscodeshift](https://github.com/facebook/jscodeshift) хороший инструмент для их создания, команда реакта [использует именно его](https://github.com/reactjs/react-codemod). Благодаря ему вам нужно лишь написать `js/ts` файл который будет экспортировать функцию *transform,* ответственную за модификацию вашего *AST*.
 
-Другая важная вещь это собственно понимание самого *AST*: что это, из чего состоит и как вообще его менять. [Руководство babel](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/ru/README.md) может послужить отличной вводной.
+Другая важная вещь это собственно понимание самого *AST*: что это, из чего состоит и как вообще его менять. Сразу после википедии я рекомендую смотреть [руководство babel](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/ru/README.md): там очень хорошо расписано, что можно делать как. Ну и инструмент без которого просто не обойтись это [AST explorer](https://astexplorer.net/): там можно писать код и смотреть что в какую ноду дерева превращается и тут же писать плагин с трансформациями и смотреть результат!
 
-Another important part is, of course, a general understanding of AST: what it is, what it consists of and how we can alter it. I found this [babel handbook](https://github.com/jamiebuilds/babel-handbook) to be super useful intro. Another must-have tool is [AST explorer](https://astexplorer.net/). With help of this tool you can write some code to see its AST representation and write transform functions with immediate results!
+Ах да, ещё одним хорошим помощником будет `typescript`: получать подсказки о нодах и свойствах прямо в IDE гораздо приятнее, чем постоянное переключение на документацию или эксплорер. Поэтому помимо *jscodeshift*'а сразу ставьте и типы (`@types/jscodeshift`).
 
-Also I can hardly imagine writhing AST transformation without `typescript` (you can get info about nodes and their properties, right during typing intead of switching between editor and bable docs all the time), so I installed its typings (`@types/jscodeshift`) along with a library itself.
-
-And after about an hour of playing with it I built this:
+Ну и собственно, вооружившись всеми этими инструментами, я сделал что-то такое:
 
 ```typescript
 import { Transform } from 'jscodeshift';
 
 let directions = ['', 't', 'r', 'b', 'l', 'x', 'y'];
-// these are responsive attrs provided by styled-system
+// это как раз адаптивные атрибуты, предоставленные styled-system
 let spaceAttributes = [
   ...directions.map(d => `m${d}`),
   ...directions.map(d => `p${d}`),
@@ -134,10 +132,12 @@ let transform: Transform = (fileInfo, { j }) =>
       ) {
         let [xs, ...otherMedias] = value.expression.elements;
 
-        // null in styled-system means - do not introduce new media query,
-        // so thanks to mobile first approach we'll have values defined in xs.
-        // I could also write [xs, xs, ...otherMedias],
-        // it will just result in bigger css output
+        // null в styled-system означает - не создавай медиа-выражение
+        // для этой контрольной точки, так благодаря нашему
+        // mobile-first подходу значения для планшетов "унаследуются"
+        // от мобильных значений.
+        // Того же самое можно было бы достичь написав: [xs, xs, ...otherMedias],
+        // но и результирующий css был бы больше.
         value.expression.elements = [xs, j.identifier('null'), ...otherMedias];
       }
     })
@@ -146,12 +146,12 @@ let transform: Transform = (fileInfo, { j }) =>
 export default transform;
 ```
 
-You can also play with live example in [AST explorer](https://astexplorer.net/#/gist/d76e9a0c6e5f0cea12c039bc1b3f0d4c/4a5c9afcfda6967a4d0205ba8093e2b0c363ac4c).
+Можете посмотреть и поиграться с "живым" примером в [AST explorer](https://astexplorer.net/#/gist/d76e9a0c6e5f0cea12c039bc1b3f0d4c/4a5c9afcfda6967a4d0205ba8093e2b0c363ac4c).
 
-As you can see the transform is not that big and yet very descriptive. Obviously it doesn't cover all possible cases, e.g. we could use ternary expressions in jsx attributes or use variables referring to arrays and etc. But it does explain the idea, at least I hope so.
+Как видите скрипт получился не очень большим, но очень наглядным - по коду не так сложно понять чего мы добиваемся (да ведь?). Понятное дело что я покрыл далеко не все кейсы (например в качестве значения атрибута мы могли передать переменную или тернарное выражение или...), но идею он раскрывает.
 
-The cool thing is you can run your codemode ➡️rollback using git ➡️improve 🔁1000 times, until you are happy with the result.
+И ещё одно крутое достоинство *codemode*'ов это то, что вы можете их запускать ➡️откатывать с помощью git ➡️дорабатывать 🔁1000 раз, пока результат вас не удовлетворит.
 
-## Make codemodes part of your toolbelt
+## Возьмите codemodes себе на вооружение
 
-That is all I wanted to share today. I hope after reading this article you will consider codemodes to be not just powerful tool, but also a thing that is easy to learn, as I did. If you have any questions or suggestion feel free to use comments section or rich me directly in [twitter](https://twitter.com/kitos_kirsanov). Thanks!
+Это всё, чем я хотел поделиться в этой статье. Я надеюсь после прочтения вы (как и я) будете рассматривать *codemodes* не просто как мощный инструмент, но и как штуку которую легко можно освоить и применять на своих проектах. Если у вас остались какие-то вопросы, пишите комментарии или лично мне (в [twitter](https://twitter.com/kitos_kirsanov) например). Спасибо!
