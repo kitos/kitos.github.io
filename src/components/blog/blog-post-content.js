@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import GHSlugger from 'github-slugger'
 import { useLazyIframe } from '../lazy-iframe-hook'
 import { media } from '../../utils'
-import TableOfContent from './TableOfContent.bs'
+import TableOfContent from './TableOfContent.re'
 
 import './prismjs-dan-abramov-theme.css'
 import { useCurrentHeading } from '../current-heading.hook'
@@ -40,7 +40,7 @@ export let BlogPostContent = ({ post: { headings, html } }) => {
         <StyledToc
           headings={headings}
           active={currentHeading}
-          slugify={s => slugger.slug(s, false)}
+          slugify={(s) => slugger.slug(s, false)}
         />
       </TocWrapper>
 
