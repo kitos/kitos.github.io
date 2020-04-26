@@ -45,29 +45,27 @@ _Reason_ is also already actively used and there are some pretty interesting pro
 
 And I think it will be especially interesting for _react_ developers to hear that _reason_ is [gonna be a better platform for _react_](https://youtu.be/5fG_lyNuEAw):
 
-- он функциональный, а значит более идиоматичный для реакта.\
-  _js_ тоже можно назвать функциональным языком, но в отличии от _js_ в _reason_ есть:
-  - [каррирование](https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D1%80%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5) (curring)
-  - [сопоставление с образцом](https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D0%BF%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D1%81_%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D1%86%D0%BE%D0%BC) (pattern matching)
-  - встроенная _Option_ монада (которая закрывает проблему \`can't read property of underfined\`)
+- its syntax should be familiar to _js_ developers
+- it is functional hence it is more idiomatic for react.\
+  _js_ can also be considered functional language, but unlike _js_ in _reason_ there are:
+  - [carring](https://en.wikipedia.org/wiki/Currying)
+  - [pattern matching](https://en.wikipedia.org/wiki/Pattern_matching)
+  - build in _Option_ monad (which it wipes out \`can't read property of underfined\` problem an more)
   - ...
-- статически типизированный, с мощным механизмом выведения типов\
-   Опять же тема, казалась бы, не нова для фронтенд сообщества: _typescript_, _flow_ хорошо себя зарекомендовали, я себе не представляю старт проекта без них. Но _reason_ это совершенно новый уровень: в нём объявлять типы практически не нужно, даже для параметров функции!\
+- statically typed, with strong inference mechanism\
+   Even though it might not sound like a new think to you: both _typescript_ and _flow_ proved themselves, and I personally can not imagine starting a new project without them. But _reason_ is at completely another level: e.g. you don't have to declare types even for function arguments (which is also true for _flow_). And what even more important, _reason_ was built with inference in mind. While _typescript_ and _flow_ have to struggle with dynamic nature of _js_.
   \
-  Также reason в отличии от них типизированный как бы изначально. В то время как _typescript_'у и _flow_ приходится бороться/приспосабливаться к динамической природе _js_, н.р. есть такое понятие как писать код, который можно (или легче) типизировать.
-  \
-  Не думаю, что у меня получится раскрыть эту тему лучше, чем у Jordan Walk в этой ветке:
+  Obviously these benefits don't come for free: some things, which people are used to have in _js_, are not available in _reason. And here are some thoughts from Jordan about it:
 
 <blockquote class="twitter-tweet" data-conversation="none" data-lang="ru" data-theme="light" data-link-color="#2B7BB9"><p lang="en" dir="ltr">The hardest part is telling JS developers “no you can’t do that anymore”. I think the easiest path is a fresh, but familiar start, in order to reset expectations.</p>&mdash; Jordan ⚛️ (@jordwalke) <a href="https://twitter.com/jordwalke/status/1143368198558892032?ref_src=twsrc%5Etfw">25 июня 2019 г.</a></blockquote>
 
-- у него отличный interprop с _js_ - можно использовать _js_ в _reason_ 😲и наоборот _reason_ в _js_ 🙃\
-  Результат компиляции bucklescript'ом минималистичный, оптимизированный для производительности и, что не маловажно, читабельный 📖!
-- его можно компилировать в машинный код 🤪а это значит вы можете получить максимальную производительность.\
-  Особенно это интересно с точки зрения мобильных приложений. Может скоро _js_'у не будет места в _react_ _native_, и мы будем компилировать reason в нативный код?
+- it has awesome interprop with _js_ - you can use _js_ in _reason 😲 and visa-versa 🙃\
+  Result of compilation is minimalistic, optimised for perf and last, but not least human readable 📖!
+- it can be compiled to native code, hence you can get insane performance if you need it
 
-## От слов к делу
+## All right, down to business
 
-Ну теперь, я надеюсь, вы заинтересовались языком, и мы можем попробовать что-нибудь на нём изобразить. Долго думать над приложением, которое мы будем писать, мне не пришлось. Ещё с университетских времён я знаком с [игрой "Жизнь"](https://ru.wikipedia.org/wiki/%D0%98%D0%B3%D1%80%D0%B0_%C2%AB%D0%96%D0%B8%D0%B7%D0%BD%D1%8C%C2%BB). Первую реализацию, как мне кажется, я делал на _pascal_'е, потом был _delphi_, _c++_, _java, js_ и вот теперь _reason_. Я считаю, что реализация этой игры является отличным способом поизучать язык: там и какой-никакой алгоритм нужно реализовать, поработать с коллекциями, написать UI...
+I hope, at this point you are impressed and interested in learning this language. So we can try to build something using it. I didn't have to think a lot about the app I want to build here. Since uni I am familiar with a [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). I think I implemented it first in _Pascal_, then in _Delphi_, _c_, _java_, _js_ and apparently it is time to write it in _reason_. I believe it is really good way to start learning a language: you have to write some algorithm, work with collections, build some UI...
 
 Посмотреть на готовую реализацию и исходный код, кстати, уже можно [здесь](https://kitos.github.io/game-of-life/), т.к. начал я этот проект несколько месяцев назад. Но и то и другое скорее всего будет меняться во время этого цикла статей: надеюсь я буду находить лучшие решения.
 
