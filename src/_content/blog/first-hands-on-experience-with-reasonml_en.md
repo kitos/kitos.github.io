@@ -23,8 +23,7 @@ preface: Некоторое время назад я начал знакомит
 
 First of all, as offitiall docs stands [reason](<https://en.wikipedia.org/wiki/Reason_(programming_language)>) is not a new programming language, it's a new syntax and toolchain powered by the battle-tested language, [OCaml](https://ocaml.org/).
 
-
-Чаще всего о _reason_'е говорят в контексте javascript'а и _reactjs_, и не с проста: наряду с новым синтаксисом разрабатывается ещё и компилятор в js - [bucklescript](https://bucklescript.github.io), а его (_reason_) разработкой руководит [Jordan Walke](https://twitter.com/jordwalke), ранее создавший _react_.
+Currently _reason_ is mostly mentioned in _javascript_ and _react_ communities for a reason 😏: along with new syntax, a new _backend_ (compiler to _js_) is being developed - [bucklescript](https://bucklescript.github.io), and it is led by [Jordan Walke](https://twitter.com/jordwalke), who previously created _react_.
 
 ## Чего от него ждать? Где использовать?
 
