@@ -5,7 +5,7 @@ title: First hands on experience with ReasonML
 date: 2020-04-25T19:09:05.782Z
 thumbnail:
   author: Robert Bye
-  img: /images/uploads/surf-robert-bye-unsplash.jpg
+  img: /images/uploads/matrix.jpg
   src: https://unsplash.com/@robertbye
 tags:
   - reasonml
@@ -25,14 +25,14 @@ First of all, as offitiall docs stands [reason](<https://en.wikipedia.org/wiki/R
 
 Currently _reason_ is mostly mentioned in _javascript_ and _react_ communities for a reason 😏: along with new syntax, a new _backend_ (compiler to _js_) is being developed - [bucklescript](https://bucklescript.github.io), and it is led by [Jordan Walke](https://twitter.com/jordwalke), who previously created _react_.
 
-## Чего от него ждать? Где использовать?
+## What can we expect? Where can we use it?
 
-Повторюсь, _reason_ не новый язык, а синтаксис. Ocaml является языком общего назначения и применяется в самых разных областях (украл с офф сайта):
-
-- автоматические доказыватели теорем 🤷‍♂️
-- компиляторы и интерпретаторы 🙆🏾
-- анализаторы программ 🔍
-- обучение программированию 👩🏽‍🎓
+Like I sad, _reason_ is not a new language, it is a syntax. And OCaml is a general purpose language, so it is applied in various areas:
+- automatic theorem provers 🤷‍♂️
+- compilers and interpreters 🙆🏾
+- program analyzers 🙆🏾
+- used for teaching programming 👩🏽‍🎓
+- ...
 
 [Тут вот](https://ocaml.org/learn/success.html) можно найти истории успеха его использования, в т.ч. и более прикладные.
 
