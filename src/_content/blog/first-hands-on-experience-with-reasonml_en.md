@@ -34,12 +34,12 @@ Like I sad, _reason_ is not a new language, it is a syntax. And OCaml is a gener
 - used for teaching programming 👩🏽‍🎓
 - ...
 
-[Тут вот](https://ocaml.org/learn/success.html) можно найти истории успеха его использования, в т.ч. и более прикладные.
+[Here](https://ocaml.org/learn/success.html) you can find a list of success stories.
 
-_Reason_ тоже уже активно используется и можно найти интересные и актуальные примеры на нём:
+_Reason_ is also already actively used and there are some pretty interesting projects:
 
-- [revery](https://github.com/revery-ui/revery) - фреймворк для разработки кросс-платформенных десктопных приложений 💻
-- [onivim](https://v2.onivim.io/) - среда разработки, построенная на 👆
+- [revery](https://github.com/revery-ui/revery) - framework for development of cross-platform desktop apps 💻
+- [onivim](https://v2.onivim.io/) - IDE build with _revery_ 👆
 - [rely](https://reason-native.com/docs/rely/) - jest-like blazing fast native test framework ⚡️
 - ...
 
