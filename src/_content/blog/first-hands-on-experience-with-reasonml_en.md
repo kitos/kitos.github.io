@@ -5,7 +5,7 @@ title: First hands on experience with ReasonML
 date: 2020-04-25T19:09:05.782Z
 thumbnail:
   author: Robert Bye
-  img: /images/uploads/matrix.jpg
+  img: /images/uploads/surf-robert-bye-unsplash.jpg
   src: https://unsplash.com/@robertbye
 tags:
   - reasonml
@@ -43,7 +43,7 @@ _Reason_ is also already actively used and there are some pretty interesting pro
 - [rely](https://reason-native.com/docs/rely/) - jest-like blazing fast native test framework ⚡️
 - ...
 
-И что будет более интересным для _react_ разработчиков: поговаривают, что _reason_ станет лучшей платформой для реакта, ведь:
+And I think it will be especially interesting for _react_ developers to hear that _reason_ is [gonna be a better platform for _react_](https://youtu.be/5fG_lyNuEAw):
 
 - он функциональный, а значит более идиоматичный для реакта.\
   _js_ тоже можно назвать функциональным языком, но в отличии от _js_ в _reason_ есть:
