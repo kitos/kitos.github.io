@@ -11,12 +11,12 @@ tags:
   - jscodeshift
   - recast
   - ast
-  - codemodes
+  - codemods
   - babel
   - styled-system
   - reactjs
 preface: Short story about using AST transformation to refactor the code. Like
-  some codemodes you might used.
+  some codemods you might used.
 ---
 It is hard to underestimate an importance  of [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) transformation tools in the frontend now:
 
@@ -28,7 +28,7 @@ It is hard to underestimate an importance  of [AST](https://en.wikipedia.org/wik
 * we use `eslint` to enforce best practices or avoid mistakes/bugs
 * we use `prettier` to format the code
 
-But today I wanna tell a short story about using *AST* transformation to refactor the code. Like some codemodes you might used.
+But today I wanna tell a short story about using *AST* transformation to refactor the code. Like some codemods you might used.
 
 ## Backstory
 
@@ -153,6 +153,6 @@ As you can see the transform is not that big and yet very descriptive. Obviously
 
 The cool thing is you can run your codemode ➡️rollback using git ➡️improve 🔁1000 times, until you are happy with the result.
 
-## Make codemodes part of your toolbelt
+## Make codemods part of your toolbelt
 
-That is all I wanted to share today. I hope after reading this article you will consider codemodes to be not just powerful tool, but also a thing that is easy to learn, as I did. If you have any questions or suggestion feel free to use comments section or rich me directly in [twitter](https://twitter.com/kitos_kirsanov). Thanks!
+That is all I wanted to share today. I hope after reading this article you will consider codemods to be not just powerful tool, but also a thing that is easy to learn, as I did. If you have any questions or suggestion feel free to use comments section or rich me directly in [twitter](https://twitter.com/kitos_kirsanov). Thanks!
