@@ -19,6 +19,9 @@ module.exports = {
     },
   },
   plugins: [
+    // local
+    'similar-posts',
+    // node_modules
     'gatsby-plugin-reason',
     'gatsby-plugin-preact',
     'gatsby-plugin-react-helmet',

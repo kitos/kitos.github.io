@@ -2,14 +2,17 @@ import React from 'react'
 import { graphql, Link } from 'gatsby'
 import Img from 'gatsby-image'
 import { format } from 'date-fns/fp'
+import styled from 'styled-components'
+import css from '@styled-system/css'
 import { Box, Flex } from '@rebass/grid'
 import { DiscussionEmbed } from 'disqus-react'
 
 import { BlogPostContent, BlogTags } from '../components/blog'
 import { SEO } from '../components'
 import { buildPostLink, langToEmoji } from '../components/blog/utils'
+import RelatedReads from '../components/blog/RelatedReads.re'
 
-let formatDate = d => format('MMMM dd, yyyy', new Date(d))
+let formatDate = (d) => format('MMMM dd, yyyy', new Date(d))
 
 let buildSchemaOrg = ({ title, date, tags, thumbnail, timeToRead }) => ({
   author,
@@ -26,6 +29,16 @@ let buildSchemaOrg = ({ title, date, tags, thumbnail, timeToRead }) => ({
   },
 ]
 
+let FullWidthGrayBlock = styled.div`
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background: ${({ theme }) => theme.colors.pale};
+`
+
 let BlogPost = ({
   data: {
     post: {
@@ -33,22 +46,19 @@ let BlogPost = ({
       timeToRead,
       headings,
       html,
+      similarPosts,
     },
     translations,
-    similarPosts,
     site,
   },
 }) => {
   let postLink = buildPostLink({ slug, lang })
   let absolutePostLink = `${site.meta.siteUrl}${postLink}`
   let thumbnailSrc = thumbnail.img.childImageSharp.fluid.src
-  let localizations = translations.edges.map(
-    ({
-      node: {
-        frontmatter: { lang },
-      },
-    }) => ({ lang, href: buildPostLink({ slug, lang }) })
-  )
+  let localizations = translations.nodes.map(({ frontmatter: { lang } }) => ({
+    lang,
+    href: buildPostLink({ slug, lang }),
+  }))
 
   return (
     <>
@@ -111,42 +121,22 @@ let BlogPost = ({
         post={{ title, postUrl: absolutePostLink, headings, html }}
       />
 
-      {similarPosts.edges.length > 0 && (
-        <>
-          <h2>Read next</h2>
-
-          <Flex
-            as="ul"
-            my={[2, 4]}
-            mx={[0, -2]}
-            flexDirection={['column', 'row']}
-            justifyContent="space-between"
-            css={`
-              list-style: none;
-            `}
+      {similarPosts.length > 0 && (
+        <Box as={FullWidthGrayBlock} my={4} px={[20, 20, 0]}>
+          <div
+            css={css({ margin: '0 auto', maxWidth: [800, null, null, 1200] })}
           >
-            {similarPosts.edges
-              .map(({ node: { frontmatter, ...p } }) => ({
-                ...frontmatter,
-                ...p,
-              }))
-              .map(({ slug, lang, title, date, timeToRead }) => (
-                <Flex
-                  as="li"
-                  key={slug}
-                  flex={1}
-                  flexDirection="column"
-                  mx={[0, 2]}
-                >
-                  <Link to={buildPostLink({ slug, lang })}>{title}</Link>
-
-                  <Box as="small" mt={2}>
-                    {formatDate(date)} • {timeToRead} min read
-                  </Box>
-                </Flex>
-              ))}
-          </Flex>
-        </>
+            <RelatedReads
+              posts={similarPosts.map(
+                ({ frontmatter: { thumbnail, ...f }, ...p }) => ({
+                  ...f,
+                  ...p,
+                  img: thumbnail.img.childImageSharp,
+                })
+              )}
+            />
+          </div>
+        </Box>
       )}
 
       <DiscussionEmbed
@@ -164,7 +154,7 @@ let BlogPost = ({
 export default BlogPost
 
 export const query = graphql`
-  query($id: String!, $slug: String, $similarPosts: [String!]!) {
+  query($id: String!, $slug: String) {
     post: markdownRemark(id: { eq: $id }) {
       frontmatter {
         slug
@@ -192,31 +182,35 @@ export const query = graphql`
         depth
       }
       html
+
+      similarPosts(limit: 3) {
+        frontmatter {
+          slug
+          lang
+          title
+          date
+          tags
+
+          thumbnail {
+            img {
+              childImageSharp {
+                fluid(maxHeight: 240) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+          }
+        }
+        timeToRead
+      }
     }
 
     translations: allMarkdownRemark(
       filter: { id: { ne: $id }, frontmatter: { slug: { eq: $slug } } }
     ) {
-      edges {
-        node {
-          frontmatter {
-            lang
-          }
-        }
-      }
-    }
-
-    similarPosts: allMarkdownRemark(filter: { id: { in: $similarPosts } }) {
-      edges {
-        node {
-          frontmatter {
-            slug
-            lang
-            title
-            date
-            tags
-          }
-          timeToRead
+      nodes {
+        frontmatter {
+          lang
         }
       }
     }

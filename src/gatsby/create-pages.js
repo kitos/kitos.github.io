@@ -1,8 +1,7 @@
 const path = require('path')
-const intersection = require('lodash.intersection')
 const groupBy = require('lodash.groupby')
 
-let groupPostsByTag = posts =>
+let groupPostsByTag = (posts) =>
   posts.reduce(
     (map, post) =>
       post.tags.reduce((map, tag) => {
@@ -16,14 +15,6 @@ let groupPostsByTag = posts =>
       }, map),
     new Map()
   )
-
-let getSimilarPost = ({ slug, tags }, posts) =>
-  posts
-    .map(p => ({ ...p, similarity: intersection(p.tags, tags).length }))
-    .filter(p => p.slug !== slug && p.similarity !== 0)
-    .sort((a, b) => b.similarity - a.similarity || b.date.localeCompare(a.date))
-    .slice(0, 3)
-    .map(({ id }) => id)
 
 module.exports = ({ graphql, actions: { createPage, createRedirect } }) =>
   graphql(`
@@ -59,21 +50,18 @@ module.exports = ({ graphql, actions: { createPage, createRedirect } }) =>
     )
 
     // create blog post pages
-    posts.forEach(post => {
-      let { id, lang, slug } = post
-
+    posts.forEach(({ id, lang, slug }) =>
       createPage({
         path: `/${lang}/blog/${slug}/`,
         component: path.resolve('./src/templates/blog-post.js'),
         context: {
           id,
           slug,
-          similarPosts: getSimilarPost(post, posts),
         },
       })
-    })
+    )
 
-    let postMapsByLang = Object.values(groupBy(posts, 'slug')).map(posts => ({
+    let postMapsByLang = Object.values(groupBy(posts, 'slug')).map((posts) => ({
       ...(posts.find(({ lang }) => lang === 'en') || posts[0]),
       tags: [...new Set(posts.flatMap(({ tags }) => tags))],
     }))
