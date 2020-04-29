@@ -19,5 +19,10 @@
   to = "/en/blog/:splat"
   status = 200
 
+[[redirects]]
+  from = "/rss.xml"
+  to = "/blog/rss.xml"
+  status = 200
+
 [[plugins]]
 package = "netlify-plugin-gatsby-cache"
