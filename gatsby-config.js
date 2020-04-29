@@ -20,7 +20,7 @@ module.exports = {
   },
   plugins: [
     // local
-    'similar-posts',
+    'related-reads',
     // node_modules
     'gatsby-plugin-reason',
     'gatsby-plugin-preact',

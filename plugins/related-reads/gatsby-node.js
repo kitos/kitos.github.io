@@ -3,7 +3,7 @@ const intersection = require('lodash.intersection')
 exports.createResolvers = ({ createResolvers }) =>
   createResolvers({
     MarkdownRemark: {
-      similarPosts: {
+      relatedReads: {
         type: '[MarkdownRemark!]',
         args: { limit: 'Int' },
 

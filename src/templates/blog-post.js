@@ -46,7 +46,7 @@ let BlogPost = ({
       timeToRead,
       headings,
       html,
-      similarPosts,
+      relatedReads,
     },
     translations,
     site,
@@ -121,13 +121,13 @@ let BlogPost = ({
         post={{ title, postUrl: absolutePostLink, headings, html }}
       />
 
-      {similarPosts.length > 0 && (
+      {relatedReads.length > 0 && (
         <Box as={FullWidthGrayBlock} my={4} px={[20, 20, 0]}>
           <div
             css={css({ margin: '0 auto', maxWidth: [800, null, null, 1200] })}
           >
             <RelatedReads
-              posts={similarPosts.map(
+              posts={relatedReads.map(
                 ({ frontmatter: { thumbnail, ...f }, ...p }) => ({
                   ...f,
                   ...p,
@@ -183,7 +183,7 @@ export const query = graphql`
       }
       html
 
-      similarPosts(limit: 3) {
+      relatedReads(limit: 3) {
         frontmatter {
           slug
           lang
