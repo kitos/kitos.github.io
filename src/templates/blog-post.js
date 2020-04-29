@@ -11,6 +11,7 @@ import { BlogPostContent, BlogTags } from '../components/blog'
 import { SEO } from '../components'
 import { buildPostLink, langToEmoji } from '../components/blog/utils'
 import RelatedReads from '../components/blog/RelatedReads.re'
+import { UnsplashBadge } from '../components/unsplash-badge'
 
 let formatDate = (d) => format('MMMM dd, yyyy', new Date(d))
 
@@ -109,11 +110,15 @@ let BlogPost = ({
 
       <Img {...thumbnail.img.childImageSharp} />
       {thumbnail.author && (
-        <p style={{ textAlign: 'center' }}>
+        <p style={{ textAlign: 'center', marginTop: 8 }}>
           Photo by{' '}
-          <a href={thumbnail.src} target="_blank" rel="noopener">
-            {thumbnail.author}
-          </a>
+          {/unsplash/.test(thumbnail.src) ? (
+            <UnsplashBadge link={thumbnail.src} author={thumbnail.author} />
+          ) : (
+            <a href={thumbnail.src} target="_blank" rel="noopener">
+              {thumbnail.author}
+            </a>
+          )}
         </p>
       )}
 
