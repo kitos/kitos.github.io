@@ -2,7 +2,7 @@
 slug: build-related-reads-for-your-gatsby-blog
 lang: en
 title: Build "Related Reads" for your gatsby blog
-date: 2020-04-29T18:28:51.603Z
+date: 2020-04-30T09:32:32.760Z
 thumbnail:
   author: israel palacio
   src: https://unsplash.com/@othentikisra?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
@@ -12,10 +12,10 @@ tags:
   - plugin
   - blog
   - JAMStack
-preface: I this article I will tell how to build "Related Reads" section for a
+preface: In this article I will tell how to build "Related Reads" section for a
   Gatsby blog, like the one you can find in the bottom of this page.
 ---
-I this article I will tell how to build "Related Reads" section for a [gatsby](https://www.gatsbyjs.org/) blog, like the one you can find in the bottom of this page.
+In this article I will tell how to build "Related Reads" section for a [gatsby](https://www.gatsbyjs.org/) blog, like the one you can find in the bottom of this page.
 
 As a prerequisite I expect, that you are already familiar with gatsby or even have an app with some source `[-plugin]`where you pull your articles from.
 
@@ -132,3 +132,7 @@ let resolve = async (source, args, ctx) {
     .slice(0, limit)
 }
 ```
+
+That is it! Pretty easy implementation and zero runtime cost - everything is requested ahead of time and build into your html pages, that is the strongest point if gatsby and JAMStack.
+
+Did you like this post? Want to hear more stories about gatby? Please leave comment about things you'd like to know about.
