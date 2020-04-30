@@ -1,7 +1,7 @@
 ---
 slug: build-related-reads-for-your-gatsby-blog
 lang: en
-title: Build "Related Reads" for you gatsby blog
+title: Build "Related Reads" for your gatsby blog
 date: 2020-04-29T18:28:51.603Z
 thumbnail:
   author: israel palacio
@@ -64,7 +64,7 @@ query BlogPostList {
 }
 ```
 
-[A while ego](https://www.gatsbyjs.org/blog/2019-03-04-new-schema-customization/) gatsby team provided very nice way to achieve this - schema customization API. And we are going to leverage it, particularly `createResolvers`:
+[A while ego](https://www.gatsbyjs.org/blog/2019-03-04-new-schema-customization/) gatsby team provided very nice way to achieve this - [schema customization API](https://www.gatsbyjs.org/docs/schema-customization). And we are going to leverage it, particularly `createResolvers`:
 
 ```js
 exports.createResolvers = ({ createResolvers }) =>
@@ -79,13 +79,56 @@ exports.createResolvers = ({ createResolvers }) =>
         args: { limit: 'Int' },
 
         async resolve(
-          source,
+          source, // the node we extend
           args,
+          // collection of helpers
+          // including access to internal store - nodeModel
           ctx
+
         ) {
           return []
         },
       },
     },
   })
+```
+
+No we can implement the last bit - the logic of _Relative Reads_. In my blog each post have a list of tags, so I gonna use it to measure similarity.
+
+```js
+const intersection = require('lodash.intersection')
+
+// I've extracted the resolve function just to get rid of extra noise
+let resolve = async (source, args, ctx) {
+  let { frontmatter: { slug, lang, tags } } = source
+  let { limit = Number.MAX_SAFE_INTEGER } = args
+
+  // request all other posts
+  let otherPosts = await ctx.nodeModel.runQuery({
+    firstOnly: false, // we want to get an array
+    type: 'MarkdownRemark',
+    query: {
+      filter: {
+        frontmatter: {
+          slug: { ne: slug }, // not current article or translation
+          lang: { eq: lang }, // same lang
+        },
+      },
+    },
+  })
+
+  return otherPosts
+    .map((p) => ({
+      ...p,
+      // measure the similarity by the size of tags intersection
+      similarity: intersection(p.frontmatter.tags, tags).length,
+    }))
+    .filter(({ similarity }) => similarity !== 0)
+    .sort(
+      (a, b) =>
+        b.similarity - a.similarity ||
+        b.frontmatter.date.localeCompare(a.frontmatter.date)
+    )
+    .slice(0, limit)
+}
 ```
