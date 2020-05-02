@@ -13,9 +13,9 @@ tags:
   - blog
   - JAMStack
 preface: In this article I will tell how to build "Related Reads" section for a
-  Gatsby blog, like the one you can find in the bottom of this page.
+  Gatsby blog, like the one you can find at the bottom of this page.
 ---
-In this article I will tell how to build "Related Reads" section for a [gatsby](https://www.gatsbyjs.org/) blog, like the one you can find in the bottom of this page.
+In this article I will tell how to build "Related Reads" section for a [gatsby](https://www.gatsbyjs.org/) blog, like the one you can find at the bottom of this page.
 
 As a prerequisite I expect, that you are already familiar with gatsby or even have an app with some source `[-plugin]`where you pull your articles from.
 
@@ -37,7 +37,7 @@ But enough about me, let's get back to business.
 
 ## Setup local plugin
 
-First of all, I want to implement this feature as a local plugin (instead of root `gatsby-node.js`). I find this way approach more idiomatic and clear. Creating one is a piece of cake and gatsby has [a decent documentation about it](https://www.gatsbyjs.org/docs/creating-a-local-plugin/), so check it out if you haven't yet.
+First of all, I want to implement this feature as a local plugin (instead of root `gatsby-node.js`). I find this approach more idiomatic and clear. Creating one is a piece of cake and gatsby has [a decent documentation about it](https://www.gatsbyjs.org/docs/creating-a-local-plugin/), so check it out if you haven't yet.
 
 As a result, we should have `/plugins/related-reads/gatsby-node.js` along with empty `package.json` and name (equal to name of the folder!) of our plugin listed in `gatsby-config.js`.
 
