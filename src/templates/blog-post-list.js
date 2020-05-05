@@ -15,7 +15,7 @@ let BlogPage = ({ pageContext: { tag }, data: { posts } }) => {
 
   let unknowns = Object.values(groupBy(posts, 'slug'))
 
-  let gropedPosts = unknowns.map(posts => ({
+  let gropedPosts = unknowns.map((posts) => ({
     ...(posts.find(({ lang }) => lang === 'en') || posts[0]),
     translations: posts.map(({ lang }) => lang),
   }))
@@ -34,7 +34,7 @@ let BlogPage = ({ pageContext: { tag }, data: { posts } }) => {
             Some posts might be here...
           </Box>
         ) : (
-          gropedPosts.map(post => (
+          gropedPosts.map((post) => (
             <BlogPostSnippet key={post.slug} post={post} selectedTag={tag} />
           ))
         )}

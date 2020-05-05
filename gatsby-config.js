@@ -31,6 +31,22 @@ module.exports = {
     'gatsby-plugin-twitter',
     rssPlugin,
     {
+      resolve: `gatsby-plugin-webmention`,
+      options: {
+        username: 'nikitakirsanov.com',
+        identity: {
+          github: 'kitos',
+          twitter: 'kitos_kirsanov',
+        },
+        mentions: true,
+        pingbacks: false,
+        // forwardPingbacksAsWebmentions: 'https://example.com/endpoint',
+        domain: 'https://nikitakirsanov.com',
+        fetchLimit: 10000, // number of webmentions to fetch
+        token: process.env.WEBMENTIONS_TOKEN,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-layout',
       options: {
         component: require.resolve('./src/components/layout.js'),
