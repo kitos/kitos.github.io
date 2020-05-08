@@ -1,6 +1,7 @@
 ---
 slug: refactor-as-no-one-is-watching
 lang: ru
+tweet_id: t1254111894404837378
 title: Рефактори как будто никто не видит
 date: 2020-04-25T09:03:57.280Z
 thumbnail:

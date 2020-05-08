@@ -1,6 +1,7 @@
 ---
 slug: build-related-reads-for-your-gatsby-blog
 lang: en
+tweet_id: t1255879654927413250
 title: Build "Related Reads" for your gatsby blog
 date: 2020-04-30T09:32:32.760Z
 thumbnail:

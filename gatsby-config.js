@@ -21,6 +21,7 @@ module.exports = {
   plugins: [
     // local
     'related-reads',
+    'webmentiones',
     // node_modules
     'gatsby-plugin-reason',
     'gatsby-plugin-preact',
@@ -41,7 +42,7 @@ module.exports = {
         mentions: true,
         pingbacks: false,
         // forwardPingbacksAsWebmentions: 'https://example.com/endpoint',
-        domain: 'https://nikitakirsanov.com',
+        domain: 'nikitakirsanov.com',
         fetchLimit: 10000, // number of webmentions to fetch
         token: process.env.WEBMENTIONS_TOKEN,
       },

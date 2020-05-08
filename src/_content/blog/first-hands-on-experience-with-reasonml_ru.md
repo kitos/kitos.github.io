@@ -1,6 +1,7 @@
 ---
 slug: first-hands-on-experience-with-reasonml
 lang: ru
+tweet_id: t1249009128808341505
 title: Первое знакомство с ReasonML
 date: 2019-09-12T07:36:18.935Z
 thumbnail:

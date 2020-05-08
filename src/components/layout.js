@@ -19,6 +19,7 @@ let theme = {
     pale: '#fafbfc',
   },
   breakpoints,
+  space: [0, 4, 8, 12, 16, 20, 24, 28, 32],
 }
 
 let PageWrapper = styled(Box)`
@@ -33,6 +34,10 @@ let FooterWrapper = styled.div``
 let GlobalStyle = createGlobalStyle`
   html {
     scroll-behavior: smooth;
+  }
+  
+  :root {
+  --reach-dialog: 1;
   }
 
   #___gatsby > * {

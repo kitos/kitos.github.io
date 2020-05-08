@@ -63,7 +63,7 @@ module PostCard = {
 let default = (~posts) =>
   <Grid.flex
     justifyContent=[|"center"|] py=[|"30px"|] px=[|"0", "0", "0", "30px"|]>
-    <div style={Style.make(~flex="1 1 auto", ())}>
+    <section style={Style.make(~flex="1 1 auto", ())}>
       <h2 style={Style.make(~borderBottom="none", ~margin="0 0 16px 0", ())}>
         {string("Related reads")}
       </h2>
@@ -91,5 +91,5 @@ let default = (~posts) =>
          )
          |> array}
       </Grid.flex>
-    </div>
+    </section>
   </Grid.flex>;

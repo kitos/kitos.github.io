@@ -12,6 +12,9 @@ import { SEO } from '../components'
 import { buildPostLink, langToEmoji } from '../components/blog/utils'
 import RelatedReads from '../components/blog/RelatedReads.re'
 import { UnsplashBadge } from '../components/unsplash-badge'
+import { WMLikes } from '../components/blog/WMLikes'
+import { Stack } from '../components/Stack'
+import { WMReposts } from '../components/blog/WMReposts'
 
 let formatDate = (d) => format('MMMM dd, yyyy', new Date(d))
 
@@ -43,10 +46,21 @@ let FullWidthGrayBlock = styled.div`
 let BlogPost = ({
   data: {
     post: {
-      frontmatter: { slug, lang, title, date, thumbnail, preface, tags },
+      frontmatter: {
+        slug,
+        lang,
+        tweet_id,
+        title,
+        date,
+        thumbnail,
+        preface,
+        tags,
+      },
       timeToRead,
       headings,
       html,
+      likes,
+      reposts,
       relatedReads,
     },
     translations,
@@ -122,36 +136,43 @@ let BlogPost = ({
         </p>
       )}
 
-      <BlogPostContent
-        post={{ title, postUrl: absolutePostLink, headings, html }}
-      />
+      <Stack columnGap={6}>
+        <BlogPostContent
+          post={{ title, postUrl: absolutePostLink, headings, html }}
+        />
 
-      {relatedReads.length > 0 && (
-        <Box as={FullWidthGrayBlock} my={4} px={[20, 20, 0]}>
-          <div
-            css={css({ margin: '0 auto', maxWidth: [800, null, null, 1200] })}
-          >
-            <RelatedReads
-              posts={relatedReads.map(
-                ({ frontmatter: { thumbnail, ...f }, ...p }) => ({
-                  ...f,
-                  ...p,
-                  img: thumbnail.img.childImageSharp,
-                })
-              )}
-            />
-          </div>
-        </Box>
-      )}
+        <Flex as={Stack} rowGap={5} justifyContent="flex-end">
+          <WMLikes tweetId={tweet_id} items={likes} />
+          <WMReposts tweetId={tweet_id} items={reposts} />
+        </Flex>
 
-      <DiscussionEmbed
-        shortname={process.env.GATSBY_DISQUS_SHORTNAME}
-        config={{
-          url: absolutePostLink,
-          identifier: postLink,
-          title,
-        }}
-      />
+        {relatedReads.length > 0 && (
+          <Box as={FullWidthGrayBlock} px={[20, 20, 0]}>
+            <div
+              css={css({ margin: '0 auto', maxWidth: [800, null, null, 1200] })}
+            >
+              <RelatedReads
+                posts={relatedReads.map(
+                  ({ frontmatter: { thumbnail, ...f }, ...p }) => ({
+                    ...f,
+                    ...p,
+                    img: thumbnail.img.childImageSharp,
+                  })
+                )}
+              />
+            </div>
+          </Box>
+        )}
+
+        <DiscussionEmbed
+          shortname={process.env.GATSBY_DISQUS_SHORTNAME}
+          config={{
+            url: absolutePostLink,
+            identifier: postLink,
+            title,
+          }}
+        />
+      </Stack>
     </>
   )
 }
@@ -164,6 +185,7 @@ export const query = graphql`
       frontmatter {
         slug
         lang
+        tweet_id
         title
         date
         preface
@@ -187,6 +209,22 @@ export const query = graphql`
         depth
       }
       html
+
+      likes {
+        author {
+          name
+          url
+          photo
+        }
+      }
+
+      reposts {
+        author {
+          name
+          url
+          photo
+        }
+      }
 
       relatedReads(limit: 3) {
         frontmatter {
