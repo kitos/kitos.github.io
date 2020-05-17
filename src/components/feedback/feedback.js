@@ -9,9 +9,10 @@ let { Provider, Consumer } = feedbackContext
 
 let FeedbackProvider = ({ children }) => {
   let [isDialogOpen, toggleDialog] = useState(false)
-  let [{ type, ...feedback }, setFeedback] = useState({})
+  let thisFixedHookDestructuring = useState({})
+  let [{ type, ...feedback }, setFeedback] = thisFixedHookDestructuring
 
-  const openFeedbackDialog = payload => {
+  const openFeedbackDialog = (payload) => {
     setFeedback(payload)
     toggleDialog(true)
   }
