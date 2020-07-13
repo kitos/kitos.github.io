@@ -82,7 +82,7 @@
     "lodash.groupby": "^4.6.0",
     "prettier": "^2.0.5",
     "prismjs": "^1.20.0",
-    "standard-version": "^7.1.0"
+    "standard-version": "^8.0.1"
   },
   "browserslist": [
     "> 2%, not IE 11, not dead"
