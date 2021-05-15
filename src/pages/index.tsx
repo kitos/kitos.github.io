@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
+import Image from 'next/image'
 
 import { getPosts, ILang } from '../posts'
 import { PostCard } from '../PostCard'
@@ -7,7 +8,23 @@ import { PostCard } from '../PostCard'
 let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   posts,
 }) => (
-  <div>
+  <main className="page">
+    <div className="flex gap-16 mb-24">
+      <div>
+        <h2 className="text-5xl font-bold mb-8">Hi, I'm Nikita!</h2>
+
+        <p className="text-xl mb-8">
+          I am software engineer based in Berlin.
+          <br />
+          You can find me lol
+        </p>
+      </div>
+
+      <div className="h-60 w-60 relative rounded-full overflow-hidden">
+        <Image src="/avatar.jpg" layout="fill" objectFit="cover" />
+      </div>
+    </div>
+
     <h2 className="text-4xl font-bold mb-8">Recent posts</h2>
 
     <div className="flex gap-8">
@@ -15,7 +32,7 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <PostCard key={p.slug} post={p} className="max-w-sm" />
       ))}
     </div>
-  </div>
+  </main>
 )
 
 export let getStaticProps = async ({ locale }: GetStaticPropsContext) => ({

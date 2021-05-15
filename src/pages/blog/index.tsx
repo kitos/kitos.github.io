@@ -8,7 +8,7 @@ import { PostCard } from '../../PostCard'
 let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   postsByYear,
 }) => (
-  <div className="flex flex-col gap-8">
+  <main className="page flex flex-col gap-8">
     <h1 className="text-6xl font-bold">Blog</h1>
 
     {postsByYear.map(([year, posts]) => (
@@ -22,7 +22,7 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </div>
       </div>
     ))}
-  </div>
+  </main>
 )
 
 export let getStaticProps = async ({ locale }: GetStaticPropsContext) => {

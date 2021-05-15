@@ -1,8 +1,10 @@
-import 'tailwindcss/tailwind.css'
 import type { AppProps } from 'next/app'
 import Link from 'next/link'
-import type { FC } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
+import type { FC } from 'react'
+
+import '../main.css'
 
 let NavLink: FC<{ href: string }> = ({ href, children }) => {
   let { asPath } = useRouter()
@@ -26,16 +28,20 @@ let NavLink: FC<{ href: string }> = ({ href, children }) => {
 }
 
 let Nav = () => (
-  <nav className="bg-gray-800">
+  <nav className="bg-gray-800 mb-16">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-16">
         <div className="flex items-center">
           <div className="flex-shrink-0">
-            <img
-              className="h-8 w-8"
-              src="/icon.png"
-              alt="Nikita Kirsanov logo"
-            />
+            <a href="https://nikitakirsanov.com">
+              <Image
+                className="object-cover rounded-full"
+                src="/avatar.jpg"
+                width={32}
+                height={32}
+                alt="Nikita Kirsanov logo"
+              />
+            </a>
           </div>
 
           <div className="hidden md:block">
@@ -67,18 +73,36 @@ let Nav = () => (
   </nav>
 )
 
+let FLink: FC<{ href: string }> = ({ href, children }) => (
+  <a className="hover:underline" href={href}>
+    {children}
+  </a>
+)
+
 let MyApp = ({ Component, pageProps }: AppProps) => (
-  <div>
+  <>
     <Nav />
 
-    <main>
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <Component {...pageProps} />
+    <Component {...pageProps} />
+
+    <footer className="page mt-12">
+      <hr />
+      <div className="flex justify-between my-8 text-gray-500">
+        <p>
+          © {new Date().getFullYear()}{' '}
+          <FLink href="https://nikitakirsanov.com">nikitakirsanov.com</FLink>
+        </p>
+
+        <div className="flex gap-4">
+          <FLink href="https://twitter.com/kitos_kirsanov">Twitter</FLink>
+          <FLink href="https://github.com/kitos">GitHub</FLink>
+          <FLink href="https://www.linkedin.com/in/kitos-kirsanov/">
+            LinkedIn
+          </FLink>
         </div>
       </div>
-    </main>
-  </div>
+    </footer>
+  </>
 )
 
 export default MyApp
