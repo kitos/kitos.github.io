@@ -2,6 +2,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import intersection from 'lodash.intersection'
+import readingTime from 'reading-time'
 
 const BLOG_DIR = 'src/_content/blog'
 let cwd = process.cwd()
@@ -22,6 +23,7 @@ export interface IPost {
   }
   content: string
   relatedPosts?: IPost[]
+  readingTime?: string
 }
 
 let readPost = async (fileName: string) => {
@@ -31,7 +33,12 @@ let readPost = async (fileName: string) => {
     content,
   } = matter(file)
 
-  return { ...meta, date: date.toISOString(), content } as IPost
+  return {
+    ...meta,
+    date: date.toISOString(),
+    content,
+    readingTime: readingTime(content).text,
+  } as IPost
 }
 
 let getAllPosts = async () =>

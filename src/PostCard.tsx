@@ -6,7 +6,7 @@ import type { IPost } from './posts'
 
 export let PostCard = ({
   className,
-  post: { lang, slug, title, date, thumbnail, preface, tags },
+  post: { lang, slug, title, date, thumbnail, preface, tags, readingTime },
 }: {
   className?: string
   post: IPost
@@ -47,7 +47,7 @@ export let PostCard = ({
       </Link>
 
       <p className="font-medium text-gray-500 pt-2">
-        {format(new Date(date), 'PP')}
+        {format(new Date(date), 'PP')} • {readingTime}
       </p>
 
       <p className="text-md text-gray-700 pt-4">{preface}</p>
