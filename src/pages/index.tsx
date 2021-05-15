@@ -1,7 +1,7 @@
 import type { FC } from 'react'
-import type { InferGetStaticPropsType } from 'next'
+import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 
-import { getPosts } from '../posts'
+import { getPosts, ILang } from '../posts'
 import { PostCard } from '../PostCard'
 
 let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
@@ -18,8 +18,8 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   </div>
 )
 
-export let getStaticProps = async ({ locale }) => {
-  let posts = await getPosts({ lang: locale })
+export let getStaticProps = async ({ locale }: GetStaticPropsContext) => {
+  let posts = await getPosts({ lang: locale as ILang })
   return {
     props: {
       posts: posts

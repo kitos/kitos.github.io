@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import type { InferGetStaticPropsType } from 'next'
+import type { InferGetStaticPropsType, GetStaticPropsContext } from 'next'
 import groupBy from 'lodash.groupby'
 
 import { getPosts, ILang, IPost } from '../../posts'
@@ -26,7 +26,7 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   </div>
 )
 
-export let getStaticProps = async ({ locale }) => {
+export let getStaticProps = async ({ locale }: GetStaticPropsContext) => {
   let posts = await getPosts({ lang: locale as ILang })
   let serializablePosts = posts.map(({ date, content, ...p }) => ({
     ...p,

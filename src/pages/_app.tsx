@@ -1,6 +1,7 @@
 import 'tailwindcss/tailwind.css'
+import type { AppProps } from 'next/app'
 import Link from 'next/link'
-import { FC } from 'react'
+import type { FC } from 'react'
 import { useRouter } from 'next/router'
 
 let NavLink: FC<{ href: string }> = ({ href, children }) => {
@@ -66,7 +67,7 @@ let Nav = () => (
   </nav>
 )
 
-let MyApp = ({ Component, pageProps }) => (
+let MyApp = ({ Component, pageProps }: AppProps) => (
   <div>
     <Nav />
 

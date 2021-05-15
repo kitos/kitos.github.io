@@ -1,7 +1,7 @@
 import type { FC } from 'react'
-import type { InferGetStaticPropsType } from 'next'
+import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 
-import { getPostBySlug, getPosts } from '../../posts'
+import { getPostBySlug, getPosts, ILang } from '../../posts'
 import { markdownToHtml } from '../../markdownRender'
 
 let BlogPost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
@@ -14,8 +14,14 @@ let BlogPost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   </article>
 )
 
-export let getStaticProps = async ({ params: { slug }, locale }) => {
-  let { date, content, ...p } = await getPostBySlug(slug, locale)
+export let getStaticProps: GetStaticProps = async ({ params, locale }) => {
+  let post = await getPostBySlug(params?.slug as string, locale as ILang)
+
+  if (!post) {
+    return { notFound: true }
+  }
+
+  let { date, content, ...p } = post
 
   return {
     props: {

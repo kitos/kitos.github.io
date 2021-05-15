@@ -42,5 +42,8 @@ export let getPosts = async ({
     )
     .sort((a, b) => b.date.valueOf() - a.date.valueOf())
 
-export let getPostBySlug = async (slug: string, lang: ILang) =>
+export let getPostBySlug = async (
+  slug: string,
+  lang: ILang
+): Promise<IPost | undefined> =>
   (await getAllPosts()).find((p) => p.slug === slug && p.lang === lang)
