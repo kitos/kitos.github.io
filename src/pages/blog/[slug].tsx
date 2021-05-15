@@ -1,4 +1,5 @@
 import type { GetStaticProps } from 'next'
+import Head from 'next/head'
 
 import { getPostBySlug, getPosts, ILang, IPost } from '../../posts'
 import { markdownToHtml } from '../../markdownRender'
@@ -10,7 +11,16 @@ interface Props {
 
 let BlogPost = ({ post: { title, content, relatedPosts = [] } }: Props) => (
   <div>
-    <article className="prose lg:prose-xl">
+    <Head>
+      <title>{title}</title>
+      <link rel="preconnect" href="https://unpkg.com" />
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/vs2015.min.css"
+      />
+    </Head>
+
+    <article className="prose lg:prose-lg">
       <h1>{title}</h1>
 
       <div dangerouslySetInnerHTML={{ __html: content }} />

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { format, formatRelative } from 'date-fns'
+import { format } from 'date-fns'
 
 import type { IPost } from './posts'
 
