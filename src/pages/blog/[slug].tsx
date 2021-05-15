@@ -1,9 +1,8 @@
 import type { FC } from 'react'
-import type { GetStaticProps, InferGetStaticPropsType } from 'next'
+import type { InferGetStaticPropsType } from 'next'
 
-import { getPost, getPosts, IPost } from '../../posts'
-import remark from 'remark'
-import html from 'remark-html'
+import { getPost, getPosts } from '../../posts'
+import { markdownToHtml } from '../../markdownRender'
 
 let BlogPost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   post: { title, content },
@@ -11,14 +10,9 @@ let BlogPost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   <article className="prose lg:prose-xl">
     <h1>{title}</h1>
 
-    <div dangerouslySetInnerHTML={{ __html: content }}></div>
+    <div dangerouslySetInnerHTML={{ __html: content }} />
   </article>
 )
-
-let markdownToHtml = async (markdown: string) => {
-  let result = await remark().use(html).process(markdown)
-  return result.toString()
-}
 
 export let getStaticProps = async ({ params: { slug }, locale }) => {
   let { date, content, ...p } = await getPost(`${slug}_${locale}.md`)
