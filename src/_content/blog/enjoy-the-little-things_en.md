@@ -5,7 +5,7 @@ title: Enjoy the little things
 date: 2020-03-22T17:30:51.536Z
 thumbnail:
   author: Mats Speicher
-  img: /images/uploads/enjoy.jpg
+  img: /uploads/enjoy.jpg
   src: 'https://unsplash.com/photos/FxGoXaib51Q'
 tags:
   - reactjs
@@ -22,7 +22,7 @@ preface: >-
 
 Well, looks like now, during self isolation caused by COVID-19 🦠, I'll have some time to code and maybe even to write a couple of articles about it (code). This one is the first, in it I'm gonna play with `react-spring` to create simple digital clock animation like this:
 
-![Animated digital clock](/images/uploads/digital-clock.gif 'Animated digital clock')
+![Animated digital clock](/public/uploads/digital-clock.gif 'Animated digital clock')
 
 ## Small things matter
 
@@ -146,7 +146,7 @@ Power of composition! So far we've built pretty simple _"app"_, yet it consists 
 
 Let's look at the result:
 
-![Digital clock with emoji](/images/uploads/no-animation-digital-clock.gif 'Digital clock with emoji')
+![Digital clock with emoji](/public/uploads/no-animation-digital-clock.gif 'Digital clock with emoji')
 
 ## Time to animate
 

@@ -5,7 +5,7 @@ tweet_id: t1251943643788840964
 title: Refactor like no one is watching
 date: 2020-04-19T10:10:20.179Z
 thumbnail:
-  img: /images/uploads/dance-as-no-one-watching.jpg
+  img: /uploads/dance-as-no-one-watching.jpg
   author: Juan Camilo Navia
   src: https://unsplash.com/@juantures12?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
 tags:

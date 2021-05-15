@@ -7,7 +7,7 @@ date: 2020-04-30T09:32:32.760Z
 thumbnail:
   author: israel palacio
   src: https://unsplash.com/@othentikisra?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText
-  img: /images/uploads/connection.jpg
+  img: /uploads/connection.jpg
 tags:
   - gatsbyjs
   - plugin

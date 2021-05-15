@@ -5,7 +5,7 @@ title: The simplest example of scheduling on the main thread
 date: 2019-02-19T22:42:04.602Z
 thumbnail:
   author: JESHOOTS.COM
-  img: /images/uploads/schedule.jpg
+  img: /uploads/schedule.jpg
   src: 'https://unsplash.com/@jeshoots'
 tags:
   - web-api
@@ -63,7 +63,7 @@ Now let's add some simple ui: button to trigger core functional of our app (sort
 
 Have you seen that? Button click "stops the world": green block is not rotating anymore, input cannot be edited. And the reason for that is that browser processes everything in a single thread: it wasn't able to update layout and respond to user while we were sorting.
 
-![Stop the world](/images/uploads/stop-the-world.jpg 'Stop the world')
+![Stop the world](/public/uploads/stop-the-world.jpg 'Stop the world')
 
 To improve our app we should not block main thread for more than 16ms (for 60 frames per second). Thus, we should be able to suspend the execution of the sort function and resume it after the browser has completed its work.
 
@@ -103,7 +103,7 @@ And here is a demo:
 
 Here is how it looks in profiler:
 
-![Smooth sort profile](/images/uploads/smooth-sort-profile.jpg 'Smooth sort profile')
+![Smooth sort profile](/public/uploads/smooth-sort-profile.jpg 'Smooth sort profile')
 
 Looks cool, right? Though sorting takes a bit more time to finish, user doesn't feel that it is slow. That is exactly what we were looking for.
 
