@@ -22,23 +22,25 @@ export interface IPost {
   content: string
 }
 
-export let getPost = async (slug: string) => {
-  let file = await fs.readFile(path.join(cwd, BLOG_DIR, slug), 'utf8')
+let readPost = async (fileName: string) => {
+  let file = await fs.readFile(path.join(cwd, BLOG_DIR, fileName), 'utf8')
   let { data, content } = matter(file)
 
   return { ...data, content } as IPost
 }
 
+let getAllPosts = async () =>
+  Promise.all((await fs.readdir(path.join(cwd, BLOG_DIR))).map(readPost))
+
 export let getPosts = async ({
   lang,
   tags = [],
-}: { lang?: ILang; tags?: string[] } = {}) => {
-  let postFileNames = await fs.readdir(path.join(cwd, BLOG_DIR))
-  let allPosts = await Promise.all(postFileNames.map(getPost))
-
-  return allPosts
+}: { lang?: ILang; tags?: string[] } = {}) =>
+  (await getAllPosts())
     .filter(
       (p) => (!lang || p.lang === lang) && tags.every((t) => p.tags.includes(t))
     )
     .sort((a, b) => b.date.valueOf() - a.date.valueOf())
-}
+
+export let getPostBySlug = async (slug: string, lang: ILang) =>
+  (await getAllPosts()).find((p) => p.slug === slug && p.lang === lang)

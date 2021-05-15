@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import type { InferGetStaticPropsType } from 'next'
 
-import { getPost, getPosts } from '../../posts'
+import { getPostBySlug, getPosts } from '../../posts'
 import { markdownToHtml } from '../../markdownRender'
 
 let BlogPost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
@@ -15,7 +15,7 @@ let BlogPost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 )
 
 export let getStaticProps = async ({ params: { slug }, locale }) => {
-  let { date, content, ...p } = await getPost(`${slug}_${locale}.md`)
+  let { date, content, ...p } = await getPostBySlug(slug, locale)
 
   return {
     props: {
