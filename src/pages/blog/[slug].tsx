@@ -1,33 +1,51 @@
-import type { FC } from 'react'
-import type { GetStaticProps, InferGetStaticPropsType } from 'next'
+import type { GetStaticProps } from 'next'
 
-import { getPostBySlug, getPosts, ILang } from '../../posts'
+import { getPostBySlug, getPosts, ILang, IPost } from '../../posts'
 import { markdownToHtml } from '../../markdownRender'
+import { PostCard } from '../../PostCard'
 
-let BlogPost: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  post: { title, content },
-}) => (
-  <article className="prose lg:prose-xl">
-    <h1>{title}</h1>
+interface Props {
+  post: IPost
+}
 
-    <div dangerouslySetInnerHTML={{ __html: content }} />
-  </article>
+let BlogPost = ({ post: { title, content, relatedPosts = [] } }: Props) => (
+  <div>
+    <article className="prose lg:prose-xl">
+      <h1>{title}</h1>
+
+      <div dangerouslySetInnerHTML={{ __html: content }} />
+    </article>
+
+    {relatedPosts?.length > 0 && (
+      <>
+        <h2 className="text-4xl font-bold mb-8">Related reads</h2>
+
+        <div className="flex gap-8">
+          {relatedPosts?.map((p) => (
+            <PostCard key={p.slug} post={p} className="max-w-sm" />
+          ))}
+        </div>
+      </>
+    )}
+  </div>
 )
 
-export let getStaticProps: GetStaticProps = async ({ params, locale }) => {
+export let getStaticProps: GetStaticProps<Props> = async ({
+  params,
+  locale,
+}) => {
   let post = await getPostBySlug(params?.slug as string, locale as ILang)
 
   if (!post) {
     return { notFound: true }
   }
 
-  let { date, content, ...p } = post
+  let { content, ...p } = post
 
   return {
     props: {
       post: {
         ...p,
-        date: date.toISOString(),
         content: await markdownToHtml(content),
       },
     },

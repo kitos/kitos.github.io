@@ -4,7 +4,6 @@ import groupBy from 'lodash.groupby'
 
 import { getPosts, ILang, IPost } from '../../posts'
 import { PostCard } from '../../PostCard'
-import { Serialize } from '../../types'
 
 let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   postsByYear,
@@ -28,18 +27,12 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
 export let getStaticProps = async ({ locale }: GetStaticPropsContext) => {
   let posts = await getPosts({ lang: locale as ILang })
-  let serializablePosts = posts.map(({ date, content, ...p }) => ({
-    ...p,
-    date: date.toISOString(),
-  }))
-  let postsByYear = groupBy(serializablePosts, (p) =>
-    new Date(p.date).getFullYear()
-  )
+  let postsByYear = groupBy(posts, (p) => new Date(p.date).getFullYear())
 
   return {
     props: {
       postsByYear: (
-        Object.entries(postsByYear) as unknown as [number, Serialize<IPost>[]][]
+        Object.entries(postsByYear) as unknown as [number, IPost[]][]
       ).sort(([y1], [y2]) => y2 - y1),
     },
   }

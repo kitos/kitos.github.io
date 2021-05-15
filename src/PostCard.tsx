@@ -3,14 +3,13 @@ import Image from 'next/image'
 import { format, formatRelative } from 'date-fns'
 
 import type { IPost } from './posts'
-import type { Serialize } from './types'
 
 export let PostCard = ({
   className,
   post: { lang, slug, title, date, thumbnail, preface, tags },
 }: {
   className?: string
-  post: Serialize<IPost>
+  post: IPost
 }) => (
   <section
     className={

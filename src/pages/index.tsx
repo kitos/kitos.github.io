@@ -18,15 +18,8 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   </div>
 )
 
-export let getStaticProps = async ({ locale }: GetStaticPropsContext) => {
-  let posts = await getPosts({ lang: locale as ILang })
-  return {
-    props: {
-      posts: posts
-        .slice(0, 3)
-        .map((p) => ({ ...p, date: p.date.toISOString() })),
-    },
-  }
-}
+export let getStaticProps = async ({ locale }: GetStaticPropsContext) => ({
+  props: { posts: (await getPosts({ lang: locale as ILang })).slice(0, 3) },
+})
 
 export default IndexPage
