@@ -38,7 +38,7 @@ export let getStaticPaths = async () => {
   let posts = await getPosts()
 
   return {
-    paths: posts.map((p) => `/blog/${p.slug}`),
+    paths: posts.map((p) => ({ params: { slug: p.slug }, locale: p.lang })),
     fallback: false,
   }
 }
