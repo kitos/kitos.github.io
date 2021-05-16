@@ -5,7 +5,7 @@ title: Implementing medium like tooltip
 date: 2019-01-20T21:52:08.746Z
 thumbnail:
   author: Markus Spiske
-  img: /images/uploads/reflection-unsplash.jpg
+  img: /uploads/reflection-unsplash.jpg
   src: 'https://unsplash.com/@markusspiske'
 tags:
   - reactjs

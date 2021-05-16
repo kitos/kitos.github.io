@@ -5,7 +5,7 @@ title: Load everything lazily with IntersectionObserver
 date: 2019-01-23T21:52:08.746Z
 thumbnail:
   author: Erik-Jan Leusink
-  img: /images/uploads/lazy.jpg
+  img: /uploads/lazy.jpg
   src: 'https://unsplash.com/@ejleusink'
 tags:
   - reactjs
