@@ -17,7 +17,7 @@ export let PostCard = ({
       className
     }
   >
-    <Link href={`/${lang}/blog/${slug}`}>
+    <Link href={`/blog/${slug}`} locale={lang}>
       <a className="h-48 w-full relative">
         <Image
           src={thumbnail.img}
@@ -38,7 +38,7 @@ export let PostCard = ({
         ))}
       </ul>
 
-      <Link href={`/${lang}/blog/${slug}`}>
+      <Link href={`/blog/${slug}`} locale={lang}>
         <a>
           <div className="text-2xl font-medium text-gray-700 pt-2 hover:underline">
             {title}
