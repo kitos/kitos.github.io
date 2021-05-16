@@ -20,7 +20,7 @@ let BlogPost = ({
       <link rel="preconnect" href="https://unpkg.com" />
       <link
         rel="stylesheet"
-        href="https://unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/vs2015.min.css"
+        href="https://unpkg.com/prismjs@1.23.0/themes/prism-tomorrow.css"
       />
     </Head>
 
