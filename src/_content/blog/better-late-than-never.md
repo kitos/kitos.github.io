@@ -18,7 +18,7 @@ preface: "I have been thinking about developing my personal blog for a least 5 y
 
 First time I thought about creating personal site was when I was taking java courses at EPAM Systems. The main motivation was to learn new things. So I've created a list of technologies I wanted to build my blog with:
 
-![List of technologies](/public/uploads/blog-tech-stack.jpg 'Technologies')
+![List of technologies](/uploads/blog-tech-stack.jpg 'Technologies')
 
 At that moment I haven't worked with either of them (except MySQL I guess) and hardly understood how I could wire them all together. Also you might noticed that I didn't write a word about infrastructure and deployment of my future site (I had no idea about it).
 

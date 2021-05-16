@@ -20,7 +20,7 @@ preface: >-
 
 While working on migration of part our [main web-site](https://tourlane.de) to [gatsby](http://gatsbyjs.org), we faced really weird problem: one of a links in navigation menu wasn't styled on initial load. It was reproducible only on the desktop.
 
-![Navigation menu with unstyled link](/public/uploads/broken-link.jpg 'Unstyled link')
+![Navigation menu with unstyled link](/uploads/broken-link.jpg 'Unstyled link')
 
 Once you opened some other page (using client-side routing), styles get in place 🤯.
 

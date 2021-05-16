@@ -42,12 +42,12 @@ So what I mean by "functionality for reporting typos/mistakes": I want to add an
 
 1. The easiest part would be to just append button to tooltip. That is how it'll look:
 
-![Typo action](/public/uploads/typo-action.jpg 'Typo action')
+![Typo action](/uploads/typo-action.jpg 'Typo action')
 
 2. Now we should implement dialog. There is plenty of ready solutions for dialogs (like [react-modal](https://github.com/reactjs/react-modal), also lots of UI libraries offer them), but I would like to give a try to the one from [reach-ui](https://ui.reach.tech/) developed by [Ryan Florence](https://twitter.com/ryanflorence).
    Its api is pretty straightforward, so I won't show an example with it (you can easily find [it on its site](https://ui.reach.tech/dialog)). But I'd like to mentioned that to animate it I used [react-spring](http://react-spring.surge.sh), as I did for tooltip (and you can also find [an example of using them together](https://ui.reach.tech/dialog#animation-example)). Here is [source code](https://github.com/kitos/kitos.github.io/blob/develop/src/components/dialog.js) of my dialog and result:
 
-![Typo dialog](/public/uploads/typo-dialog.jpg 'Typo dialog')
+![Typo dialog](/uploads/typo-dialog.jpg 'Typo dialog')
 
 3. The last but not least thing we should implement is backend which will receive out submissions and put it somewhere .
 
