@@ -22,7 +22,7 @@ export interface IPost {
     src?: string
   }
   content: string
-  relatedPosts?: IPost[]
+  nextReads?: IPost[]
   readingTime?: string
 }
 
@@ -44,9 +44,12 @@ let readPost = async (fileName: string) => {
 let getAllPosts = async () =>
   Promise.all((await fs.readdir(path.join(cwd, BLOG_DIR))).map(readPost))
 
-let getRelatedPosts = ({ slug, lang, tags }: IPost, allPosts: IPost[]) =>
+let getRelatedPosts = (
+  { slug, lang, tags }: IPost,
+  allPosts: IPost[]
+): IPost[] =>
   allPosts
-    .filter((p) => p.slug !== slug && p.lang !== lang)
+    .filter((p) => p.slug !== slug || p.lang !== lang)
     .map((p) => ({
       ...p,
       similarity: intersection(p.tags, tags).length,
@@ -66,14 +69,23 @@ export let getPosts = async ({
     .sort((a, b) => b.date.localeCompare(a.date))
 
 export let getPostBySlug = async (slug: string, lang: ILang) => {
-  let allPosts = await getAllPosts()
-  let post = allPosts.find((p) => p.slug === slug && p.lang === lang)
+  let allPosts = await getPosts({ lang })
+  let post = allPosts.find((p) => p.slug === slug)
 
   if (post) {
     return {
       ...post,
-      get relatedPosts() {
-        return getRelatedPosts(post!, allPosts)
+      get nextReads() {
+        let relatedPosts = getRelatedPosts(post!, allPosts)
+
+        return relatedPosts.length === 3
+          ? relatedPosts
+          : [
+              ...relatedPosts,
+              ...allPosts
+                .filter((p) => p !== post && !relatedPosts.includes(p))
+                .slice(0, 3 - relatedPosts.length),
+            ]
       },
     }
   }

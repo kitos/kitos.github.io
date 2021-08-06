@@ -20,7 +20,7 @@ let BlogPost = ({
     readingTime,
     thumbnail,
     content,
-    relatedPosts = [],
+    nextReads = [],
     tags,
   },
 }: Props) => (
@@ -55,12 +55,12 @@ let BlogPost = ({
       />
     </div>
 
-    {relatedPosts?.length > 0 && (
+    {nextReads?.length > 0 && (
       <div className="page">
-        <h2 className="text-4xl font-bold my-8">Related reads</h2>
+        <h2 className="text-4xl font-bold my-8">Next reads</h2>
 
         <div className="flex gap-8">
-          {relatedPosts?.map((p) => (
+          {nextReads?.map((p) => (
             <PostCard key={p.slug} post={p} className="max-w-sm" />
           ))}
         </div>
