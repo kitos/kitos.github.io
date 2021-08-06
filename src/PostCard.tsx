@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { format } from 'date-fns'
 
 import type { IPost } from './posts'
+import { Tags } from './Tags'
 
 export let PostCard = ({
   className,
@@ -28,15 +29,7 @@ export let PostCard = ({
     </Link>
 
     <div className="p-6">
-      <ul className="flex flex-wrap gap-2">
-        {tags.map((t) => (
-          <li key={t} className="text-sm text-violet-900 hover:underline">
-            <Link href={`/blog/tags/${t}`} locale={lang}>
-              <a>#{t}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <Tags locale={lang} tags={tags} />
 
       <Link href={`/blog/${slug}`} locale={lang}>
         <a>

@@ -1,18 +1,28 @@
 import type { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import format from 'date-fns/format'
 
 import { getPostBySlug, getPosts, ILang, IPost } from '../../posts'
 import { markdownToHtml } from '../../markdownRender'
 import { PostCard } from '../../PostCard'
-import format from 'date-fns/format'
+import { Tags } from '../../Tags'
 
 interface Props {
   post: IPost
 }
 
 let BlogPost = ({
-  post: { title, date, readingTime, thumbnail, content, relatedPosts = [] },
+  post: {
+    lang,
+    title,
+    date,
+    readingTime,
+    thumbnail,
+    content,
+    relatedPosts = [],
+    tags,
+  },
 }: Props) => (
   <>
     <Head>
@@ -29,14 +39,20 @@ let BlogPost = ({
     </div>
 
     <div className="flex flex-col items-center">
-      <article className="prose lg:prose-lg">
-        <h1>{title}</h1>
-        <div className="text-lg -mt-4 mb-4 text-gray-500">
+      <header className="w-full max-w-prose lg:text-lg mb-8">
+        <h1 className="text-5xl font-extrabold">{title}</h1>
+
+        <div className="text-lg mt-4 mb-2 text-gray-500">
           {format(new Date(date), 'PP')} • {readingTime}
         </div>
 
-        <div dangerouslySetInnerHTML={{ __html: content }} />
-      </article>
+        <Tags locale={lang} tags={tags} />
+      </header>
+
+      <article
+        className="prose lg:prose-lg"
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
     </div>
 
     {relatedPosts?.length > 0 && (
