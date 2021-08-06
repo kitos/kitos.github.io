@@ -83,7 +83,13 @@ export let getPostBySlug = async (slug: string, lang: ILang) => {
           : [
               ...relatedPosts,
               ...allPosts
-                .filter((p) => p !== post && !relatedPosts.includes(p))
+                .filter(
+                  (p) =>
+                    p !== post &&
+                    !relatedPosts.find(
+                      (rp) => rp.slug === p.slug && rp.lang === p.lang
+                    )
+                )
                 .slice(0, 3 - relatedPosts.length),
             ]
       },
