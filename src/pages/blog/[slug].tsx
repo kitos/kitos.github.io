@@ -29,7 +29,7 @@ let BlogPost = ({
     </div>
 
     <div className="flex flex-col items-center">
-      <article className="prose lg:prose-xl">
+      <article className="prose lg:prose-lg">
         <h1>{title}</h1>
         <div className="text-lg -mt-4 mb-4 text-gray-500">
           {format(new Date(date), 'PP')} • {readingTime}
