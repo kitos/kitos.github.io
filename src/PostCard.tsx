@@ -31,7 +31,7 @@ export let PostCard = ({
       <ul className="flex flex-wrap gap-2">
         {tags.map((t) => (
           <li key={t} className="text-sm text-violet-900 hover:underline">
-            <Link href={`/blog/tags/${t}`}>
+            <Link href={`/blog/tags/${t}`} locale={lang}>
               <a>#{t}</a>
             </Link>
           </li>

@@ -10,6 +10,7 @@ interface Props {
 
 let BlogPost = ({ posts }: Props) => {
   let {
+    locale,
     query: { tag },
   } = useRouter()
 
@@ -17,10 +18,8 @@ let BlogPost = ({ posts }: Props) => {
     <main className="page flex flex-col gap-8">
       <h1 className="text-6xl font-bold">
         Blog{' '}
-        <Link href={`/blog/tags/${tag}`}>
-          <a href="#" className="text-violet-900 hover:underline">
-            #{tag}
-          </a>
+        <Link href={`/blog/tags/${tag}`} locale={locale}>
+          <a className="text-violet-900 hover:underline">#{tag}</a>
         </Link>
       </h1>
 
