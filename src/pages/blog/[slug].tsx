@@ -29,7 +29,7 @@ let BlogPost = ({
     content,
     nextReads = [],
     tags,
-    tweet_id,
+    tweetId,
   },
   webMentions,
 }: Props) => (
@@ -63,9 +63,9 @@ let BlogPost = ({
         dangerouslySetInnerHTML={{ __html: content }}
       />
 
-      {tweet_id && (
+      {tweetId && (
         <section className="w-full max-w-prose lg:text-lg mt-8 flex justify-end">
-          <WebMentionsButtons tweetId={tweet_id} {...webMentions} />
+          <WebMentionsButtons tweetId={tweetId} {...webMentions} />
         </section>
       )}
     </div>

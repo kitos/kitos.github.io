@@ -17,7 +17,7 @@ export interface IPost {
   title: string
   preface: ILang
   tags: string[]
-  tweet_id: string | null
+  tweetId: string | null
   thumbnail: {
     img: string
     author?: string
@@ -43,7 +43,7 @@ let readPost = async (fileName: string) => {
       base64: await getPlaiceholder(thumbnail.img).then((p) => p.base64),
     },
     // get rid of first 't',
-    tweet_id: tweet_id?.substr(1, 0) ?? null,
+    tweetId: tweet_id?.substr(1) ?? null,
     date: date.toISOString(),
     content,
     readingTime: readingTime(content).text,
