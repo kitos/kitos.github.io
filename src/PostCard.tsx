@@ -14,7 +14,7 @@ export let PostCard = ({
 }) => (
   <section
     className={
-      'flex flex-col bg-white shadow-lg hover:shadow-2xl rounded-md ' +
+      'flex flex-col bg-white dark:bg-gray-800 shadow-lg hover:shadow-2xl rounded-md ' +
       className
     }
   >
@@ -35,7 +35,7 @@ export let PostCard = ({
 
       <Link href={`/blog/${slug}`} locale={lang}>
         <a>
-          <div className="text-2xl font-medium text-gray-700 pt-2 hover:underline">
+          <div className="text-2xl font-medium text-gray-700 dark:text-gray-300 pt-2 hover:underline">
             {title}
           </div>
         </a>
@@ -45,7 +45,7 @@ export let PostCard = ({
         {format(new Date(date), 'PP')} • {readingTime}
       </p>
 
-      <p className="text-md text-gray-700 pt-4">{preface}</p>
+      <p className="text-md text-gray-700 dark:text-gray-400 pt-4">{preface}</p>
     </div>
   </section>
 )

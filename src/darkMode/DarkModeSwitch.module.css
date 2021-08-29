@@ -1,0 +1,87 @@
+.switcher {
+    --size: 24px;
+    position: relative;
+    padding: 2px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 2px;
+    border: none;
+}
+
+.switcher__radio {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    width: var(--size);
+    height: var(--size);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    transition: filter 0.1s ease-in;
+    z-index: 2;
+}
+
+.switcher__radio, :global(.dark) .switcher__radio:checked {
+    filter: invert(0);
+}
+
+.switcher__radio:checked, :global(.dark) .switcher__radio {
+    filter: invert(1);
+}
+
+.switcher__radio:focus {
+    outline: none;
+}
+
+.switcher__radio[value='light'] {
+    background-image: url('/svgs/sun.svg');
+}
+
+.switcher__radio[value='system'] {
+    background-image: url('/svgs/cog.svg');
+}
+
+.switcher__radio[value='dark'] {
+    background-image: url('/svgs/moon.svg');
+}
+
+.switcher__status {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    box-shadow: 0 0 0 2px rgb(0 0 0 / 0.2);
+    border-radius: 18px;
+    background-color: rgb(255 255 255 / 0.5);
+    background-repeat: no-repeat;
+    background-image: url('/svgs/circle.svg');
+    background-size: var(--size);
+    background-position: center;
+    transition: background-position 0.1s ease-in;
+}
+
+.switcher__status {
+    filter: invert(0);
+}
+
+:global(.dark) .switcher__status {
+    filter: invert(1);
+}
+
+.switcher__radio:focus-visible ~ .switcher__status {
+    box-shadow: 0 0 0 2px black;
+}
+
+.switcher__radio[value='light']:checked ~ .switcher__status {
+    background-position: left 2px center;
+}
+
+.switcher__radio[value='system']:checked ~ .switcher__status {
+    background-position: center center;
+}
+
+.switcher__radio[value='dark']:checked ~ .switcher__status {
+    background-position: right 2px center;
+}

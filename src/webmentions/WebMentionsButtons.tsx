@@ -73,21 +73,21 @@ export let WebMentionsButtons = ({
       count={like}
       action={`like?tweet_id=${tweetId}`}
       icon={<HeartIcon />}
-      className="hover:text-red-600"
+      className="hover:text-red-600 dark:text-red-300 dark:hover:text-red-600"
     />
 
     <Button
       count={repost}
       action={`retweet?tweet_id=${tweetId}`}
       icon={<RetweetIcon />}
-      className="hover:text-green-600"
+      className="hover:text-green-600  dark:text-green-300 dark:hover:text-green-600"
     />
 
     <Button
       count={mention}
       action={`tweet?in_reply_to=${tweetId}`}
       icon={<CommentIcon />}
-      className="hover:text-blue-600"
+      className="hover:text-blue-600  dark:text-blue-300 dark:hover:text-blue-600"
     />
   </div>
 )

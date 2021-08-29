@@ -55,7 +55,7 @@ let BlogPost = ({
 
     <div className="flex flex-col items-center">
       <header className="w-full max-w-prose lg:text-lg mb-8">
-        <h1 className="text-5xl font-extrabold">{title}</h1>
+        <h1 className="text-5xl font-extrabold dark:text-gray-100">{title}</h1>
 
         <div className="text-lg mt-4 mb-2 text-gray-500">
           {format(new Date(date), 'PP')} • {readingTime}
@@ -65,7 +65,7 @@ let BlogPost = ({
       </header>
 
       <article
-        className="prose lg:prose-lg"
+        className="prose lg:prose-lg dark:prose-light"
         dangerouslySetInnerHTML={{ __html: content }}
       />
 
@@ -78,7 +78,9 @@ let BlogPost = ({
 
     {nextReads?.length > 0 && (
       <div className="page">
-        <h2 className="text-4xl font-bold my-8">Next reads</h2>
+        <h2 className="text-4xl font-bold my-8 dark:text-gray-300">
+          Next reads
+        </h2>
 
         <div className="flex flex-col sm:flex-row gap-8 justify-between">
           {nextReads?.map((p) => (

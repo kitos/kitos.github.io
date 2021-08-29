@@ -15,16 +15,16 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   return (
     <div className="page flex flex-col gap-8">
-      <h1 className="text-6xl font-bold">Blog</h1>
+      <h1 className="text-6xl font-bold dark:text-gray-300">Blog</h1>
 
       <div>
-        <h2 className="text-2xl font-bold mb-4">By tag</h2>
+        <h2 className="text-2xl font-bold mb-4 dark:text-gray-300">By tag</h2>
         <Tags tags={allTags} locale={locale!} />
       </div>
 
       {postsByYear.map(([year, posts]) => (
         <div key={year}>
-          <h2 className="text-2xl font-bold mb-4">{year}</h2>
+          <h2 className="text-2xl font-bold mb-4 dark:text-gray-300">{year}</h2>
 
           <div className="flex flex-col gap-6">
             {posts.map((p) => (

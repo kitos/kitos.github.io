@@ -16,10 +16,12 @@ let BlogPost = ({ posts }: Props) => {
 
   return (
     <div className="page flex flex-col gap-8">
-      <h1 className="text-6xl font-bold">
+      <h1 className="text-6xl font-bold dark:text-gray-300">
         Blog{' '}
         <Link href={`/blog/tags/${tag}`} locale={locale}>
-          <a className="text-violet-900 hover:underline">#{tag}</a>
+          <a className="text-violet-900 dark:text-violet-400 hover:underline">
+            #{tag}
+          </a>
         </Link>
       </h1>
 

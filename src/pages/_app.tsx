@@ -8,6 +8,7 @@ import type { FC } from 'react'
 import '../main.css'
 
 import avatarSrc from '../../public/avatar.jpg'
+import { DarkModeSwitch } from '../darkMode/DarkModeSwitch'
 
 let NavLink: FC<{ href: string; isActive?: (p: string) => boolean }> = ({
   href,
@@ -36,7 +37,7 @@ let Nav = () => (
   <nav className="bg-gray-800 mb-16">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-16">
-        <div className="flex items-center">
+        <div className="flex items-center flex-1">
           <div className="flex-shrink-0">
             <a href="https://nikitakirsanov.com">
               <Image
@@ -57,6 +58,8 @@ let Nav = () => (
               </NavLink>
             </div>
           </div>
+
+          <DarkModeSwitch className="ml-auto" />
         </div>
       </div>
     </div>
@@ -80,6 +83,9 @@ let MyApp = ({ Component, pageProps }: AppProps) => (
         rel="pingback"
         href="https://webmention.io/nikitakirsanov.com/xmlrpc"
       />
+      <script>
+        {`if(localStorage.getItem('darkMode')==='dark'){document.documentElement.classList.add('dark')}`}
+      </script>
     </Head>
 
     <Nav />
@@ -89,8 +95,8 @@ let MyApp = ({ Component, pageProps }: AppProps) => (
     </main>
 
     <footer className="page mt-12 px-8 2xl:px-0">
-      <hr />
-      <div className="flex justify-between my-8 text-gray-500">
+      <hr className="dark:border-gray-700" />
+      <div className="flex justify-between py-8 text-gray-500 dark:text-gray-400">
         <p>
           © {new Date().getFullYear()}{' '}
           <FLink href="https://nikitakirsanov.com">nikitakirsanov.com</FLink>
