@@ -22,6 +22,8 @@ export let PostCard = ({
       <a className="h-48 w-full relative">
         <Image
           src={thumbnail.img}
+          placeholder="blur"
+          blurDataURL={thumbnail.base64}
           layout="fill"
           className="object-cover rounded-t-md overflow-hidden"
         />

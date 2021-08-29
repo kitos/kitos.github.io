@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { getPosts, ILang } from '../posts'
 import { PostCard } from '../PostCard'
 
+import avatarSrc from '../../public/avatar.jpg'
+
 let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   posts,
 }) => (
@@ -21,7 +23,14 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       </div>
 
       <div className="h-60 w-60 relative rounded-full overflow-hidden">
-        <Image src="/avatar.jpg" layout="fill" objectFit="cover" />
+        <Image
+          src={avatarSrc}
+          height={60}
+          width={60}
+          placeholder="blur"
+          layout="fill"
+          objectFit="cover"
+        />
       </div>
     </div>
 

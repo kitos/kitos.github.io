@@ -3,6 +3,7 @@ import path from 'path'
 import matter from 'gray-matter'
 import intersection from 'lodash.intersection'
 import readingTime from 'reading-time'
+import { getPlaiceholder } from 'plaiceholder'
 
 const BLOG_DIR = 'src/_content/blog'
 let cwd = process.cwd()
@@ -21,6 +22,7 @@ export interface IPost {
     img: string
     author?: string
     src?: string
+    base64?: string
   }
   content: string
   nextReads?: IPost[]
@@ -30,13 +32,17 @@ export interface IPost {
 let readPost = async (fileName: string) => {
   let file = await fs.readFile(path.join(cwd, BLOG_DIR, fileName), 'utf8')
   let {
-    data: { date, tweet_id, ...meta },
+    data: { date, tweet_id, thumbnail, ...meta },
     content,
   } = matter(file)
 
   return {
     ...meta,
-    // get rid of first 't'
+    thumbnail: {
+      ...thumbnail,
+      base64: await getPlaiceholder(thumbnail.img).then((p) => p.base64),
+    },
+    // get rid of first 't',
     tweet_id: tweet_id?.substr(1, 0) ?? null,
     date: date.toISOString(),
     content,

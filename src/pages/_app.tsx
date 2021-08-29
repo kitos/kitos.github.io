@@ -42,7 +42,6 @@ let Nav = () => (
               <Image
                 className="object-cover rounded-full"
                 src={avatarSrc}
-                placeholder="blur"
                 width={32}
                 height={32}
                 alt="Nikita Kirsanov logo"
