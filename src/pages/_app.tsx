@@ -67,7 +67,10 @@ let Nav = () => (
 )
 
 let FLink: FC<{ href: string }> = ({ href, children }) => (
-  <a className="hover:underline" href={href}>
+  <a
+    className="hover:text-blue-700 dark:hover:text-blue-300 hover:underline"
+    href={href}
+  >
     {children}
   </a>
 )
