@@ -2,7 +2,7 @@ import type { GetStaticProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { getPosts, ILang, IPost } from '../../../posts'
-import { PostCard } from '../../../PostCard'
+import { PostLink } from '../../../PostLink'
 
 interface Props {
   posts: IPost[]
@@ -23,9 +23,9 @@ let BlogPost = ({ posts }: Props) => {
         </Link>
       </h1>
 
-      <div className="flex flex-wrap gap-8">
+      <div className="flex flex-col gap-6">
         {posts.map((p) => (
-          <PostCard key={p.slug} post={p} className="max-w-sm" />
+          <PostLink key={p.slug} {...p} />
         ))}
       </div>
     </div>
