@@ -25,8 +25,6 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
       <div className="h-60 w-60 relative rounded-full overflow-hidden">
         <Image
           src={avatarSrc}
-          height={60}
-          width={60}
           placeholder="blur"
           layout="fill"
           objectFit="cover"
