@@ -44,7 +44,13 @@ let BlogPost = ({
     </Head>
 
     <div className="my-12 h-96 w-screen relative -mx-8 2xl:m-0">
-      <Image src={thumbnail.img} layout="fill" objectFit="cover" />
+      <Image
+        src={thumbnail.img}
+        placeholder="blur"
+        blurDataURL={thumbnail.base64}
+        layout="fill"
+        objectFit="cover"
+      />
     </div>
 
     <div className="flex flex-col items-center">
@@ -74,7 +80,7 @@ let BlogPost = ({
       <div className="page">
         <h2 className="text-4xl font-bold my-8">Next reads</h2>
 
-        <div className="flex gap-8 justify-between">
+        <div className="flex flex-col sm:flex-row gap-8 justify-between">
           {nextReads?.map((p) => (
             <PostCard key={p.slug} post={p} className="max-w-sm" />
           ))}
