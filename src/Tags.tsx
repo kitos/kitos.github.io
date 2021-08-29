@@ -5,7 +5,7 @@ export let Tags = ({ locale, tags }: { tags: string[]; locale: string }) => (
     {tags.map((t) => (
       <li
         key={t}
-        className="text-sm text-violet-900 dark:text-violet-400 hover:underline"
+        className="text-sm text-blue-700 dark:text-blue-300 hover:underline"
       >
         <Link href={`/blog/tags/${t}`} locale={locale}>
           <a>#{t}</a>

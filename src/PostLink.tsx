@@ -4,7 +4,7 @@ import { IPost } from './posts'
 
 export let PostLink = ({ slug, lang, title, date, readingTime }: IPost) => (
   <div>
-    <h3 className="text-xl text-blue-800 dark:text-blue-400 font-bold hover:underline">
+    <h3 className="text-xl text-blue-700 dark:text-blue-400 font-bold hover:underline">
       <Link href={`/blog/${slug}`} locale={lang}>
         <a>{title}</a>
       </Link>

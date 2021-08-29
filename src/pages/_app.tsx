@@ -23,8 +23,8 @@ let NavLink: FC<{ href: string; isActive?: (p: string) => boolean }> = ({
         className={
           'px-3 py-2 rounded-md text-sm font-medium ' +
           (isActive?.(asPath) ?? href === asPath
-            ? 'bg-gray-900 text-white'
-            : 'text-gray-300 hover:bg-gray-700 hover:text-white')
+            ? 'bg-blue-700 dark:bg-gray-900 text-white'
+            : 'dark:text-gray-300 hover:bg-blue-500 dark:hover:bg-gray-700 hover:text-white')
         }
       >
         {children}
@@ -34,7 +34,7 @@ let NavLink: FC<{ href: string; isActive?: (p: string) => boolean }> = ({
 }
 
 let Nav = () => (
-  <nav className="bg-gray-800 mb-16">
+  <nav className="dark:bg-gray-800 mb-16 shadow-lg">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-16">
         <div className="flex items-center flex-1">
