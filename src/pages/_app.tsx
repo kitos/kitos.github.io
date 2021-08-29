@@ -7,17 +7,19 @@ import type { FC } from 'react'
 
 import '../main.css'
 
-let NavLink: FC<{ href: string }> = ({ href, children }) => {
+let NavLink: FC<{ href: string; isActive?: (p: string) => boolean }> = ({
+  href,
+  isActive,
+  children,
+}) => {
   let { asPath } = useRouter()
-  let isActive = href === asPath
 
   return (
     <Link href={href}>
       <a
-        href="#"
         className={
           'px-3 py-2 rounded-md text-sm font-medium ' +
-          (isActive
+          (isActive?.(asPath) ?? href === asPath
             ? 'bg-gray-900 text-white'
             : 'text-gray-300 hover:bg-gray-700 hover:text-white')
         }
@@ -48,7 +50,9 @@ let Nav = () => (
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <NavLink href="/">home</NavLink>
-              <NavLink href="/blog">blog</NavLink>
+              <NavLink href="/blog/" isActive={(p) => p.startsWith('/blog')}>
+                blog
+              </NavLink>
             </div>
           </div>
         </div>
