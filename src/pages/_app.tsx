@@ -95,9 +95,11 @@ let MyApp = ({ Component, pageProps }: AppProps) => (
 
     <Nav />
 
-    <Component {...pageProps} />
+    <main className="px-8 2xl:px-0">
+      <Component {...pageProps} />
+    </main>
 
-    <footer className="page mt-12">
+    <footer className="page mt-12 px-8 2xl:px-0">
       <hr />
       <div className="flex justify-between my-8 text-gray-500">
         <p>

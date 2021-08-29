@@ -8,7 +8,7 @@ import { PostCard } from '../PostCard'
 let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   posts,
 }) => (
-  <main className="page">
+  <div className="page">
     <div className="flex gap-16 mb-24">
       <div>
         <h2 className="text-5xl font-bold mb-8">Hi, I'm Nikita!</h2>
@@ -32,7 +32,7 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <PostCard key={p.slug} post={p} className="max-w-sm" />
       ))}
     </div>
-  </main>
+  </div>
 )
 
 export let getStaticProps = async ({ locale }: GetStaticPropsContext) => ({

@@ -15,7 +15,7 @@ let BlogPost = ({ posts }: Props) => {
   } = useRouter()
 
   return (
-    <main className="page flex flex-col gap-8">
+    <div className="page flex flex-col gap-8">
       <h1 className="text-6xl font-bold">
         Blog{' '}
         <Link href={`/blog/tags/${tag}`} locale={locale}>
@@ -28,7 +28,7 @@ let BlogPost = ({ posts }: Props) => {
           <PostCard key={p.slug} post={p} className="max-w-sm" />
         ))}
       </div>
-    </main>
+    </div>
   )
 }
 
