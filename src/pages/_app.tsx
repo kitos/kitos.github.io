@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -81,6 +82,17 @@ let FLink: FC<{ href: string }> = ({ href, children }) => (
 
 let MyApp = ({ Component, pageProps }: AppProps) => (
   <>
+    <Head>
+      <link
+        rel="webmention"
+        href="https://webmention.io/nikitakirsanov.com/webmention"
+      />
+      <link
+        rel="pingback"
+        href="https://webmention.io/nikitakirsanov.com/xmlrpc"
+      />
+    </Head>
+
     <Nav />
 
     <Component {...pageProps} />

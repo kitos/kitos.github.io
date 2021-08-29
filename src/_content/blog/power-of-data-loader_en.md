@@ -28,7 +28,9 @@ One particular feature was to find links to the pages from other ones. E.g. we w
 To give you an idea, _contentful_ has a very powerful mechanism to build site hierarchy (not only) - reference fields. Where one entry can have link/s to others.
 With a help of it we've been able to create structure like this:
 
-Which is heavily used to automate a lot of content sections throughout our website: main navigation, breadcrumbs, thumbnails with parent/child/sibling pages and basically the whole gatsby (yep, we use SSG) build process relies on it.
+TODO
+
+On which we heavily rely to automate a lot of content sections throughout our website: main navigation, breadcrumbs, thumbnails with parent/child/sibling pages and basically the whole gatsby (yep, we use SSG) build process relies on it.
 
 ## Limitation of existing API
 

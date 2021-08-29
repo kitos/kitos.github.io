@@ -16,6 +16,7 @@ export interface IPost {
   title: string
   preface: ILang
   tags: string[]
+  tweet_id: string | null
   thumbnail: {
     img: string
     author?: string
@@ -29,12 +30,14 @@ export interface IPost {
 let readPost = async (fileName: string) => {
   let file = await fs.readFile(path.join(cwd, BLOG_DIR, fileName), 'utf8')
   let {
-    data: { date, ...meta },
+    data: { date, tweet_id, ...meta },
     content,
   } = matter(file)
 
   return {
     ...meta,
+    // get rid of first 't'
+    tweet_id: tweet_id?.substr(1, 0) ?? null,
     date: date.toISOString(),
     content,
     readingTime: readingTime(content).text,
@@ -68,7 +71,10 @@ export let getPosts = async ({
     )
     .sort((a, b) => b.date.localeCompare(a.date))
 
-export let getPostBySlug = async (slug: string, lang: ILang) => {
+export let getPostBySlug = async (
+  slug: string,
+  lang: ILang
+): Promise<IPost | undefined> => {
   let allPosts = await getPosts({ lang })
   let post = allPosts.find((p) => p.slug === slug)
 

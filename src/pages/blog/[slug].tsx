@@ -1,4 +1,5 @@
 import type { GetStaticProps } from 'next'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
 import format from 'date-fns/format'
@@ -7,9 +8,15 @@ import { getPostBySlug, getPosts, ILang, IPost } from '../../posts'
 import { markdownToHtml } from '../../markdownRender'
 import { PostCard } from '../../PostCard'
 import { Tags } from '../../Tags'
+import { count, IWebMentionsCount } from '../../webmentions'
+
+let WebMentionsButtons = dynamic(
+  () => import('../../webmentions/WebMentionsButtons')
+)
 
 interface Props {
   post: IPost
+  webMentions: IWebMentionsCount
 }
 
 let BlogPost = ({
@@ -22,7 +29,9 @@ let BlogPost = ({
     content,
     nextReads = [],
     tags,
+    tweet_id,
   },
+  webMentions,
 }: Props) => (
   <>
     <Head>
@@ -53,6 +62,12 @@ let BlogPost = ({
         className="prose lg:prose-lg"
         dangerouslySetInnerHTML={{ __html: content }}
       />
+
+      {tweet_id && (
+        <section className="w-full max-w-prose lg:text-lg mt-8 flex justify-end">
+          <WebMentionsButtons tweetId={tweet_id} {...webMentions} />
+        </section>
+      )}
     </div>
 
     {nextReads?.length > 0 && (
@@ -69,11 +84,14 @@ let BlogPost = ({
   </>
 )
 
-export let getStaticProps: GetStaticProps<Props> = async ({
+export let getStaticProps: GetStaticProps<Props, { slug: string }> = async ({
   params,
   locale,
 }) => {
-  let post = await getPostBySlug(params?.slug as string, locale as ILang)
+  let [post, webMentions] = await Promise.all([
+    getPostBySlug(params?.slug!, locale as ILang),
+    count(params?.slug!, locale as ILang),
+  ])
 
   if (!post) {
     return { notFound: true }
@@ -81,7 +99,12 @@ export let getStaticProps: GetStaticProps<Props> = async ({
 
   let { content, ...p } = post
 
-  return { props: { post: { ...p, content: await markdownToHtml(content) } } }
+  return {
+    props: {
+      post: { ...p, content: await markdownToHtml(content) },
+      webMentions,
+    },
+  }
 }
 
 export let getStaticPaths = async () => {
