@@ -11,7 +11,7 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   posts,
 }) => (
   <div className="page">
-    <div className="flex gap-16 my-16 dark:text-gray-100">
+    <div className="flex flex-col-reverse md:flex-row gap-8 md:gap-16 my-8 md:my-16 dark:text-gray-100">
       <div>
         <h2 className="text-5xl font-bold mb-8">Hi, I'm Nikita!</h2>
 
@@ -22,7 +22,7 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </p>
       </div>
 
-      <div className="h-60 w-60 relative rounded-full overflow-hidden">
+      <div className="h-40 w-40 md:h-60 md:w-60 self-center relative rounded-full overflow-hidden">
         <Image
           src={avatarSrc}
           placeholder="blur"
@@ -34,9 +34,9 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
     <h2 className="text-4xl font-bold mb-8 dark:text-gray-200">Recent posts</h2>
 
-    <div className="flex gap-8">
+    <div className="flex flex-col md:flex-row gap-8">
       {posts.map((p) => (
-        <PostCard key={p.slug} post={p} className="max-w-sm" />
+        <PostCard key={p.slug} post={p} className="flex-1 md:max-w-sm" />
       ))}
     </div>
   </div>

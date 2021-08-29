@@ -65,7 +65,7 @@ let BlogPost = ({
       </header>
 
       <article
-        className="prose lg:prose-lg dark:prose-light"
+        className="prose prose-blue max-w-full sm:max-w-prose lg:prose-lg dark:prose-light"
         dangerouslySetInnerHTML={{ __html: content }}
       />
 
@@ -84,7 +84,7 @@ let BlogPost = ({
 
         <div className="flex flex-col sm:flex-row gap-8 justify-between">
           {nextReads?.map((p) => (
-            <PostCard key={p.slug} post={p} className="max-w-sm" />
+            <PostCard key={p.slug} post={p} className="flex-1 md:max-w-sm" />
           ))}
         </div>
       </section>

@@ -10,18 +10,19 @@ import '../main.css'
 import avatarSrc from '../../public/avatar.jpg'
 import { DarkModeSwitch } from '../darkMode/DarkModeSwitch'
 
-let NavLink: FC<{ href: string; isActive?: (p: string) => boolean }> = ({
-  href,
-  isActive,
-  children,
-}) => {
+let NavLink: FC<{
+  href: string
+  isActive?: (p: string) => boolean
+  className?: string
+}> = ({ href, isActive, className, children }) => {
   let { asPath } = useRouter()
 
   return (
     <Link href={href}>
       <a
         className={
-          'px-3 py-2 rounded-md text-sm font-medium ' +
+          className +
+          ' px-3 py-2 rounded-md text-sm font-medium ' +
           (isActive?.(asPath) ?? href === asPath
             ? 'bg-blue-700 dark:bg-gray-900 text-white'
             : 'dark:text-gray-300 hover:bg-blue-500 dark:hover:bg-gray-700 hover:text-white')
@@ -50,13 +51,13 @@ let Nav = () => (
             </a>
           </div>
 
-          <div className="hidden sm:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <NavLink href="/">home</NavLink>
-              <NavLink href="/blog/" isActive={(p) => p.startsWith('/blog')}>
-                blog
-              </NavLink>
-            </div>
+          <div className="ml-4 md:ml-8 flex items-baseline space-x-4">
+            <NavLink href="/" className="hidden sm:block">
+              home
+            </NavLink>
+            <NavLink href="/blog/" isActive={(p) => p.startsWith('/blog')}>
+              blog
+            </NavLink>
           </div>
 
           <DarkModeSwitch className="ml-auto" />
