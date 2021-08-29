@@ -11,7 +11,7 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   posts,
 }) => (
   <div className="page">
-    <div className="flex gap-16 mb-24 dark:text-gray-200">
+    <div className="flex gap-16 my-16 dark:text-gray-200">
       <div>
         <h2 className="text-5xl font-bold mb-8">Hi, I'm Nikita!</h2>
 

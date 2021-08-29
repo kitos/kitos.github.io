@@ -43,7 +43,7 @@ let BlogPost = ({
       />
     </Head>
 
-    <div className="my-12 h-96 w-screen relative -mx-8 2xl:m-0">
+    <div className="mb-12 h-96 w-screen relative -mx-8 2xl:m-0">
       <Image
         src={thumbnail.img}
         placeholder="blur"
@@ -77,7 +77,7 @@ let BlogPost = ({
     </div>
 
     {nextReads?.length > 0 && (
-      <div className="page">
+      <section className="page">
         <h2 className="text-4xl font-bold my-8 dark:text-gray-300">
           Next reads
         </h2>
@@ -87,7 +87,7 @@ let BlogPost = ({
             <PostCard key={p.slug} post={p} className="max-w-sm" />
           ))}
         </div>
-      </div>
+      </section>
     )}
   </>
 )

@@ -34,7 +34,7 @@ let NavLink: FC<{ href: string; isActive?: (p: string) => boolean }> = ({
 }
 
 let Nav = () => (
-  <nav className="dark:bg-gray-800 mb-16 shadow-lg">
+  <nav className="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-10">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-16">
         <div className="flex items-center flex-1">
@@ -50,7 +50,7 @@ let Nav = () => (
             </a>
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden sm:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <NavLink href="/">home</NavLink>
               <NavLink href="/blog/" isActive={(p) => p.startsWith('/blog')}>

@@ -14,7 +14,7 @@ let IndexPage: FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   let { locale } = useRouter()
 
   return (
-    <div className="page flex flex-col gap-8">
+    <div className="mt-8 page flex flex-col gap-8">
       <h1 className="text-6xl font-bold dark:text-gray-300">Blog</h1>
 
       <div>
