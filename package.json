@@ -6,6 +6,7 @@
   "private": true,
   "author": "Nikita Kirsanov <kitos.kirsanov@gmail.com>",
   "dependencies": {
+    "@googlemaps/polyline-codec": "^1.0.1",
     "@tailwindcss/typography": "^0.4.1",
     "autoprefixer": "^10.3.3",
     "date-fns": "^2.23.0",
