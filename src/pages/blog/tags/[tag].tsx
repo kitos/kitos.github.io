@@ -15,7 +15,7 @@ let BlogPost = ({ posts }: Props) => {
   } = useRouter()
 
   return (
-    <div className="page flex flex-col gap-8">
+    <div className="mt-8 page flex flex-col gap-8">
       <h1 className="text-6xl font-bold dark:text-gray-300">
         Blog{' '}
         <Link href={`/blog/tags/${tag}`} locale={locale}>
