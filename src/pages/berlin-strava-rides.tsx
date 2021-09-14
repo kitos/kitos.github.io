@@ -99,6 +99,7 @@ export let getStaticProps = async (
           refresh_token: string
         }>()
         .then((_) => [])
+        .catch((_) => [])
     )
 
   return {
