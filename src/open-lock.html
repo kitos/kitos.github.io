@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <style>
+      text {
+        font-family: monospace;
+        font-size: 12px;
+        fill: black;
+        font-weight: bold;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+    </style>
+    <script type="module">
+      import * as d3 from 'https://cdn.skypack.dev/d3@7'
+      import { openLock } from './open.js'
+
+      let links = []
+      let nodes = [{ id: 0, level: 0 }]
+
+      let toStrCode = (code) => String(code).padStart(4, 0)
+
+      let scale = d3.scaleOrdinal(d3.schemeCategory10)
+      let color = (d) => scale(d.level)
+
+      let zoom = d3
+        .zoom()
+        .scaleExtent([0.1, 1.5])
+        .on('zoom', (e) => {
+          root.attr('transform', e.transform)
+          root.attr('stroke-width', 1 / e.transform.k)
+        })
+
+      let svg = d3.select('svg').call(zoom)
+
+      let { width, height } = svg.node().getBBox()
+
+      let simulation = d3
+        .forceSimulation(nodes)
+        .force(
+          'link',
+          d3
+            .forceLink(links)
+            .id((d) => d.id)
+            .distance(50)
+        )
+        .force('charge', d3.forceManyBody())
+        .force('center', d3.forceCenter(width / 2, height / 2))
+
+      let root = svg.append('g')
+
+      let link = root
+        .append('g')
+        .attr('stroke', '#999')
+        .attr('stroke-opacity', 0.6)
+        .selectAll('line')
+        .data(links)
+
+      let node = root
+        .append('g')
+        .attr('stroke-width', 1.5)
+        .selectAll('g')
+        .data(nodes)
+
+      let appendNode = (n) => {
+        n.append('circle').attr('r', 6).attr('fill', 'red')
+
+        n.append('rect')
+          .attr('x', -19)
+          .attr('y', -8)
+          .attr('width', 35)
+          .attr('height', 16)
+          .attr('fill', color)
+
+        n.append('text')
+          .text((d) => toStrCode(d.id))
+          .attr('x', -16)
+          .attr('y', 4)
+        return n
+      }
+
+      appendNode(node)
+
+      simulation.on('tick', () => {
+        link
+          .attr('x1', (d) => d.source.x)
+          .attr('y1', (d) => d.source.y)
+          .attr('x2', (d) => d.target.x)
+          .attr('y2', (d) => d.target.y)
+
+        node.attr('transform', (d) => `translate(${d.x}, ${d.y})`)
+      })
+
+      function zoomFit(transitionDuration = 0) {
+        let { x, y, width, height } = root.node().getBBox()
+        let parent = root.node().parentElement
+        let fullWidth = parent.clientWidth ?? parent.parentNode.clientWidth
+        let fullHeight = parent.clientHeight ?? parent.parentNode.clientHeight
+
+        if (width === 0 || height === 0) return // nothing to fit
+
+        let scale = Math.min(
+          0.85 / Math.max(width / fullWidth, height / fullHeight),
+          1
+        )
+        let midX = x + width / 2
+        let midY = y + height / 2
+        let translate = [
+          fullWidth / 2 - scale * midX,
+          fullHeight / 2 - scale * midY,
+        ]
+
+        root
+          .transition()
+          .duration(transitionDuration)
+          .call(
+            zoom.transform,
+            d3.zoomIdentity.translate(...translate).scale(scale)
+          )
+      }
+
+      let spawn = (source, target) => {
+        let sourceNode = nodes.find((n) => n.id === source)
+        let targetCode = [...toStrCode(target.id)]
+
+        nodes.push({ ...sourceNode, ...target })
+        links.push({ source, target: target.id, value: 16 })
+
+        // try {
+        //   nodes
+        //     .filter(({ id }) => {
+        //       let diff = toStrCode(id)
+        //         .split('')
+        //         .map((d, i) => [d, i])
+        //         .filter(([d, i]) => d !== targetCode[i])
+        //
+        //       if (diff.length === 1 && id !== source) {
+        //         let [d, i] = diff[0]
+        //
+        //         let cha = Math.abs(d - targetCode[i])
+        //         return cha === 1 || cha === 9
+        //       }
+        //
+        //       return false
+        //     })
+        //     .forEach((n) => links.push({ source: n.id, target: target.id }))
+        // } catch (e) {
+        //   console.error(e)
+        // }
+
+        link = link.data(links).join('line').attr('stroke-width', 2)
+
+        node = node.data(nodes).join(
+          (enter) => appendNode(enter.append('g')),
+          (update) => update,
+          (exit) => exit.remove()
+        )
+
+        simulation.nodes(nodes)
+        simulation.force('link').links(links)
+
+        simulation.alpha(1).restart()
+      }
+
+      let wait = (timeout) => new Promise((r) => setTimeout(r, timeout))
+
+      openLock(
+        ['0201', '0101', '0102', '1212', '2002'],
+        // [],
+        '0202',
+        async (parent, code, level) => {
+          spawn(parent, { id: code, level })
+          zoomFit()
+          await wait(100)
+        }
+      )
+    </script>
+  </head>
+  <body>
+    <svg width="100%" height="100%"></svg>
+  </body>
+</html>
