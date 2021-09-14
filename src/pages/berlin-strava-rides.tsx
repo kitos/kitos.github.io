@@ -13,6 +13,7 @@ let BerlinStravaRides = ({ ridesPolylines }: IProps) => {
   let mapRef = useRef()
 
   useEffect(() => {
+    // @ts-ignore
     let Leaflet = window.L
 
     if (!mapRef.current) {
