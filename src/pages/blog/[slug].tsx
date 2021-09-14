@@ -43,7 +43,7 @@ let BlogPost = ({
       />
     </Head>
 
-    <div className="mb-12 h-96 w-screen relative -mx-8 2xl:m-0">
+    <div className="mb-12 h-96 w-screen relative -mx-8 2xl:mx-0">
       <Image
         src={thumbnail.img}
         placeholder="blur"
