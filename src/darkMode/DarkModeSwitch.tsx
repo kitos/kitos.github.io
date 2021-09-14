@@ -22,17 +22,22 @@ const LS_KEY = 'darkMode'
 let isSystemModeDark = () =>
   window.matchMedia('(prefers-color-scheme: dark)').matches
 
-let savedMode =
+let savedMode = () =>
   typeof window != 'undefined' ? localStorage.getItem(LS_KEY) : null
 
 export let DarkModeSwitch = ({ className }: { className?: string }) => {
   let [mode, set] = useState<string>()
 
   useEffect(() => {
-    set(savedMode ? (savedMode === 'dark' ? 'dark' : 'light') : 'system')
+    let m = savedMode()
+    set(m ? (m === 'dark' ? 'dark' : 'light') : 'system')
   }, [])
 
   useEffect(() => {
+    if (!mode) {
+      return
+    }
+
     let cl = document.documentElement.classList
 
     if (mode === 'system' ? isSystemModeDark() : mode === 'dark') {
