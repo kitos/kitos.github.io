@@ -7,4 +7,5 @@ module.exports = withPreact({
     locales: ['en', 'ru'],
     defaultLocale: 'en',
   },
+  experimental: { nftTracing: true },
 })
