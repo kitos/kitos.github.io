@@ -112,6 +112,7 @@ let MyApp = ({ Component, pageProps }: AppProps) => (
           <FLink href="https://www.linkedin.com/in/kitos-kirsanov/">
             LinkedIn
           </FLink>
+          <FLink href="/blog/rss.xml">RSS</FLink>
         </div>
       </div>
     </footer>

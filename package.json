@@ -4,12 +4,13 @@
   "homepage": "https://nikitakirsanov.com",
   "version": "1.14.0",
   "private": true,
-  "author": "Nikita Kirsanov <kitos.kirsanov@gmail.com>",
+  "author": "Nikita Kirsanov",
   "dependencies": {
     "@googlemaps/polyline-codec": "^1.0.1",
     "@tailwindcss/typography": "^0.4.1",
     "autoprefixer": "^10.3.3",
     "date-fns": "^2.23.0",
+    "feed": "^4.2.2",
     "got": "^11.8.2",
     "gray-matter": "^4.0.3",
     "lodash.intersection": "^4.4.0",
@@ -31,9 +32,9 @@
     "tailwindcss": "^2.2.8"
   },
   "keywords": [
-    "site",
-    "react",
-    "gatsby"
+    "blog",
+    "software development",
+    "frontend"
   ],
   "license": "MIT",
   "scripts": {

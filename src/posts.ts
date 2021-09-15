@@ -15,7 +15,7 @@ export interface IPost {
   lang: ILang
   date: string
   title: string
-  preface: ILang
+  preface: string
   tags: string[]
   tweetId: string | null
   thumbnail: {
@@ -50,7 +50,7 @@ let readPost = async (fileName: string) => {
   } as IPost
 }
 
-let getAllPosts = async () =>
+export let getAllPosts = async () =>
   Promise.all((await fs.readdir(path.join(cwd, BLOG_DIR))).map(readPost))
 
 let getRelatedPosts = (

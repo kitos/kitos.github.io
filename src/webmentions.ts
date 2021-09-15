@@ -1,13 +1,6 @@
-import path from 'path'
-import fs from 'fs'
 import got from 'got'
 import { ILang } from './posts'
-
-let _domain
-let getDomain = async () =>
-  (_domain ??= await fs.promises
-    .readFile(path.join(process.cwd(), 'package.json'))
-    .then((f) => JSON.parse(f.toString()).homepage))
+import { getDomain } from './package'
 
 let getJson = <R>(path: string) =>
   got(`https://webmention.io/api${path}`).json<R>()
