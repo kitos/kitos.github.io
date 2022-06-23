@@ -11,7 +11,7 @@
     "autoprefixer": "^10.3.3",
     "date-fns": "^2.23.0",
     "feed": "^4.2.2",
-    "got": "^11.8.2",
+    "got": "^11.8.5",
     "gray-matter": "^4.0.3",
     "lodash.intersection": "^4.4.0",
     "next": "^11.1.0",
