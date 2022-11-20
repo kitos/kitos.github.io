@@ -6,8 +6,16 @@ jobs:
   check_vabali:
     runs-on: ubuntu-latest
     steps:
-      - uses: appleboy/telegram-action@0.0.3
-      - uses: denoland/setup-deno@v1.1.1
-      - run: |
+      - name: check vabali
+        uses: denoland/setup-deno@v1.1.1
+        run: |
           deno run --allow-net=vabaliwellness.km-it.de:44301 \
           --allow-run https://gist.githubusercontent.com/kitos/c0fffcf09579744f7c00fad897fdbff0/raw/2ada9309bffa0523a355c0c74718250531da1b1f/Vabali.ts
+
+      - name: notify me
+        uses: denoland/setup-deno@v1.1.1
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Yo, hello
