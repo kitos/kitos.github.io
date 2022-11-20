@@ -12,8 +12,9 @@ jobs:
         uses: denoland/setup-deno@v1.1.1
       
       - run: |
-          deno run --allow-net=vabaliwellness.km-it.de:44301 \
-          --allow-run https://gist.githubusercontent.com/kitos/c0fffcf09579744f7c00fad897fdbff0/raw/2cedd00e5eb795b444b71b40ddb9ff72f418819e/Vabali.ts
+          echo success
+          # deno run --allow-net=vabaliwellness.km-it.de:44301 \
+          # --allow-run https://gist.githubusercontent.com/kitos/c0fffcf09579744f7c00fad897fdbff0/raw/2cedd00e5eb795b444b71b40ddb9ff72f418819e/Vabali.ts
 
       - name: notify me
         uses: denoland/setup-deno@v1.1.1
@@ -22,3 +23,4 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Yo, hello
+            https://www.vabali.de/en/berlin/massage-reservation/
