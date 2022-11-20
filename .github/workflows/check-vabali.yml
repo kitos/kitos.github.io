@@ -16,11 +16,21 @@ jobs:
           deno run --allow-net=vabaliwellness.km-it.de:44301 \
           --allow-run https://gist.githubusercontent.com/kitos/c0fffcf09579744f7c00fad897fdbff0/raw/2cedd00e5eb795b444b71b40ddb9ff72f418819e/Vabali.ts
 
-      - name: notify me
+      - name: notify about success
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
           message: |
-            Yo, hello
-            https://www.vabali.de/en/berlin/massage-reservation/
+            Time to [book](https://www.vabali.de/en/berlin/massage-reservation/), ||mf||!
+
+      - name: notifty about failure
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            Just checked _Vabali_ - no luck 😔
