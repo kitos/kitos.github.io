@@ -7,6 +7,7 @@ on:
 jobs:
   check_vabali:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: check vabali
         uses: denoland/setup-deno@v1.1.1
