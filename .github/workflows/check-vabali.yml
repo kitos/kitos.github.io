@@ -6,10 +6,11 @@ on:
 
 jobs:
   check_vabali:
-    runs-on: denoland/deno:alpine-1.28.1
+    runs-on: ubuntu-latest
     environment: production
     steps:
       - name: check vabali
+        uses: denoland/setup-deno@v1.1.1
         env:
           TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
         run: |
