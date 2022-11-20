@@ -17,7 +17,7 @@ jobs:
           # --allow-run https://gist.githubusercontent.com/kitos/c0fffcf09579744f7c00fad897fdbff0/raw/2cedd00e5eb795b444b71b40ddb9ff72f418819e/Vabali.ts
 
       - name: notify me
-        uses: denoland/setup-deno@v1.1.1
+        uses: appleboy/telegram-action@0.0.3
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
