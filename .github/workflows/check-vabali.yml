@@ -10,8 +10,10 @@ jobs:
     environment: production
     steps:
       - name: check vabali
+        env:
+          TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
         run: |
-          echo ${{ secrets.TELEGRAM_TO }}
+          echo $TELEGRAM_TO
           # deno run --allow-net=vabaliwellness.km-it.de:44301 \
           # --allow-run https://gist.githubusercontent.com/kitos/c0fffcf09579744f7c00fad897fdbff0/raw/2cedd00e5eb795b444b71b40ddb9ff72f418819e/Vabali.ts
 
