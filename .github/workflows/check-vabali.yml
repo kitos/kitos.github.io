@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: check vabali
         uses: denoland/setup-deno@v1.1.1
+        
+      - name: echo
         env:
           TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
         run: |
